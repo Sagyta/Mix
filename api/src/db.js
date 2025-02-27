@@ -41,8 +41,8 @@ const { New, Comment, User, Category} = sequelize.models;
 New.hasMany(Comment);
 Comment.belongsTo(New); 
 
-Category.hasMany(New);
-New.belongsTo(Category);
+Category.hasMany(New, {foreignKey: 'categoryId'});
+New.belongsTo(Category,{foreignKey: 'categoryId'});
 
 User.hasMany(New)
 New.belongsTo(User);

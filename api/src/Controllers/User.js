@@ -149,18 +149,19 @@ async function putUser (req,res,next){
        
 
        if(!regexUuid.test(id)){
-           return res.send({msg: 'ingrese un ID valido'});
+           return res.status(400).json({msg: 'ingrese un ID valido'});
        }else{
        const data = await User.findOne({where: {id:id}});
        if(data === null){
-           return res.send({msg: 'Lo siento pero no se encuentra ese usuario'});
+           return res.status(400).json({msg: 'Lo siento pero no se encuentra ese usuario'});
        }else {
 
         // verificar usuario
 
         const existingUser = await User.findOne({
             where: {
-               username 
+               username ,
+               id: { [Op.ne]: id }
                // Asegura que no se compare con el propio usuario
             }
           });

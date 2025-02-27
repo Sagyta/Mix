@@ -16,7 +16,7 @@ async function getNews (req,res,next){
                     attributes: ['name']
                 }
             ],
-            attributes:['id','title', 'subtitle', 'image', 'videoLink']
+            attributes:['id','title','text', 'subtitle', 'image', 'videoLink']
         })
         if(title){
             console.log(title)
@@ -63,8 +63,9 @@ async function getNewsId(req,res,next){
 
 async function postNews(req, res, next) {
     try {
+        //console.log("Parámetros recibidos:", req.params);
         const { userId } = req.params;
-       // console.log("userId recibido:", userId);
+        //console.log("userId recibido:", userId);
 
         const createBy = await User.findByPk(userId);
         //console.log("Usuario encontrado:", createBy);

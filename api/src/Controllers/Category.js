@@ -38,8 +38,10 @@ async function postCategory(req,res,next){
              let newCategory = await Category.create({
                 name,
             })
-            res.send('Categoría Creada')
-            return newCategory
+            return res.status(200).json({ 
+                message: 'Categoría Creada', 
+                category: newCategory 
+            });
         }
     } catch (error) {
         next(error)
