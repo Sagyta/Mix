@@ -1,0 +1,635 @@
+.dashboard-btn {
+    display: inline-block;
+    margin: 10px 0;
+    padding: 5px 10px;
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s, background 0.3s;
+}
+
+.dashboard-btn:hover {
+    background: linear-gradient(135deg, #0056b3, #003f7f);
+    transform: scale(1.05);
+}
+ 
+ .admin-container {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+}
+
+ .admin-sidebar {
+    width: 250px;
+    background: #343a40;
+    color: white;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+ .admin-sidebar h2 {
+    margin-bottom: 20px;
+}
+
+ .admin-sidebar ul {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+}
+
+ .admin-sidebar li {
+    margin: 10px 0;
+}
+
+ .admin-sidebar a {
+    display: block;
+    padding: 10px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+    transition: background 0.3s;
+    font-size: 16px;
+}
+
+ .admin-sidebar a:hover {
+    background: #0056b3;
+}
+
+.admin-sidebar h3{
+    margin: 10px auto 5px auto;
+    font-size: 16px;
+}
+.sidebar-crear{
+    display: block;
+    padding: 10px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+    transition: background 0.3s;
+    border: 0px;
+    width: 100%;
+    font-size:16px;
+    margin: 5px 0px 5px 0px;
+}
+
+.sidebar-crear:hover{
+    background: #0056b3;
+}
+
+ .logout-btn {
+    margin-top: 20px;
+    padding: 10px;
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+    width: 100%;
+}
+
+ .logout-btn:hover {
+    background: #a71d2a;
+}
+
+/* GESTION NOTICIAS*/
+ .admin-content {
+    flex-grow: 1;
+    padding: 20px;
+    background: white;
+}
+.admin-content h3{
+    margin: auto;
+}
+.admin-content p{
+    margin-top: 1%;
+}
+ .admin-content h2{
+    padding: 20px;
+    background: white;
+    text-align: center;
+}
+
+ .news-list {
+    list-style: none;
+    padding: 0;
+}
+
+ .news-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+ .news-item span {
+    flex-grow: 1;
+}
+
+ .button-group {
+    display: flex;
+    gap: 10px;
+}
+
+ .edit-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin: 0px 5px 0px 5px;
+}
+
+ .delete-btn {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin: 0px 5px 0px 5px;
+}
+
+/* formulario para editar*/
+ .edit-form {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    margin-top: 5%;
+}
+.edit-form h3{
+    background: white;
+    padding: 2%;
+    text-align: center;
+}
+ .edit-form label{
+    text-align: justify;
+    font-weight: bolder;
+}
+ .edit-form input {
+    width: 100%;
+    padding: 10px;
+    margin: 20px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.edit-form textarea {
+    width: 100%;
+    height: 300px;
+    padding: 10px;
+    margin: 20px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+ .edit-form button {
+    padding: 10px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+ .edit-form button:hover {
+    background: #0056b3;
+}
+/*FIN GESTION NOTICIAS*/
+
+/*GESTION COMENTARIOS*/
+.comment-content {
+    flex-grow: 1;
+    padding: 20px;
+    background: white;
+}
+.comment-content h3{
+    margin: auto;
+}
+.comment-content p{
+    margin-top: 1%;
+}
+ .comment-content h2{
+    padding: 20px;
+    background: white;
+    text-align: center;
+}
+
+ .comment-list {
+    list-style: none;
+    padding: 0;
+}
+
+ .comment-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+ .comment-item span {
+    flex-grow: 1;
+}
+
+ .button-group {
+    display: flex;
+    gap: 10px;
+}
+
+ .edit-btn-comment {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin: 0px 5px 0px 5px;
+}
+
+ .delete-btn-comment {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin: 0px 5px 0px 5px;
+}
+
+/* formulario para editar comentarios*/
+ .edit-form-comment {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    margin-top: 5%;
+}
+.edit-form-comment h3{
+    background: white;
+    padding: 2%;
+    text-align: center;
+}
+ .edit-form-comment label{
+    text-align: justify;
+    font-weight: bolder;
+}
+ .edit-form-comment input {
+    width: 100%;
+    padding: 10px;
+    margin: 20px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.edit-form-comment textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 20px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+ .edit-form-comment button {
+    padding: 10px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+ .edit-form-comment button:hover {
+    background: #0056b3;
+}
+/*FIN GESTION COMENTARIOS*/
+
+/*GESTION CATEGORIAS*/
+.category-content {
+    flex-grow: 1;
+    padding: 20px;
+    background: white;
+}
+.category-content h3{
+    margin: auto;
+}
+.category-content p{
+    margin-top: 1%;
+}
+ .category-content h2{
+    padding: 20px;
+    background: white;
+    text-align: center;
+}
+
+ .category-list {
+    list-style: none;
+    padding: 0;
+}
+
+ .category-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+ .category-item span {
+    flex-grow: 1;
+}
+
+ .button-group {
+    display: flex;
+    gap: 10px;
+}
+
+ .edit-btn-category {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin: 0px 5px 0px 5px;
+}
+
+ .delete-btn-category {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin: 0px 5px 0px 5px;
+}
+
+/*formulario para editar categoria*/
+.edit-form-category {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    margin-top: 5%;
+}
+.edit-form-category h3{
+    background: white;
+    padding: 2%;
+    text-align: center;
+}
+ .edit-form-category label{
+    text-align: justify;
+    font-weight: bolder;
+}
+ .edit-form-category input {
+    width: 100%;
+    padding: 10px;
+    margin: 20px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.edit-form-category textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 20px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+ .edit-form-category button {
+    padding: 10px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+ .edit-form-category button:hover {
+    background: #0056b3;
+}
+
+/*FIN GESTION CATEGORIAS*/
+
+/*GESTION USUARIOS*/
+.user-content {
+    flex-grow: 1;
+    padding: 20px;
+    background: white;
+}
+.user-content h3{
+    margin: auto;
+}
+.user-content p{
+    margin-top: 1%;
+}
+ .user-content h2{
+    padding: 20px;
+    background: white;
+    text-align: center;
+}
+
+ .user-list {
+    list-style: none;
+    padding: 0;
+}
+
+ .user-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+ .user-item span {
+    flex-grow: 1;
+}
+
+ .button-group {
+    display: flex;
+    gap: 10px;
+}
+
+ .edit-btn-user {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin: 0px 5px 0px 5px;
+}
+
+ .delete-btn-user {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin: 0px 5px 0px 5px;
+}
+
+/* formulario para editar user*/
+ .edit-form-user {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    margin-top: 5%;
+}
+.edit-form-user h3{
+    background: white;
+    padding: 2%;
+    text-align: center;
+}
+ .edit-form-user label{
+    text-align: justify;
+    font-weight: bolder;
+}
+ .edit-form-user input {
+    width: 100%;
+    padding: 10px;
+    margin: 20px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.edit-form-user textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 20px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+ .edit-form-user button {
+    padding: 10px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+ .edit-form-user button:hover {
+    background: #0056b3;
+}
+
+/* FIN GESTION USUARIOS*/
+
+/*FORMULARIOS AREA DE CREAR*/
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 500px; /* Ajusta el ancho según necesites */
+    margin: 5% auto;
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.form-container h3 {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.form-container input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: left;
+}
+
+.form-container textarea {
+    width: 100%;
+    height: 400px;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: left;
+}
+
+.form-container select {
+    width: 100%;
+    padding: 5px;
+    border: 2px solid #007bff;
+    border-radius: 8px;
+    font-size: 14px;
+    background-color: white;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    margin: 1% 0% 3% 0%;
+}
+
+.form-container select {
+    border-color: #0056b3;
+}
+
+.form-container select {
+    outline: none;
+    border-color: #0056b3;
+    box-shadow: 0 0 5px rgba(0, 91, 187, 0.5);
+}
+
+.form-container option {
+    padding: 10px;
+    font-size: 16px;
+}
+
+.form-container .button-group {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    gap: 10px;
+}
+
+.form-container button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.form-container button:first-child {
+    background: #007bff;
+    color: white;
+}
+
+.form-container button:first-child:hover {
+    background: #0056b3;
+}
+
+.form-container button:last-child {
+    background: #dc3545;
+    color: white;
+}
+
+.form-container button:last-child:hover {
+    background: #a71d2a;
+}
+/*FIN FORMULARIOS AREA DE CREAR*/

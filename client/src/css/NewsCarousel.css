@@ -1,0 +1,36 @@
+.carousel-container {
+    width: 98%;
+    margin: 10px auto;
+    padding: 10px;
+    background-color: rgb(218, 218, 218);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+  }
+  
+  .news-slide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 10px 0 10 0;    
+    border: violet 1px solid;/*hay q quitar*/
+  }
+  
+  .news-image {
+    width: 80px;
+    height: 80px;
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+  
+  .news-text h3 {
+    margin-top: 10px;
+    font-size: 18px;
+    color: rgb(38, 60, 255);
+  }
+  
+  .news-text p {
+    font-size: 14px;
+    color: #666;
+  }
