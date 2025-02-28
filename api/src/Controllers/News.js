@@ -16,7 +16,8 @@ async function getNews (req,res,next){
                     attributes: ['name']
                 }
             ],
-            attributes:['id','title','text', 'subtitle', 'image', 'videoLink']
+            attributes:['id','title','text', 'subtitle', 'image', 'videoLink', 'createdAt'],
+            order: [['createdAt', 'DESC']]
         })
         if(title){
            // console.log(title)
