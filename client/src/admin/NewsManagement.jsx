@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getNews, deleteNews, updateNews } from "../redux/actions/actions";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 export function NewsManagement() {
     const dispatch = useDispatch();
@@ -9,14 +10,47 @@ export function NewsManagement() {
     
     const [editData, setEditData] = useState({ id: "", title: "", text: "" });
     const [showEditForm, setShowEditForm] = useState(false);
+    const [reload, setReload] = useState(false);
 
     useEffect(() => {
         dispatch(getNews());
-    }, [dispatch]);
+    }, [dispatch, reload]);
 
-    const handleDelete = (id) => {
+    /*const handleDelete = async (id) => {
+        const confirmDelete = window.confirm("¿Estás seguro de que deseas eliminar esta noticia?");
+        if (confirmDelete) {
         dispatch(deleteNews(id));
-    };
+        setReload(prev => !prev); // Reload categories after deletion
+        }
+    };*/
+    const handleDelete = async (id)=>{
+        const result = await Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'Esta acción no se puede deshacer.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        });
+        if (result.isConfirmed){
+            dispatch(deleteNews(id));
+
+            Swal.fire(
+                'Eliminado!',
+                'La noticia ha sido eliminada.',
+                'success'
+            );
+            setReload(prev => !prev);
+        }else{
+            Swal.fire(
+                'Cancelado',
+                'La noticia no fue eliminada.',
+                'info'
+            );            
+        }
+    }
 
     const handleEditClick = (n) => {
         setEditData(n);

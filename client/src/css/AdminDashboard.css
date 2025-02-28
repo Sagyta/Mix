@@ -67,6 +67,10 @@
     margin: 10px auto 5px auto;
     font-size: 16px;
 }
+.admin-sidebar p{
+    margin: 10px auto 5px auto;
+    font-size: 16px;
+}
 .sidebar-crear{
     display: block;
     padding: 10px;
@@ -228,6 +232,13 @@
     text-align: center;
 }
 
+.comment-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 300px; /* ajusta este valor según el espacio disponible */
+}
+
  .comment-list {
     list-style: none;
     padding: 0;
@@ -241,6 +252,9 @@
     border-bottom: 1px solid #ccc;
 }
 
+.comment-item p{
+    width: 300px;
+}
  .comment-item span {
     flex-grow: 1;
 }

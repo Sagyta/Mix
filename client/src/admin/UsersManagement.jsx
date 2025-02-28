@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUsers, deleteUser, updateUser } from "../redux/actions/actions";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 export function UsersManagement() {
     const dispatch = useDispatch();
@@ -9,13 +10,41 @@ export function UsersManagement() {
 
     const [editData, setEditData] = useState({ id: "", username: "", email: "" });
     const [showEditForm, setShowEditForm] = useState(false);
+    const [reload, setReload] = useState(false);
 
     useEffect(() => {
         dispatch(getUsers());
-    }, [dispatch]);
+    }, [dispatch, reload]);
 
-    const handleDelete = (id) => {
+
+    const handleDelete = async (id) => {
+        const result = await Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'Esta acción no se puede deshacer.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        });
+            
+            if (result.isConfirmed) {
         dispatch(deleteUser(id));
+        Swal.fire(
+            'Eliminado!',
+            'El usuario ha sido eliminado.',
+            'success'
+        );
+        setReload(prev => !prev); // Reload categories after deletion
+    }else{
+        Swal.fire(
+            'Cancelado',
+            'El usuario no fue eliminado.',
+            'info'
+        );
+        
+    }
     };
 
     const handleEditClick = (u) => {

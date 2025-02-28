@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 export function CategoryManagement() {
     const dispatch = useDispatch();
-    const categories = useSelector((state) => state.categories);
+    const categories = useSelector((state) => state.category);
 
     const [editData, setEditData] = useState({ id: "", name: "" });
     const [showEditForm, setShowEditForm] = useState(false);
@@ -17,10 +17,32 @@ export function CategoryManagement() {
     }, [dispatch, reload]);
 
     const handleDelete = async (id) => {
-        const confirmDelete = window.confirm("¿Estás seguro de que deseas eliminar esta categoría?");
-        if (confirmDelete) {
+        const result = await Swal.fire({
+        title: '¿Estás seguro?',
+        text: 'Esta acción no se puede deshacer.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+    });
+        
+        if (result.isConfirmed) {
             dispatch(deleteCategory(id));
+            Swal.fire(
+                'Eliminado!',
+                'La categoria ha sido eliminada.',
+                'success'
+            );
             setReload(prev => !prev); // Reload categories after deletion
+        }else{
+            Swal.fire(
+                'Cancelado',
+                'La categoria no fue eliminada.',
+                'info'
+            );
+            
         }
     };
 

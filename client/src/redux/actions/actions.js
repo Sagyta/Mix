@@ -11,12 +11,14 @@ import {
 	SEARCH_SEARCH,
 	GET_COMMENTS,
 	ADD_COMMENT,
+	CREATE_USER,
 	GET_USERS,
 	ADD_NEWS,
 	CREATE_CATEGORY,
 	GET_CATEGORIES,
 	UPDATE_CATEGORY,
-	DELETE_CATEGORY
+	DELETE_CATEGORY,
+	LOGOUT_ADMIN,
 } from './DataTypes';
 
 
@@ -117,24 +119,32 @@ export function clearComments() {
 
 export const loginAdmin = (username, password) => async (dispatch) => {
     try {
+        // Enviar la solicitud POST para loguearse
         const response = await axios.post("http://localhost:3001/admin/login", {
             username,
             password,
         });
-		console.log("Respuesta del servidor: backend", response.data);
+		console.log('Login response:', response);
 
+        const { user, token, isAdmin } = response.data; // Desestructuramos la respuesta
+
+        // Guardar el token, usuario y el estado isAdmin en localStorage
+        localStorage.setItem("token", token);  
+        localStorage.setItem("user", JSON.stringify(user)); // Guardamos el usuario
+        localStorage.setItem("isAdmin", isAdmin);  // Guardamos el isAdmin
+
+        // Dispatch para guardar el usuario y el isAdmin en Redux
         dispatch({
             type: "ADMIN_LOGIN_SUCCESS",
             payload: { 
-				user: response.data.user,
-				isAdmin: response.data.isAdmin
-			 },  // Guardamos el isAdmin
+                user, 
+                isAdmin 
+            },  
         });
-console.log('dispatch desde action realizado con exito')
-        //localStorage.setItem("token", token);  // Guardamos el token
-		//localStorage.setItem('isAdmin', isAdmin)
+       // console.log('dispatch desde action realizado con éxito');
 
     } catch (error) {
+        // Si hay error al hacer login, se despacha un fallo
         dispatch({
             type: "ADMIN_LOGIN_FAILURE",
             payload: error.message || "Error al iniciar sesión",
@@ -143,21 +153,24 @@ console.log('dispatch desde action realizado con exito')
 };
 
 export const logoutAdmin = () => (dispatch) => {
-    localStorage.removeItem("token");
-    dispatch({ type: "LOGOUT" });
+	console.log('deslogueando')
+        dispatch({ type: "LOGOUT_ADMIN" });
+		localStorage.removeItem("token");
 };
 
 //SECCION USUARIOS
-export function createUser(userData) {
-    return async (dispatch) => {
-        try {
-            const data = await axios.post('http://localhost:3001/user', userData);
-            // Aquí puedes despachar la acción para actualizar el estado con los usuarios
-        } catch (error) {
-            console.error("Error al crear usuario", error);
-        }
-    };
-}
+export const createUser = (userData) => async (dispatch) => {
+    try {
+        const response = await axios.post("http://localhost:3001/admin/users", userData);
+		//console.log("Usuario creado con éxito:", response.data);
+        dispatch({
+            type: CREATE_USER,
+            payload: response.data
+        });
+    } catch (error) {
+        console.error("Error al crear usuario:", error);
+    }
+};
 
 export function getUsers (){
 	return async (dispatch) =>{
@@ -175,8 +188,10 @@ export function updateUser(id, updateData){
 		try{
 			await axios.put(`http://localhost:3001/user/${id}`, updateData);
 			dispatch(getUsers());
+			swal.fire("Éxito", "Usuario actualizado correctamente", "success");
 		}catch(error){
 			console.error("Error al actualizar usuario", error);
+			swal.fire("Error", "No se pudo actualizar el usuario, el usuario o email ya existen", "error");
 		}
 	}
 }
@@ -196,7 +211,7 @@ export function deleteUser(id){
 export function createNews(newsData, userId) {
     return async (dispatch) => {
         try {
-			console.log("userId enviado a la API:", userId); 
+			//console.log("userId enviado a la API:", userId); 
             const {data} = await axios.post(`http://localhost:3001/news/crear/${userId}`, newsData);
             dispatch({type: ADD_NEWS, payload: data});
 
@@ -211,7 +226,7 @@ export function createNews(newsData, userId) {
 			console.error("Error al crear noticia:", error.response?.data || error.message); // Mostrar error en consola
 			swal.fire({
 				title: 'Error',
-				text: error.response?.data?.message || 'Hubo un error al crear la noticia',
+				text: error.response?.data?.message || 'Ya existe una noticia con ese título',
 				icon: 'success',
 				confirmButtonText: 'Ok'
 			});
@@ -225,8 +240,10 @@ export function updateNews(id, updateData){
 		try{
 			await axios.put(`http://localhost:3001/news/${id}`, updateData);
 			dispatch(getNews());
+			swal.fire("Éxito", "Noticia actualizada correctamente", "success");
 		}catch(error){
 			console.error("Error al actualizar la noticia", error);
+			swal.fire("Error", "No se pudo actualizar la noticia", "error");
 		}
 	};
 }
@@ -247,9 +264,11 @@ export function updateComment(id, updateData){
 	return async (dispatch)=>{
 		try{
 			await axios.put(`http://localhost:3001/comment/${id}`, updateData);
+			swal.fire("Éxito", "Comentario actualizado correctamente", "success");
 			dispatch(getComments());
 		}catch (error){
 			console.error("Error al actualizar comentario", error);
+			swal.fire("Error", "No se pudo actualizar el comentario", "error");
 		}
 	}
 }
@@ -282,7 +301,7 @@ export function createCategory(name) {
 			swal.fire({
 				icon: 'error',
 				title: 'Error',
-				text: 'No se pudo crear la categoría. Intenta nuevamente.',
+				text: 'Esa categoria ya existe.',
 			  });
         }
     };
@@ -308,7 +327,7 @@ export const updateCategory = (id, data) => async (dispatch) => {
         swal.fire("Éxito", "Categoría actualizada correctamente", "success");
     } catch (error) {
         console.error("Error al actualizar categoría:", error.response?.data || error);
-        swal.fire("Error", "No se pudo actualizar la categoría", "error");
+        swal.fire("Error", "Esa categoría ya existe", "error");
     }
 };
 
@@ -317,7 +336,6 @@ export function deleteCategory(id) {
         try {
             await axios.delete(`http://localhost:3001/category/${id}`);
             dispatch({ type: DELETE_CATEGORY, payload: id });
-            alert("Categoría eliminada con éxito");
         } catch (error) {
             console.error("Error al eliminar categoría", error);
         }

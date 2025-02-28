@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getComments, deleteComment, updateComment } from "../redux/actions/actions";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 export function CommentsManagement() {
     const dispatch = useDispatch();
@@ -21,7 +22,32 @@ export function CommentsManagement() {
         setReload(prev=>!prev);
     };*/
     const handleDelete = async(id)=>{
-        const confirmDelete = window.confirm("")
+        const result = await Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'Esta acción no se puede deshacer.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        });
+            
+            if (result.isConfirmed) {
+                dispatch(deleteComment(id));
+                Swal.fire(
+                    'Eliminado!',
+                    'La categoria ha sido eliminada.',
+                    'success'
+                );
+                setReload(prev => !prev); // Reload categories after deletion
+            }else{
+                Swal.fire(
+                    'Cancelado',
+                    'La categoria no fue eliminada.',
+                    'info'
+                );
+            }
     }
 
     const handleEditClick = (c) => {
@@ -48,7 +74,9 @@ export function CommentsManagement() {
             <ul className="comment-list">
                 {comments.map((c) => (
                     <li key={c.id} className='comment-item'>
-                       <span> {c.comment}</span>
+                        <strong>{c.username}</strong> - 
+                        <em className="comment-title">{c.newTitle}</em>
+                       <p> {c.comment}</p>
                         <button onClick={() => handleEditClick(c) } className='edit-btn-comment'>Editar</button>
                         <button onClick={() => handleDelete(c.id)} className='delete-btn-comment' >Eliminar</button>
                     </li>

@@ -4,10 +4,12 @@ const initialState = {
     comment:[],
     users:[],
     category:[],
-    isAuthenticated: false,
-    isAdmin:false,
+   // auth:{
     user: null,
+    isAuthenticated: false,
+    isAdmin: false,
     error: null,
+   // }
 };
 
 const rootReducer = (state = initialState, {type, payload}) => {
@@ -58,22 +60,33 @@ const rootReducer = (state = initialState, {type, payload}) => {
                 comment: Array.isArray(state.comment)? [...state.comment, payload] : [payload],
       };
       //PANEL ADMIN - AUTENTICACION ADMIN
-      case 'ADMIN_LOGIN_SUCCESS':
-        console.log('datos recibidos en el reducer', payload)
-            return {
+      case "ADMIN_LOGIN_SUCCESS":
+        return {
             ...state,
+            user: payload.user,
             isAuthenticated: true,
             isAdmin: payload.isAdmin,
-            user: payload.user,
+            error: null,
         };
-        case "ADMIN_LOGIN_FAILURE":
-            return {
-                ...state,
-                isAuthenticated: false,
-                error: payload,
-            };
-        case 'ADMIN_LOGOUT':
-            return initialState;
+    case "ADMIN_LOGIN_FAILURE":
+        return {
+            ...state,
+            user: null,
+            isAuthenticated: false,
+            isAdmin: false,
+        };
+
+    case "LOGOUT_ADMIN":
+      // Eliminar del estado y de localStorage
+      localStorage.removeItem("user");
+      localStorage.removeItem("token");
+      localStorage.removeItem("isAdmin");
+      return {
+        ...state,
+        user: null,
+        isAdmin: false,
+        token: null,
+      };
         
 // NOTICIAS Y COMENTARIOS
         case 'ADD_NEWS':
@@ -100,6 +113,11 @@ const rootReducer = (state = initialState, {type, payload}) => {
             ...state,
             comments: state.comment.filter(comment => comment.id !== payload)
         };
+        case 'CREATE_USER':
+            return {
+                ...state,
+                user:  payload
+            }
         case 'GET_USERS':
             return { ...state, users: payload };
 

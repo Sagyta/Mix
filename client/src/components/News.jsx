@@ -6,7 +6,7 @@ import '../css/News.css'
 
 
 export default function Noticias({ title, subtitle, videoLink, id, user, category, image}){
-  console.log("Imagen recibida:", image);
+ // console.log("Imagen recibida:", image);
   const dispatch = useDispatch()
   const noticia = useSelector(state=> state.news);
 

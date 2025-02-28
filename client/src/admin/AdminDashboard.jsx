@@ -8,6 +8,16 @@ const AdminDashboard = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        const user = JSON.parse(localStorage.getItem("user")); // Obtener el usuario desde localStorage
+    
+        // Si no hay token o no hay usuario, redirigir al login
+        if (!token || !user) {
+            navigate("/admin/login");
+        }
+    }, [navigate]);
+
     // Estado para controlar qué formulario se muestra
     const [activeForm, setActiveForm] = useState(null);
 
@@ -17,12 +27,14 @@ const AdminDashboard = () => {
         title: "", text: "", subtitle:"", image: "", videoLink:"",  categoryId: "" });
     const [newUser, setNewUser] = useState({ username: "", email: "", password: "" });
     const user = useSelector(state=> state.user);
+    //console.log('log del user',user)
     const categories= useSelector((state)=> state.category)//agregue
+
 
     useEffect(()=>{
         dispatch(getCategories());
     }, [dispatch])  // ----agregue todo
-    console.log("Categorías en Redux:", categories);
+    //console.log("Categorías en Redux:", categories);
 
     //console.log('User que recibe el dashboard:', user);  
 
@@ -43,11 +55,11 @@ const AdminDashboard = () => {
         setActiveForm(null);
     };
 
-    const handleCreateUser = () => {
+   /* const handleCreateUser = () => {
         dispatch(createUser(newUser));
         setNewUser({ username: "", email: "", password: "" });
         setActiveForm(null);
-    };
+    };*/
 
     // Cerrar sesión
     const handleLogout = () => {
@@ -70,16 +82,16 @@ const AdminDashboard = () => {
                     <li>
                         <NavLink to="/admin/comments">Gestión de Comentarios</NavLink>
                     </li>
-                    <li>
+                   {/* <li>
                         <NavLink to="/admin/users">Gestión de Usuarios</NavLink>
-                    </li>
+    </li>*/}
                 </ul>
 
                 {/* Botones para abrir formularios */}
                 <h3>Crear Nuevo</h3>
                 <button className="sidebar-crear" onClick={() => setActiveForm("category")}>Categoría</button>
                 <button className="sidebar-crear" onClick={() => setActiveForm("news")}>Noticia</button>
-                <button className="sidebar-crear" onClick={() => setActiveForm("user")}>Usuario</button>
+               {/* <button className="sidebar-crear" onClick={() => setActiveForm("user")}>Usuario</button>*/}
                 {user ? <p>Bienvenido, {user.username}</p> : <p>Cargando...</p>}
                 <button onClick={handleLogout} className="logout-btn">Cerrar sesión</button>
             </nav>
@@ -155,7 +167,7 @@ const AdminDashboard = () => {
                     </div>
                 )}
 
-                {activeForm === "user" && (
+              {/*  {activeForm === "user" && (
                     <div className="form-container">
                         <h3>Crear Usuario</h3>
                         <input
@@ -181,7 +193,7 @@ const AdminDashboard = () => {
                         <button onClick={() => setActiveForm(null)}>Cancelar</button>
                         </div>
                     </div>
-                )}
+               )}*/}
             </div>
         </div>
     );
