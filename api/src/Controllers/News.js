@@ -19,7 +19,7 @@ async function getNews (req,res,next){
             attributes:['id','title','text', 'subtitle', 'image', 'videoLink']
         })
         if(title){
-            console.log(title)
+           // console.log(title)
             let findTitle= newsFind.filter(e=>e.title.toLowerCase().includes(title.toLowerCase()))
             if(findTitle.length) return res.send(findTitle)
             else return res.status(404).send('No hay noticias que contengan esta palabra en el título')

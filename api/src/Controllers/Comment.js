@@ -19,6 +19,10 @@ async function getComment (req,res,next){
                 {
                     model: User,
                     attributes: ["username"],
+                },
+                {
+                    model: New,
+                    attributes: ["title"]
                 }
             ]
         });
@@ -29,6 +33,7 @@ async function getComment (req,res,next){
             id: comment.id,
             comment: comment.comment,
             username: comment.user ? comment.user.username : comment.username,
+            newTitle: comment.new ? comment.new.title : "Noticia desconocida",
             newId: comment.newId
         }));
        // console.log("los de format coment", formattedComments)

@@ -10,7 +10,7 @@ const getTokenData = (token) => {
     let data = null;
     jwt.verify(token, 'SECRET', (err, decoded) => {
         if(err) {
-            console.log('Error al obtener data del token');
+           // console.log('Error al obtener data del token');
         } else {
             data = decoded;
         }

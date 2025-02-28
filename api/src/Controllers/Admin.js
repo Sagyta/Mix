@@ -22,15 +22,6 @@ const login = async (req, res) => {
         if (!isPasswordValid) {
             return res.status(400).json({ error: "Contraseña incorrecta" });
         }
-
-        console.log('Respuesta del backend (user y isAdmin):', {
-            user: {
-                id: user.id,
-                username: user.username,
-                email: user.email,
-            },
-            isAdmin: user.isAdmin  // Verifica que isAdmin esté aquí
-        });
         // Verificar si el usuario es administrador
         if (user.isAdmin) {
             return res.json({

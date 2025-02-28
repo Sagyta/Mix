@@ -30,7 +30,7 @@ async function getUserId(req, res, next) {
           msg: "Lo siendo pero no hay ningun usuario con ese id",
         });
       } else {
-        console.log(usuario);
+        //console.log(usuario);
         res.send(usuario);
       }
     }
