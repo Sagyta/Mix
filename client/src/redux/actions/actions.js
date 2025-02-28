@@ -16,9 +16,9 @@ import {
 	ADD_NEWS,
 	CREATE_CATEGORY,
 	GET_CATEGORIES,
-	UPDATE_CATEGORY,
+	//UPDATE_CATEGORY,
 	DELETE_CATEGORY,
-	LOGOUT_ADMIN,
+	//LOGOUT_ADMIN,
 } from './DataTypes';
 
 
@@ -27,7 +27,7 @@ export function getNews(){
     return async (dispatch) =>{
         try{
             let {data} = await axios.get("http://localhost:3001/news");
-            //console.log('Noticias recibidas:', data);
+            console.log('Noticias recibidas:', data);
             return dispatch({ type: ALL_NEWS, payload: data});
         }catch (error){
            // ✅ Guardarlo en otra variable
@@ -35,6 +35,26 @@ export function getNews(){
         }
     };
 }
+
+/*export function getNews(){
+		return async (dispatch) => {
+			try {
+			  const response = await axios.get('http://localhost:3001/news'); // Ajusta la URL si es necesario
+			  let sortedNews = response.data;
+		
+			  if (sortedNews.length > 0) {
+				sortedNews = sortedNews.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+			  }
+		console.log('noticias ordenadas',sortedNews)
+			  dispatch({
+				type: ALL_NEWS,
+				payload: sortedNews,
+			  });
+			} catch (error) {
+			  console.error('Error al obtener noticias:', error);
+			}
+		  };
+		};*/
 
 export function detailNews(id) {
 	return async function (dispatch) {

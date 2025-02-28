@@ -8,7 +8,8 @@ export function NewsManagement() {
     const dispatch = useDispatch();
     const news = useSelector((state) => state.news);
     
-    const [editData, setEditData] = useState({ id: "", title: "", text: "" });
+    const [editData, setEditData] = useState({ id: "", 
+    title: "", subtitle:"", text: "",  image:"", videoLink:""});
     const [showEditForm, setShowEditForm] = useState(false);
     const [reload, setReload] = useState(false);
 
@@ -103,14 +104,14 @@ export function NewsManagement() {
             <label>Link de imagen</label>
             <input
                 type="text"
-                name="imagen"
+                name="image"
                 value={editData.image}
                 onChange={handleEditChange}
             />
             <label>Link de Video</label>
             <input
                 type="text"
-                name="video"
+                name="videoLink"
                 value={editData.videoLink}
                 onChange={handleEditChange}
             />

@@ -25,7 +25,7 @@ const AdminDashboard = () => {
     const [newCategory, setNewCategory] = useState("");
     const [newNews, setNewNews] = useState({ 
         title: "", text: "", subtitle:"", image: "", videoLink:"",  categoryId: "" });
-    const [newUser, setNewUser] = useState({ username: "", email: "", password: "" });
+    //const [newUser, setNewUser] = useState({ username: "", email: "", password: "" });
     const user = useSelector(state=> state.user);
     //console.log('log del user',user)
     const categories= useSelector((state)=> state.category)//agregue
@@ -149,6 +149,7 @@ const AdminDashboard = () => {
                             value={newNews.videoLink}
                             onChange={(e) => setNewNews({ ...newNews, videoLink: e.target.value })}
                             placeholder="Link del video"
+                            disabled={false}
                         />                       
                         <select
                             value={newNews.categoryId}
@@ -200,4 +201,3 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard;
-

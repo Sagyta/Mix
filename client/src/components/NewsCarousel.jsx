@@ -13,10 +13,11 @@ const NewsCarousel = ({ news }) => {
         modules={[Navigation, Pagination, Autoplay]}
         spaceBetween={20}
         slidesPerView={8}
-        navigation
+       // navigation
         pagination={{ clickable: true }}
-        autoplay={{ delay: 3000, disableOnInteraction: false }}
+        autoplay={{ delay: 50, disableOnInteraction: false, pauseOnMouseEnter: true, }}
         loop={true}
+        speed={500}
       >
         {news.map((item, index) => (
           <SwiperSlide key={index}>

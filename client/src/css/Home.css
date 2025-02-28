@@ -1,130 +1,209 @@
-/* Reset general */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  /* Fondo del body */
-  body {
-    background-color: #ffffff; /* Color de fondo */
-    font-family:  Arial, sans-serif;
-  }
-  
-  /* Contenedor principal */
-  .container {
-    width: 100%;  /* Ocupa todo el ancho de la pantalla */
-    display: flex;
-    flex-direction: column;
-    margin: auto;
-    border: red 1px solid;
-  }
-  
-  .publi-head{
-    background-color: burlywood;
-    margin: auto;
-    width: 98%;
-    text-align: center;
-    padding: 10px 0px 10px 0px;
-    font-size: 12px;
-  }
+h1::first-letter, 
+h2::first-letter, 
+h3::first-letter, 
+h4::first-letter, 
+h5::first-letter, 
+h6::first-letter, 
+p::first-letter {
+    text-transform: uppercase;
+}
 
-  .publi-main{
-    background-color: burlywood;
-    margin: auto;
-    width: 100%;
-    text-align: center;
-    padding: 10px 0px 10px 0px;
-    font-size: 12px;
-  }
-  /* Header */
-  header {
-    background-color: #333;
-    color: white;
-    padding: 20px;
-    text-align: center;
-    font-size: 24px;
-    width: 98%;
-    margin: 10px auto 0px auto;
-  }
-  
-  /* Main */
-  .main {
-    display: flex;
-    width: 98%; /* Ahora ocupa todo el ancho */
-    margin: auto;
-    border: 1px salmon solid;
-  }
-  
-  /* Columnas */
-  .left, .right {
-    width: 20%;  /* Cada lateral ocupa el 25% */
-    min-width: 150px; /* Para que no se achique demasiado en pantallas chicas */
-    
-  }
-  
-  .center {
-    width: 100%; /* La columna central ocupa la mitad */
-    justify-content: center;
-    border: rgb(0, 26, 255) 1px solid;    
-  }
-  
-  /* Colores de las columnas */
-  .left { background-color: lightblue;  }
-  .center {background-color: rgb(214, 214, 27);}
-  .right { background-color: lightgreen; }  
-  
-  /* Todas las columnas */
-  .column {
-    padding: 10px;
-    text-align: center;
-    min-height: 300px;  
-  }
-  
-  .newsContainer {
-    display: flex;
-    flex-wrap: wrap; /* Permite que los elementos bajen si no hay espacio */
-    gap: 20px; /* Espacio entre noticias */
-    justify-content: center; /* Centrar las noticias */
-  }
-  
-  .newsItem {
-    display: flex;
-    flex-wrap: wrap;
-   /* border: aqua 3px solid; /* esto sse borra*/
-    margin: auto;
-    width: 100%;
-  }
-  
-  /* Para pantallas pequeñas, una sola columna */
-  @media (max-width: 768px) {
-    .newsItem {
-      width: 100%;
-    }
-  }
-  
-  .antFooter{
-        color: white;
-        text-align: center;
-        font-size: 24px;
-        width: 98%;
-        margin: 0px auto 0px auto;
-  }
-  img {
-  width: 100%;
+.home {
+  font-family: Arial, sans-serif;
+  width: 98%;
   margin: auto;
-  }
-  /* Footer */
-  footer {
-    background-color: #444;
-    color: white;
-    text-align: center;
-    padding: 15px;
-    width: 98%;
-    margin: -6px auto 10px auto;
-    height: 150px;
-  }
-  
+}
+.home-header {
+  text-align: center;
+  padding: 0px;
+  background-color: #f4f4f4;
+}
+
+.content-home {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.home-left-column {
+  width: 80%;
+}
+
+.home-right-column {
+  width: 20%;
+  border-left: violet 1px solid;
+}
+
+.home-news-row, .home-category-news-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  background-color: yellowgreen;
+}
+
+.home-news-item, .home-category-news-item {
+  width: 23%; /* Ajusta el tamaño para que quepan 4 en una fila */
+  padding: 10px;
+  background-color: #e0e0e0;
+  text-align: center;
+}
+
+.home-latest-news, .home-featured-category, .home-latest-large-news {
+  margin-bottom: 20px;
+}
+.home-latest-news {
+  margin-bottom: 20px;
+}
+
+.home-last-news-text h5{
+  text-align: center;
+  margin-top: 5px;
+  padding: 5px;
+}
+
+.home-last-news-image{
+  width: 80%;
+height: 50vh;
+box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Sombra con un desplazamiento */
+border-radius: 8px; /* Opcional, para darle bordes redondeados */
+}
+
+.home-last-news-video{
+width: 80%;
+height: 50vh;
+box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Sombra con un desplazamiento */
+border-radius: 8px; /* Opcional, para darle bordes redondeados */
+}
+
+.home-ver-mas-btn{
+  background-color: transparent;
+  border: 0;
+}
+.home-ver-mas-btn:hover{
+  background-color: transparent;
+  border-bottom: tomato 1px solid;
+  color: tomato;
+}
+.home-last-news-content{
+  text-align: center;
+  margin: auto;
+}
+
+.home-last-news-content h3{
+  text-align:center;
+}
+
+.home-featured-news {
+  background-color: #ddd;
+  padding: 20px;
+}
+
+.home-ad-space, .home-ad-space-between {
+  margin: 20px 0;
+  background-color: #f0f0f0;
+  padding: 20px;
+  text-align: center;
+  border: tomato 2px solid;
+}
+
+footer {
+  background-color: #333;
+  color: white;
+  padding: 10px;
+  text-align: center;
+}
+
+/*cintas*/
+.home-ribbon {
+  display: inline-block;
+  background: #e63946;
+  color: white;
+  padding: 5px 10px;
+  font-size: 14px;
+  font-weight: bold;
+  position: relative;
+  text-transform: uppercase;
+  border-radius: 5px;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Puntas dobladas de la cinta */
+.home-ribbon::before, .home-ribbon::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  border-style: solid;
+  border-width: 18px 10px 18px 0;
+  border-color: transparent #a52834 transparent transparent;
+}
+
+.home-ribbon::before {
+  left: -10px;
+}
+
+.home-ribbon::after {
+  right: -10px;
+  border-width: 18px 0 18px 10px;
+  border-color: transparent transparent transparent #a52834;
+}
+/*banner*/
+.home-banner {
+  background: #ff9800;
+  color: white;
+  padding: 10px;
+  font-size: 20px;
+  text-align: center;
+  font-weight: bold;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+  position: relative;
+  width: 95%;
+}
+
+.home-banner::before, .home-banner::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  width: 0;
+  height: 0;
+  border-style: solid;
+}
+
+.home-banner::before {
+  left: 0;
+  border-width: 30px 25px 0 0;
+  border-color: #d47d00 transparent transparent transparent;
+}
+
+.home-banner::after {
+  right: 0;
+  border-width: 30px 0 0px 25px;
+  border-color: #d47d00 transparent transparent transparent;
+}
+
+.home-ribbon-single {
+  display: inline-block;
+  background: #e63946; /* Color de fondo */
+  color: white; /* Color del texto */
+  padding: 5px 10px; /* Espaciado interno */
+  font-size: 14px;
+  font-weight: bold;
+  position: relative;
+  text-transform: uppercase;
+  border-radius: 5px;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Punta de la cinta en un solo lado */
+.home-ribbon-single::before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 70px;
+  margin-top: -1px;
+  border-style: solid;
+  border-width: 10px 15px 0 5px; /* Triángulo */
+  border-color: #a52834 transparent transparent transparent; /* Color igual al fondo pero más oscuro */
+}
   
   /* -------------------------LOADER------------------------- */
   

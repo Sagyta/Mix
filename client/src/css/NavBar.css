@@ -1,33 +1,80 @@
 .navbar {
-    background-color: #333;
-    padding: 10px 0;
-    text-align: center;
-  }
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+  background-image: url('../img/banner.png'); /* La imagen de fondo */
+  background-size: cover;
+  background-position: center;
+  color: white;
+  height: 200px; /* Ajusta la altura total */
+  display: flex;
+  flex-direction: column; /* Para dividir la barra en dos secciones */
+  width: 100%;
+  margin: auto;
+}
 
-.navList {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    padding: 0;
-    margin: 0;
-  }
-  
-.navItem {
-    margin: 10px 5px;
-  }
-  
-.link {
-    background-color: #007bff ; 
-    color: #fff;
-    padding: 10px 5px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: bold;
-    transition: background 0.3s ease;
-  }
+.navbar-top {
+  display: flex;
+  justify-content: flex-start; /* Hora alineada a la izquierda */
+  align-items: flex-start; /* Alineación vertical */
+  padding: 10px 20px;
+}
 
-.link:hover{
-    background-color: aqua;
-    color: blueviolet;
+.datetime {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.navbar-bottom {
+  display: flex;
+  justify-content: space-between; /* Divide la parte inferior en dos: izquierda y derecha */
+  align-items: flex-start; /* Alineación de elementos */
+  padding: 10px 20px;
+  flex: 1; /* Toma todo el espacio restante */
+  align-items: flex-end;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+}
+
+.social-icons {
+  display: flex;
+  gap: 15px;
+}
+
+.social-icons img {
+  width: 30px;
+  height: 30px;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+}
+
+.buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.nav-button {
+  background-color: transparent;
+  border: 2px solid white;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.nav-button:hover {
+  background-color: white;
+  color: #333;
+  transform: scale(1.05);
+}
+
+.nav-button:active {
+  transform: scale(0.95);
 }
