@@ -3,6 +3,7 @@ const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const cors = require('cors');
 const routes = require('./routes/index');
+const path = require("path")
 
 require('./db');
 
@@ -23,6 +24,9 @@ server.use(morgan('dev'));
 
 server.use('/', routes);
 
+//imagenes ads
+server.use("/uploads", express.static(path.join(__dirname, "../public/uploads")));
+//console.log(__dirname)
 // Error handling
 server.use((err, req, res, next) => {
     const status = err.status || 500;
