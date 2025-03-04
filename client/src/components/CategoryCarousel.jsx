@@ -35,8 +35,8 @@ const CategoryCarousel = ({ news }) => {
         modules={[Navigation, Pagination, Autoplay]}
         spaceBetween={20}
         slidesPerView={4}
-        navigation
-        pagination={{ clickable: true }}
+        //navigation
+        //pagination={{ clickable: true }}
         autoplay={{
           delay: 2000,
           disableOnInteraction: false,
@@ -47,11 +47,13 @@ const CategoryCarousel = ({ news }) => {
       >
         {flattenedLatestNews.map((item, index) => (
           <SwiperSlide key={index}>
-          <div className="news-slide">
+          <div className="category-news-slide">
             {/* Aquí accedemos al nombre de la categoría correctamente */}
             <h2>{item.category?.name || "Sin categoría"}</h2>
-            <img src={item.image} alt={item.title} className="news-image" />
-            <div className="news-text">
+            <Link to={`/news/${item.id}`}>
+            <img src={item.image} alt={item.title} className="category-news-image" />
+            </Link>
+            <div className="category-news-text">
               <h3>{item.title}</h3>
             </div>
           </div>

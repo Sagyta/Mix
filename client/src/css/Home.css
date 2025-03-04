@@ -22,23 +22,31 @@ p::first-letter {
 .content-home {
   display: flex;
   justify-content: space-between;
-  padding: 20px;
+  padding: 0px;
+  box-shadow: -5px 0 10px rgba(0, 0, 0, 0.2), 5px 0 10px rgba(0, 0, 0, 0.2);
+  /*background-color: #d47d00; /*se va*/
 }
 
 .home-left-column {
-  width: 80%;
+  width: 75%;
+  /*border: #a52834 1px solid;*/
+  margin: auto;
+  /*box-shadow: 5px 0 15px rgba(0, 0, 0, 0.3); der*/
+  /*box-shadow: -5px 0 10px rgba(0, 0, 0, 0.2);*/
 }
 
 .home-right-column {
-  width: 20%;
-  border-left: violet 1px solid;
+  width: 100%;
+  max-width: 250px;
+  /*box-shadow: -5px 0 10px rgba(0, 0, 0, 0.2), 5px 0 10px rgba(0, 0, 0, 0.2);*/
 }
 
 .home-news-row, .home-category-news-row {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20px;
-  background-color: yellowgreen;
+  margin: 20px 0px;
+  padding: 5px;
+  background-color: #000c26;
 }
 
 .home-news-item, .home-category-news-item {
@@ -99,11 +107,11 @@ border-radius: 8px; /* Opcional, para darle bordes redondeados */
 }
 
 .home-ad-space, .home-ad-space-between {
-  margin: 20px 0;
+  margin: auto;
   background-color: #f0f0f0;
-  padding: 20px;
+  padding: 0px;
   text-align: center;
-  border: tomato 2px solid;
+  width: 90%;
 }
 
 footer {
@@ -116,7 +124,7 @@ footer {
 /*cintas*/
 .home-ribbon {
   display: inline-block;
-  background: #e63946;
+  background: #00607d;
   color: white;
   padding: 5px 10px;
   font-size: 14px;
@@ -182,7 +190,7 @@ footer {
 
 .home-ribbon-single {
   display: inline-block;
-  background: #e63946; /* Color de fondo */
+  background: #00607d; /* Color de fondo */
   color: white; /* Color del texto */
   padding: 5px 10px; /* Espaciado interno */
   font-size: 14px;
@@ -191,6 +199,7 @@ footer {
   text-transform: uppercase;
   border-radius: 5px;
   box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
+  margin: 5px 0px 5px 0px;
 }
 
 /* Punta de la cinta en un solo lado */
@@ -202,7 +211,7 @@ footer {
   margin-top: -1px;
   border-style: solid;
   border-width: 10px 15px 0 5px; /* Triángulo */
-  border-color: #a52834 transparent transparent transparent; /* Color igual al fondo pero más oscuro */
+  border-color: #00607d transparent transparent transparent; /* Color igual al fondo pero más oscuro */
 }
   
   /* -------------------------LOADER------------------------- */

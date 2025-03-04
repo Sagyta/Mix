@@ -8,10 +8,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getNews } from '../redux/actions/actions'; // Importa la acción para cargar las noticias
 import '../css/Home.css'
 import CategoryCarousel from './CategoryCarousel';
+import AdsCarousel from './AdsCarousel';
+import BannerCarousel from './BannerCarousel';
 
 const Home = () => {
     const dispatch = useDispatch();
     const news = useSelector((state) => state.news);
+   
 
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
@@ -39,7 +42,7 @@ const Home = () => {
     <div className="home">
       {/* Espacio para anuncios entre noticias */}
       <div className="home-ad-space-between">
-        <p>Publicidad entre noticias</p>
+        <BannerCarousel />
       </div>
       <header className="home-header">
       <NavBar />
@@ -83,18 +86,14 @@ const Home = () => {
           </div>
 
           {/* 4 noticias en fila (horizontalmente) */}
-          <div>categrias</div>
+          <div className='home-ribbon-single'>Últimas noticias...</div>
           <div className="home-news-row">
             <CategoryCarousel news={news} />
-            {/*<div className="home-news-item">Noticia 1</div>
-            <div className="home-news-item">Noticia 2</div>
-            <div className="home-news-item">Noticia 3</div>
-            <div className="home-news-item">Noticia 4</div>*/}
           </div>
 
         {/* Espacio para anuncios entre noticias */}
           <div className="home-ad-space-between">
-           <p>Publicidad entre noticias</p>
+          <BannerCarousel />
           </div>
 
           {/* Noticia destacada por categoría */}          
@@ -123,7 +122,7 @@ const Home = () => {
 
           {/* Espacio para anuncios */}
           <div className="home-ad-space">
-            <p>Publicidad aquí</p>
+            <AdsCarousel />
           </div>
         </div>
       </div>

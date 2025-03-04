@@ -70,7 +70,7 @@ export default function NewsDetail() {
 
   return (
     <div>
-        <header>Encabezado
+        <header>
                 <Navbar />
             </header>
     <div className="containerTotal">

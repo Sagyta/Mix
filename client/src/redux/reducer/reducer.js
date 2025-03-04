@@ -10,6 +10,8 @@ const initialState = {
     isAdmin: false,
     error: null,
    // }
+   ads: [],
+   adsBanner: [],
 };
 
 const rootReducer = (state = initialState, {type, payload}) => {
@@ -131,25 +133,58 @@ const rootReducer = (state = initialState, {type, payload}) => {
                     user.id === payload.id ? payload : user
                 ),
             };
-            case "GET_CATEGORIES":
+        case "GET_CATEGORIES":
             return { 
                 ...state, 
                  category: payload 
-    };
+            };
 
         case "UPDATE_CATEGORY":
             return { 
                 ...state, 
                 categories: state.category.map(cat => 
                 cat.id === payload.id ? payload : cat
-        )
-    };
+                )
+            };
 
         case "DELETE_CATEGORY":
             return { 
                 ...state, 
                 categories: state.category.filter(cat => cat.id !== payload) 
-    };
+            };
+
+        case "GET_ADS":
+            return{
+                ...state,
+                //ads: Array.isArray(payload) ? payload : [],
+                ads: payload
+            };
+        case "GET_ADS_BANNER":
+            return{
+                ...state,
+                //adsBanner: Array.isArray(payload) ? payload : [],
+                adsBanner: payload
+            };
+        case "CREATE_ADS":
+            return {
+                ...state,
+                ads: payload
+            };
+        case "DELETE_ADS":
+            return {
+                ...state,
+                ads: state.ads.filter(ad => ad.id !== payload)
+            };
+        case "CREATE_ADS_BANNER":
+            return {
+                ...state,
+                adsBanner: payload
+            };
+        case "DELETE_ADS_BANNER":
+            return {
+                ...state,
+                adsBanner: state.adsBanner.filter((ad) => ad.id !==payload)
+            };
         
         default:
             return state;

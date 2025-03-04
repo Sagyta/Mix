@@ -19,7 +19,16 @@ import {
 	//UPDATE_CATEGORY,
 	DELETE_CATEGORY,
 	//LOGOUT_ADMIN,
+	GET_ADS,
+	CREATE_ADS,
+	GET_ADS_BANNER,
+	DELETE_ADS,
+	CREATE_ADS_BANNER, 
+	DELETE_ADS_BANNER,
 } from './DataTypes';
+
+const adsUrl = "http://localhost:3001/ads";
+const bannerUrl = "http://localhost:3001/adsbanner";
 
 
 // Noticias
@@ -35,26 +44,6 @@ export function getNews(){
         }
     };
 }
-
-/*export function getNews(){
-		return async (dispatch) => {
-			try {
-			  const response = await axios.get('http://localhost:3001/news'); // Ajusta la URL si es necesario
-			  let sortedNews = response.data;
-		
-			  if (sortedNews.length > 0) {
-				sortedNews = sortedNews.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-			  }
-		console.log('noticias ordenadas',sortedNews)
-			  dispatch({
-				type: ALL_NEWS,
-				payload: sortedNews,
-			  });
-			} catch (error) {
-			  console.error('Error al obtener noticias:', error);
-			}
-		  };
-		};*/
 
 export function detailNews(id) {
 	return async function (dispatch) {
@@ -361,3 +350,93 @@ export function deleteCategory(id) {
         }
     };
 }
+// ADS
+export function getAds(){
+	return async (dispatch)=>{
+		try{
+			const {data} = await axios.get('http://localhost:3001/ads');
+			dispatch({ type: GET_ADS, payload: data})
+		}catch(error){
+			console.error('Error al cargar la imagen', error);
+			dispatch({
+				type: 'GET_ADS',
+				payload: [],
+			})
+		}
+	}
+}
+
+export const createAds = (formData) => async (dispatch) => {
+	try {
+	  const { data } = await axios.post(`${adsUrl}/upload`, formData, {
+		headers: { "Content-Type": "multipart/form-data" },
+	  });
+	  swal.fire({
+		icon: 'success',
+		title: '¡La imagen se ha subido!',
+		text: 'Imagen se ha creado correctamente.',
+	  });
+	  dispatch({ type: CREATE_ADS, payload: data });
+	} catch (error) {
+	  console.error("Error al crear el anuncio:", error);
+	  swal.fire({
+		icon: 'error',
+		title: 'Error',
+		text: 'Error al subir la imagen.',
+	  });
+	}
+  };
+  
+  export const deleteAds = (id) => async (dispatch) => {
+	try {
+	  await axios.delete(`${adsUrl}/${id}`);
+	  dispatch({ type: DELETE_ADS, payload: id });
+	} catch (error) {
+	  console.error("Error al eliminar el anuncio:", error);
+	}
+  };
+
+export function getAdsBanner(){
+	return async (dispatch)=>{
+		try{
+			const {data} = await axios.get('http://localhost:3001/adsbanner');
+			dispatch({ type: GET_ADS_BANNER, payload: data})
+		}catch(error){
+			console.error('Error al cargar la imagen', error);
+			dispatch({
+				type: 'GET_ADS_BANNER',
+				payload: [],
+			})
+		}
+	}
+};
+
+export const createAdsBanner = (formData) => async (dispatch) => {
+	try {
+	  const { data } = await axios.post(`${bannerUrl}/upload`, formData, {
+		headers: { "Content-Type": "multipart/form-data" },
+	  });
+	  swal.fire({
+		icon: 'success',
+		title: '¡La imagen se ha subido!',
+		text: 'Imagen se ha creado correctamente.',
+	  });
+	  dispatch({ type: CREATE_ADS_BANNER, payload: data });
+	} catch (error) {
+	  console.error("Error al crear el anuncio:", error);
+	  swal.fire({
+		icon: 'error',
+		title: 'Error',
+		text: 'Error al subir la imagen.',
+	  });
+	}
+  };
+  
+  export const deleteAdBanner = (id) => async (dispatch) => {
+	try {
+	  await axios.delete(`${bannerUrl}/${id}`);
+	  dispatch({ type: DELETE_ADS_BANNER, payload: id });
+	} catch (error) {
+	  console.error("Error al eliminar el anuncio:", error);
+	}
+  };
