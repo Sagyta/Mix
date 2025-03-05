@@ -13,7 +13,7 @@ import "swiper/css/effect-fade";
 const BannerCarousel = () => {
   const dispatch = useDispatch();
   const adsBan = useSelector((state) => state.adsBanner); // Suponiendo que ya tienes ads en Redux
-  console.log("Anuncios cargados:", adsBan);
+ // console.log("Anuncios cargados:", adsBan);
   useEffect(() => {
     dispatch(getAdsBanner()); // Llama a la acción para obtener las imágenes de los anuncios
   }, [dispatch]);

@@ -25,6 +25,7 @@ import {
 	DELETE_ADS,
 	CREATE_ADS_BANNER, 
 	DELETE_ADS_BANNER,
+	GET_NEWS_BY_CATEGORY,
 } from './DataTypes';
 
 const adsUrl = "http://localhost:3001/ads";
@@ -36,7 +37,7 @@ export function getNews(){
     return async (dispatch) =>{
         try{
             let {data} = await axios.get("http://localhost:3001/news");
-            console.log('Noticias recibidas:', data);
+            //console.log('Noticias recibidas:', data);
             return dispatch({ type: ALL_NEWS, payload: data});
         }catch (error){
            // ✅ Guardarlo en otra variable
@@ -44,6 +45,22 @@ export function getNews(){
         }
     };
 }
+
+export const newsByCategory = (categoryId) => async (dispatch) => {
+    try {
+        console.log(`🔍 Obteniendo noticias para categoría: ${categoryId}`);
+        const { data } = await axios.get(`http://localhost:3001/news/category/${categoryId}`);
+
+        console.log(`✅ Noticias recibidas para categoría ${categoryId}:`, data);
+
+        dispatch({
+            type: GET_NEWS_BY_CATEGORY,
+            payload: { categoryId, news: data },
+        });
+    } catch (error) {
+        console.error(`❌ Error obteniendo noticias para categoría ${categoryId}:`, error);
+    }
+};
 
 export function detailNews(id) {
 	return async function (dispatch) {
@@ -319,10 +336,13 @@ export function createCategory(name) {
 export function getCategories() {
     return async (dispatch) => {
         try {
+           // console.log("🔍 Llamando a la API para obtener categorías GetCategory...");
             const response = await axios.get("http://localhost:3001/category");
+            console.log("✅ Categorías recibidas GetCategory:", response.data);
+
             dispatch({ type: GET_CATEGORIES, payload: response.data });
         } catch (error) {
-            console.error("Error al obtener categorías", error);
+            console.error("❌ Error al obtener categorías:", error);
         }
     };
 }

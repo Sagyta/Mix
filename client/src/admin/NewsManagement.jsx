@@ -1,20 +1,22 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getNews, deleteNews, updateNews } from "../redux/actions/actions";
+import { getNews, deleteNews, updateNews, getCategories } from "../redux/actions/actions";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
 export function NewsManagement() {
     const dispatch = useDispatch();
     const news = useSelector((state) => state.news);
+    const categories = useSelector((state) => state.category);
     
     const [editData, setEditData] = useState({ id: "", 
-    title: "", subtitle:"", text: "",  image:"", videoLink:""});
+    title: "", subtitle:"", text: "",  image:"", videoLink:"", categoryId: ""});
     const [showEditForm, setShowEditForm] = useState(false);
     const [reload, setReload] = useState(false);
 
     useEffect(() => {
         dispatch(getNews());
+        dispatch(getCategories());
     }, [dispatch, reload]);
 
     /*const handleDelete = async (id) => {
@@ -121,7 +123,20 @@ export function NewsManagement() {
                 name="text"
                 value={editData.text || ""}
                 onChange={handleEditChange}
-    />
+            />
+            <label>Categoría</label>
+                    <select
+                        name="categoryId"
+                        value={editData.categoryId}
+                        onChange={handleEditChange}
+                    >
+                        <option value=''>Selecciona una categoría</option>
+                        {categories?.map((category) => (
+                            <option key={category.id} value={category.id}>
+                                {category.name}
+                            </option>
+                        ))}
+                    </select>
             <button type="submit">Guardar Cambios</button>
         </form>
     )}

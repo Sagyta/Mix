@@ -12,6 +12,7 @@ const initialState = {
    // }
    ads: [],
    adsBanner: [],
+   newsByCategory: {},
 };
 
 const rootReducer = (state = initialState, {type, payload}) => {
@@ -21,6 +22,14 @@ const rootReducer = (state = initialState, {type, payload}) => {
             return {
                 ...state,
                 news: payload,
+            };
+        case 'GET_NEWS_BY_CATEGORY':
+            return {
+                ...state,
+            newsByCategory: {
+            ...state.newsByCategory,
+            [payload.categoryId]: payload.news,
+        },
             };
         case 'DETAIL_NEWS':
             return {

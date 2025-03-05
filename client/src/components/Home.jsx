@@ -5,23 +5,42 @@ import NewsCarousel from './NewsCarousel'; // Suponiendo que tienes un component
 import NavBar from './NavBar';
 import Footer from './Footer'; // Suponiendo que tienes un componente de Footer
 import { useDispatch, useSelector } from 'react-redux';
-import { getNews } from '../redux/actions/actions'; // Importa la acción para cargar las noticias
-import '../css/Home.css'
+import { getNews, getCategories, newsByCategory  } from '../redux/actions/actions'; // Importa la acción para cargar las noticias
+import '../css/Home.css';
 import CategoryCarousel from './CategoryCarousel';
 import AdsCarousel from './AdsCarousel';
 import BannerCarousel from './BannerCarousel';
 
+//console.log("📌 Funciones importadas:", { getNews, getCategories, newsByCategory });
+
 const Home = () => {
     const dispatch = useDispatch();
     const news = useSelector((state) => state.news);
-   
+    const categories = useSelector((state)=> state.category)
+    const newsByCategoryData = useSelector((state)=> state.newsByCategory);
 
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
     useEffect(() => {
+     // console.log("Ejecutando dispatch(getNews())...");
         dispatch(getNews()); // 🔹 Llamamos a la acción que ahora ya ordena las noticias desde el back
     }, [dispatch]);
+
+    useEffect(() => {
+      //console.log("🔍 Ejecutando dispatch(getCategories())...");
+      dispatch(getCategories());
+  }, [dispatch]);
+  
+  useEffect(() => {
+    console.log("📌 Categorías cargadas en Redux:", categories);
+    if (categories && categories.length > 0) {
+        categories.forEach((category) => {
+            console.log(`📌 Dispatching category ${category.id}`);
+            dispatch(newsByCategory(category.id));
+        });
+    }
+}, [dispatch, categories, newsByCategory]); // Agregado newsByCategory
 
 //ultima noticia
     useEffect(() => {
@@ -97,21 +116,42 @@ const Home = () => {
           </div>
 
           {/* Noticia destacada por categoría */}          
-          <div className="home-featured-category">
-            <h2>Noticias de Tecnología</h2>
-            <div className="home-featured-news">
-              <p>Noticia destacada de la categoría</p>
-            </div>
-          </div>
-
-          {/* 4 noticias más de la misma categoría */}
-          <div className="home-category-news-row">
-            <div className="home-category-news-item">Noticia 1</div>
+          <div className="home-news-category-row">
+                        {categories.map((category) => (
+                            <div className="home-news-by-category-item" key={category.id}>
+                                <h2>{category.name}</h2>
+                                <div>
+                                    {newsByCategoryData[category.id]?.length > 0 ? (
+                                        newsByCategoryData[category.id].map((newsItem) => (
+                                            <div key={newsItem.id}>
+                                                <h3>{newsItem.title}</h3>
+                                                <p>{newsItem.subtitle}</p>
+                                                {newsItem.image && <img src={newsItem.image} alt={newsItem.title} className='home-by-category-image ' />}
+                                                {newsItem.videoLink && (
+                                                    <a href={newsItem.videoLink} target="_blank" rel="noopener noreferrer">
+                                                        Ver video
+                                                    </a>
+                                                )}
+                                            </div>
+                                        ))
+                                    ) : (
+                                        <p>No hay noticias en esta categoría</p>
+                                    )}
+                                </div>
+                            </div>
+                        ))}
+                    </div>    
+                    
+                    <div className="home-category-news-row">
+                    <div className="home-category-news-item">Noticia 1</div>
             <div className="home-category-news-item">Noticia 2</div>
             <div className="home-category-news-item">Noticia 3</div>
             <div className="home-category-news-item">Noticia 4</div>
-          </div>
-        </div>
+                    </div>
+
+                </div>
+
+                
 
         <div className="home-right-column">
           {/* Última noticia en grande */}

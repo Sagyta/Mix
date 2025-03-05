@@ -42,7 +42,7 @@ const AdminDashboard = () => {
             return;
         }
         dispatch(createNews(newNews, user.id));
-        setNewNews({ title: "", text: "", categoryId: "", subtitle:"", image:"", videoLink:"" });
+        setNewNews({ title: "", subtitle:"", text: "", image:"", videoLink:"", categoryId: "" });
         setActiveForm(null);
     };
 
