@@ -57,7 +57,7 @@ p::first-letter {
 }
 
 /*POR CATEGORY*/
-.home-news-category-row{
+.home-news-by-category-row{
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
@@ -68,9 +68,8 @@ p::first-letter {
 }
 
 .home-news-by-category-item {
-  width: 20%; /* Ajusta el tamaño para que quepan 4 en una fila */
+  width: 40%; /* Ajusta el tamaño para que quepan 4 en una fila */
   padding: 10px;
-  background-color: #e0e0e0;
   text-align: center;
   margin: 10px 0px;
 }
@@ -79,7 +78,6 @@ p::first-letter {
   width: 93%; /* Ajusta el tamaño para que quepan 4 en una fila */
   height: 150px;
   padding: 10px;
-  background-color: #e0e0e0;
   text-align: center;
   margin: auto;
 }

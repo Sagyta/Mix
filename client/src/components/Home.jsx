@@ -116,7 +116,7 @@ const Home = () => {
           </div>
 
           {/* Noticia destacada por categoría */}          
-          <div className="home-news-category-row">
+          <div className="home-news-by-category-row">
                         {categories.map((category) => (
                             <div className="home-news-by-category-item" key={category.id}>
                                 <h2>{category.name}</h2>
