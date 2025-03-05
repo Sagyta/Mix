@@ -3,7 +3,9 @@ const { Op } = require("sequelize"); // Asegúrate de importar Op
 
 async function getCategory (req,res,next){
     try {
-        const category = await Category.findAll()
+        const category = await Category.findAll({
+            attributes: ['id', 'name']
+        });
         res.send(category)
 
     } catch (error) {

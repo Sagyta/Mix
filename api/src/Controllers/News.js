@@ -151,10 +151,31 @@ async function deleteNews(req,res,next){
     }
 }
 
+async function getNewsByCategory(req, res, next) {
+    try {
+        const categoryId = req.params.id;
+
+        if (!categoryId || categoryId.length !== 36) {
+            return res.status(400).json({ error: "ID de categoría inválido" });
+        }
+
+        const noticias = await New.findAll({
+            where: { categoryId },
+            attributes: ['id', 'title', 'subtitle', 'text', 'image', 'videoLink']
+        });
+
+        res.json(noticias);
+    } catch (error) {
+        console.error('Error obteniendo noticias por categoría:', error);
+        res.status(500).json({ error: 'Error al obtener las noticias' });
+    }
+}
+
 module.exports = {
     getNews,
     postNews,
     getNewsId,
     putNews,
     deleteNews,
+    getNewsByCategory
 }
