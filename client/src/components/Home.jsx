@@ -115,49 +115,97 @@ const Home = () => {
           <BannerCarousel />
           </div>
 
-          {/* Noticia destacada por categoría */}          
-          <div className="home-news-by-category-row">
-                        {categories.map((category) => (
-                            <div className="home-news-by-category-item" key={category.id}>
-                                <h2>{category.name}</h2>
-                                <div>
-                                    {newsByCategoryData[category.id]?.length > 0 ? (
-                                        newsByCategoryData[category.id].map((newsItem) => (
-                                            <div key={newsItem.id}>
-                                                <h3>{newsItem.title}</h3>
-                                                <p>{newsItem.subtitle}</p>
-                                                {newsItem.image && <img src={newsItem.image} alt={newsItem.title} className='home-by-category-image ' />}
-                                                {newsItem.videoLink && (
-                                                    <a href={newsItem.videoLink} target="_blank" rel="noopener noreferrer">
-                                                        Ver video
-                                                    </a>
-                                                )}
-                                            </div>
-                                        ))
-                                    ) : (
-                                        <p>No hay noticias en esta categoría</p>
-                                    )}
-                                </div>
-                            </div>
-                        ))}
-                    </div>    
-                    
-                    <div className="home-category-news-row">
-                    <div className="home-category-news-item">Noticia 1</div>
-            <div className="home-category-news-item">Noticia 2</div>
-            <div className="home-category-news-item">Noticia 3</div>
-            <div className="home-category-news-item">Noticia 4</div>
+          {/* Noticia destacada por categoría */}
+<div className="home-featured-category">
+  {categories.map((category) => {
+    const categoryNews = newsByCategoryData[category.id] || [];
+
+    if (categoryNews.length === 0) {
+      return null; // Si no hay noticias en la categoría, no se muestra
+    }
+
+    // Última noticia en grande
+    const lastCategoryNews = categoryNews[0]; 
+    const otherNews = categoryNews.slice(1); // Otras noticias de la categoría
+
+    return (
+      <div key={category.id} className="by-category-section">
+        <h2 className="by-category-title">{category.name}</h2>
+
+        {/* Última noticia en grande */}
+        <div className="by-category-main-news">
+          <h3>{lastCategoryNews.title}</h3>
+          {lastCategoryNews.videoLink ? (
+            <iframe
+              className="by-category-news-video"
+              src={lastCategoryNews.videoLink.replace("watch?v=", "embed/")}
+              title="Video Noticia"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          ) : lastCategoryNews.image ? (
+            <img src={lastCategoryNews.image} alt={lastCategoryNews.title} className="by-category-news-image" />
+          ) : (
+            <img
+              src="https://img.freepik.com/vector-premium/advertencia-error-sistema-operativo-ventana-mensaje-emergente-ventana-dialogo-falla-sistema-diseno-plano_812892-54.jpg"
+              alt="Imagen no encontrada"
+              className="by-category-news-image"
+            />
+          )}
+          <p>{lastCategoryNews.subtitle}</p>
+          <button onClick={() => navigate(`/news/${lastCategoryNews.id}`)} className="by-home-ver-mas-btn">
+            ...Seguir leyendo
+          </button>
+        </div>
+
+        {/* Noticias restantes en filas de 4 */}
+        {otherNews.length > 0 && (
+          <div className="by-category-news-grid">
+            {otherNews.map((newsItem, index) => (
+              <div  key={newsItem.id} className="by-category-news-item">
+                <h4 onClick={() => navigate(`/news/${lastCategoryNews.id}`)} className='by-category-news-item-link'>{newsItem.title}</h4>
+                {lastCategoryNews.videoLink ? (
+            <iframe
+              className="by-category-news-video-thumb"
+              src={lastCategoryNews.videoLink.replace("watch?v=", "embed/")}
+              title="Video Noticia"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          ) : lastCategoryNews.image ? (
+            <img src={lastCategoryNews.image} alt={lastCategoryNews.title} className="by-category-news-image-thumb" />
+          ) : (
+            <img
+              src="https://img.freepik.com/vector-premium/advertencia-error-sistema-operativo-ventana-mensaje-emergente-ventana-dialogo-falla-sistema-diseno-plano_812892-54.jpg"
+              alt="Imagen no encontrada"
+              className="by-category-news-image-thumb"
+                />
+              )}
                     </div>
-
+                  ))}
                 </div>
-
-                
+              )}
+            </div>
+          );
+        })}
+      </div>     
+      </div>                
 
         <div className="home-right-column">
-          {/* Última noticia en grande */}
-          <div className="home-latest-large-news">
-            <h2>Última Noticia Grande</h2>
-            <p>Contenido de la última noticia en grande</p>
+          {/* Clima */}
+          <div className="home-lateral-clima">
+          <div id="ww_006c1e1daee38" v='1.3' loc='auto' 
+          a='{"t":"horizontal","lang":"es","sl_lpl":1,"ids":[],
+          "font":"Arial","sl_ics":"one_a","sl_sot":"celsius",
+          "cl_bkg":"#FFFFFF","cl_font":"#000000","cl_cloud":"#d4d4d4",
+          "cl_persp":"#2196F3","cl_sun":"#FFC107","cl_moon":"#FFC107",
+          "cl_thund":"#FF5722","el_whr":3}'>
+            Más previsiones: <a href="https://oneweather.org/es/seville/" 
+            id="ww_006c1e1daee38_u" target="_blank">
+              oneweather.org</a></div>
+              <script async src="https://app3.weatherwidget.org/js/?id=ww_006c1e1daee38"></script>
           </div>
 
           {/* Espacio para anuncios */}
