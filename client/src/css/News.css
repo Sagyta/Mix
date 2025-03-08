@@ -1,5 +1,84 @@
 /* css news*/
-.news{
+
+/*css card news*/
+.news {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+  border-radius: 8px;
+  padding: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+  width: 100%; /* Se adapta al contenedor */
+  max-width: 450px; /* Controla el tamaño máximo */
+  margin: auto;
+  height: 100%;
+  background-color: #0020422a;
+}
+
+.news-card-category{
+  background-color: #002042;
+  color: #fff;
+  width: 100%;
+  padding: 5px;
+  margin: 0px;
+  border-radius: 5px;
+}
+
+.news:hover {
+  transform: scale(1.03);
+}
+
+.card-imgNews, .card-video {
+  width: 100%;
+  height: 200px; /* Tamaño fijo para imágenes y videos */
+  object-fit: cover; /* Evita que las imágenes se deformen */
+  border-radius: 8px;
+}
+
+.titleNews {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  margin: 10px 0;
+}
+.titleNews:hover {
+  background-color: transparent;
+  color: #ff6500;
+}
+
+.subtitleNews {
+  font-size: 14px;
+  color: #666;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.news button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.news button:hover {
+  background: #0056b3;
+}
+
+.news p {
+  font-size: 12px;
+  color: rgb(255, 255, 255);
+  margin-top: 5px;
+}
+/*fin css card news*/
+/*.news{
     display: flex;
     flex-direction: column;
     margin: 5px 0px 5px 0px;
@@ -65,6 +144,12 @@
     height: 480px;
     padding-bottom: 10px;
     margin: auto;
+}
+.imgNews{
+  width: 780px;
+  height: 480px;
+  padding-bottom: 10px;
+  margin: auto;
 }
 .noticiaSubtitulo{
     font-size: 18px;

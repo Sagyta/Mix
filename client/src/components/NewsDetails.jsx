@@ -82,22 +82,34 @@ export default function NewsDetail() {
           <div className="detalleNoticia">
             <h2 className="noticiaTitulo">{noticia.title}</h2>
             <div className='video'>
-              {noticia.videoLink ? (
-              <iframe
-                width="100%"
-                height="100%"
-                src={noticia.videoLink?.replace("watch?v=", "embed/")}
-                title="Video Noticia"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
-              ):(
-                <img src={noticia.image || "https://via.placeholder.com/300"}
-                alt="imagen noticia"
-                className='imgNews'
-                />
-              )}
+            {noticia.videoLink ? (
+                  <iframe
+                    className="home-last-news-video"
+                    src={
+                      noticia.videoLink.includes('youtube.com')
+                        ? noticia.videoLink.replace('watch?v=', 'embed/')
+                        : noticia.videoLink.includes('facebook.com')
+                        ? `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(noticia.videoLink)}`
+                        : noticia.videoLink
+                    }
+                    title="Video Noticia"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                ) : noticia.image ? (
+                  <img
+                    src={noticia.image}
+                    alt={noticia.title}
+                    className="home-last-news-image"
+                  />
+                ) : (
+                  <img
+                    src="https://img.freepik.com/vector-premium/advertencia-error-sistema-operativo-ventana-mensaje-emergente-ventana-dialogo-falla-sistema-diseno-plano_812892-54.jpg"
+                    alt="Imagen no encontrada"
+                    className="home-imgNews"
+                  />
+                )}
             </div>
             <h4 className="noticiaSubtitulo">{noticia.subtitle}</h4>
             <p className="noticiaTexto">{noticia.text}</p>

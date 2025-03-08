@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
 import '../css/NavBar.css';
+import tik from '../img/tik-naranja.png';
+import face from '../img/face-naranja.png';
+import insta from '../img/insta-naranja.png';
 
 const Navbar = () => {
   const [currentDateTime, setCurrentDateTime] = useState('');
@@ -40,23 +44,23 @@ const Navbar = () => {
           {/* Iconos de redes sociales en la parte inferior izquierda */}
           <div className="social-icons">
             <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-              <img src="facebook-icon.png" alt="Facebook" />
+              <img src={face} alt="Facebook" />
             </a>
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-              <img src="twitter-icon.png" alt="Twitter" />
+            <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer">
+              <img src={tik} alt="tiktok" />
             </a>
             <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-              <img src="instagram-icon.png" alt="Instagram" />
+              <img src={insta} alt="Instagram" />
             </a>
           </div>
         </div>
 
         <div className="right">
           {/* Botones de links en la parte inferior derecha */}
-          <div className="buttons">
-            <button className="nav-button">Inicio</button>
-            <button className="nav-button">Acerca de</button>
-            <button className="nav-button">Contacto</button>
+          <div className="nav-container-button">
+            <button className="nav-button"><NavLink className='nav-button' to='/' >Inicio </NavLink></button>
+            <button className="nav-button"><NavLink className='nav-button' to='/SeccionNews' >Noticias</NavLink></button>
+            <button className="nav-button"><NavLink className='nav-button' to='' >Contacto</NavLink></button>
           </div>
         </div>
       </div>

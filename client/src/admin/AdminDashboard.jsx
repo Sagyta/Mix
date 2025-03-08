@@ -20,7 +20,7 @@ const AdminDashboard = () => {
     const [activeForm, setActiveForm] = useState(null);
     const [newCategory, setNewCategory] = useState("");
     const [newNews, setNewNews] = useState({ 
-        title: "", text: "", subtitle:"", image: "", videoLink:"",  categoryId: "" });
+        title: "", volanta: "", text: "", subtitle:"", image: "", videoLink:"",  categoryId: "" });
     const [newAd, setNewAd] = useState({ image: "" });
     const [newAdBan, setNewAdBan] = useState({image: ""});
     const user = useSelector(state => state.user);
@@ -42,7 +42,7 @@ const AdminDashboard = () => {
             return;
         }
         dispatch(createNews(newNews, user.id));
-        setNewNews({ title: "", subtitle:"", text: "", image:"", videoLink:"", categoryId: "" });
+        setNewNews({ title: "", volanta: "", subtitle:"", text: "", image:"", videoLink:"", categoryId: "" });
         setActiveForm(null);
     };
 
@@ -122,6 +122,12 @@ const AdminDashboard = () => {
                             value={newNews.title}
                             onChange={(e) => setNewNews({ ...newNews, title: e.target.value })}
                             placeholder="Título de la noticia"
+                        />
+                        <input
+                            type="text"
+                            value={newNews.volanta}
+                            onChange={(e) => setNewNews({ ...newNews, volanta: e.target.value })}
+                            placeholder="Volanta de la noticia"
                         />
                         <input
                             type="text"

@@ -8,7 +8,6 @@ import {
     CLEAR_MEMBER_DETAIL,
     CLEAR_COMMENTS,
     DELETE_COMMENT,
-	SEARCH_SEARCH,
 	GET_COMMENTS,
 	ADD_COMMENT,
 	CREATE_USER,
@@ -16,9 +15,7 @@ import {
 	ADD_NEWS,
 	CREATE_CATEGORY,
 	GET_CATEGORIES,
-	//UPDATE_CATEGORY,
 	DELETE_CATEGORY,
-	//LOGOUT_ADMIN,
 	GET_ADS,
 	CREATE_ADS,
 	GET_ADS_BANNER,
@@ -26,6 +23,7 @@ import {
 	CREATE_ADS_BANNER, 
 	DELETE_ADS_BANNER,
 	GET_NEWS_BY_CATEGORY,
+	SET_NOTICIAS,
 } from './DataTypes';
 
 const adsUrl = "http://localhost:3001/ads";
@@ -48,10 +46,10 @@ export function getNews(){
 
 export const newsByCategory = (categoryId) => async (dispatch) => {
     try {
-        console.log(`🔍 Obteniendo noticias para categoría: ${categoryId}`);
+       // console.log(`🔍 Obteniendo noticias para categoría: ${categoryId}`);
         const { data } = await axios.get(`http://localhost:3001/news/category/${categoryId}`);
 
-        console.log(`✅ Noticias recibidas para categoría ${categoryId}:`, data);
+       // console.log(`✅ Noticias recibidas para categoría ${categoryId}:`, data);
 
         dispatch({
             type: GET_NEWS_BY_CATEGORY,
@@ -78,23 +76,35 @@ export function detailNews(id) {
 	};
 }
 
-export function filterNews(title) {
+export function buscarNoticias(query) {
 	return async (dispatch) => {
-		try {
-			let { data } = await axios.get(
-				`http://localhost:3001/news?title=${title}`
-			);
-			return dispatch({ type: SEARCH_SEARCH, payload: data });
-		} catch (error) {
-			swal({
-				title: "No se encontró su busqueda.",
-				text: "Intente escribir un nombre de una noticia o asegurese de que este bien escrito.",
-				icon: "error",
-				button: "Ok.",
-			});
+	  try {
+		// Hacemos la solicitud al backend con el parámetro 'title'
+		const response = await fetch(`http://localhost:3001/news/?title=${query}`);
+		const data = await response.json();
+  
+		if (data.length === 0) {
+		  // Si no se encontraron noticias, mostramos un mensaje de alerta
+		  swal.fire({
+			title: '¡No se encontraron noticias!',
+			text: 'No hay noticias con ese título.',
+			icon: 'info',
+		  });
 		}
+  
+		// Si encontramos noticias, las actualizamos en el estado
+		dispatch({ type: SET_NOTICIAS, payload: data });
+	  } catch (error) {
+		console.error('Error al buscar noticias:', error);
+		swal.fire({
+		  title: 'Error',
+		  text: 'Hubo un error al buscar las noticias.',
+		  icon: 'error',
+		});
+	  }
 	};
-}
+  }
+
 
 // fin noticias
 
@@ -338,7 +348,7 @@ export function getCategories() {
         try {
            // console.log("🔍 Llamando a la API para obtener categorías GetCategory...");
             const response = await axios.get("http://localhost:3001/category");
-            console.log("✅ Categorías recibidas GetCategory:", response.data);
+           // console.log("✅ Categorías recibidas GetCategory:", response.data);
 
             dispatch({ type: GET_CATEGORIES, payload: response.data });
         } catch (error) {

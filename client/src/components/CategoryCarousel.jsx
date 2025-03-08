@@ -1,33 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
-import { Link } from "react-router-dom"; // Si estás usando React Router
+import { Link } from "react-router-dom";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import "../css/NewsCarousel.css"; // Archivo de estilos
+import "../css/NewsCarousel.css";
+import { useDispatch, useSelector } from "react-redux";
+import { newsByCategory } from "../redux/actions/actions";
 
-const CategoryCarousel = ({ news }) => {
-  // Agrupar las noticias por categoría
-  const groupedNews = news.reduce((acc, item) => {
-    if (!acc[item.categoryId]) {
-      acc[item.categoryId] = []; // Si no existe la categoría, inicializamos un array
+const CategoryCarousel = () => {
+  const dispatch = useDispatch();
+  const categories = useSelector((state) => state.category) || []; // Categorías desde Redux
+  const newsByCategories = useSelector((state) => state.newsByCategory); // Últimas noticias de cada categoría
+
+  //console.log("Categorías en Redux:", categories);
+  //console.log("Noticias agrupadas por categoría:", newsByCategories);
+  // Cargar las noticias de cada categoría cuando cambien las categorías
+  useEffect(() => {
+    if (categories.length) {
+      categories.forEach((category) => {
+        dispatch(newsByCategory(category.id)); // Trae noticias por categoría
+      });
     }
-    acc[item.categoryId].push(item); // Añadimos la noticia al grupo
-    return acc;
-  }, {});
-
-  // Obtener las últimas 4 noticias de cada categoría
-  const latestNewsArray = Object.keys(groupedNews).map((categoryId) => {
-    const categoryNews = groupedNews[categoryId];
-    // Ordenamos las noticias de cada categoría por fecha (si tienes el campo `date`)
-    categoryNews.sort((a, b) => new Date(b.date) - new Date(a.date));
-    // Retornamos las últimas 4 noticias de cada categoría
-    return categoryNews.slice(0, 4); // Toma solo las 4 primeras noticias más recientes
-  });
-
-  // Aplanar el array de noticias para que sea un solo array
-  const flattenedLatestNews = latestNewsArray.flat();
+  }, [dispatch, categories]);
 
   return (
     <div className="category-carousel-container">
@@ -35,8 +31,6 @@ const CategoryCarousel = ({ news }) => {
         modules={[Navigation, Pagination, Autoplay]}
         spaceBetween={20}
         slidesPerView={4}
-        //navigation
-        //pagination={{ clickable: true }}
         autoplay={{
           delay: 2000,
           disableOnInteraction: false,
@@ -45,23 +39,32 @@ const CategoryCarousel = ({ news }) => {
         loop={true}
         speed={500}
       >
-        {flattenedLatestNews.map((item, index) => (
-          <SwiperSlide key={index}>
-          <div className="category-news-slide">
-            {/* Aquí accedemos al nombre de la categoría correctamente */}
-            <h2>{item.category?.name || "Sin categoría"}</h2>
-            <Link to={`/news/${item.id}`}>
-            <img src={item.image} alt={item.title} className="category-news-image" />
-            </Link>
-            <div className="category-news-text">
-              <h3>{item.title}</h3>
-            </div>
+        {categories.length > 0 ? (
+  categories.map((category) => {
+    const news = newsByCategories?.[category.id] || []; // Evita errores si es undefined
+    const latestNews = news.length > 0 ? news[0] : null;
+
+    return latestNews ? (
+      <SwiperSlide key={latestNews.id}>
+        <div className="category-news-slide">
+          <h2>{category.name}</h2>
+          <Link to={`/news/${latestNews.id}`}>
+            <img src={latestNews.image} alt={latestNews.title} className="category-news-image" />
+          </Link>
+          <div className="category-news-text">
+            <h3>{latestNews.volanta}</h3>
+            <h3>{latestNews.title}</h3>
           </div>
-        </SwiperSlide>
-      ))}
-    </Swiper>
-  </div>
-);
+        </div>
+      </SwiperSlide>
+    ) : null;
+  })
+) : (
+  <p>Cargando categorías...</p> // Mensaje temporal si aún no hay categorías
+)}
+      </Swiper>
+    </div>
+  );
 };
 
 export default CategoryCarousel;

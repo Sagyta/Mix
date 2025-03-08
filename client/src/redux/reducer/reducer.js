@@ -36,6 +36,11 @@ const rootReducer = (state = initialState, {type, payload}) => {
                 ...state,
                 newsDetail: payload
             };
+        case 'SET_NOTICIAS':
+            return {
+                ...state,
+                news: payload, // Guardamos las noticias filtradas
+            };    
         case 'CLEAR_MEMBER_DETAIL':
 			return {
 				...state,
@@ -53,12 +58,16 @@ const rootReducer = (state = initialState, {type, payload}) => {
 				newsDetail: {},
 				comment: [],
 			};
-        case 'SEARCH_SEARCH':
+        case 'SEARCH_NEWS':
 			//functión para buscar en el estado
 			return {
-				...state,
-				news: payload,
-			};
+                ...state,
+                filteredNews: state.news
+                  ? state.news.filter((news) =>
+                      news.title.toLowerCase().includes(payload.toLowerCase())
+                    )
+                  : [], // Si `allNews` es undefined, evitar el error devolviendo un array vacío
+              };
         case 'GET_COMMENTS':
             return {
              ...state,

@@ -10,7 +10,7 @@ export function NewsManagement() {
     const categories = useSelector((state) => state.category);
     
     const [editData, setEditData] = useState({ id: "", 
-    title: "", subtitle:"", text: "",  image:"", videoLink:"", categoryId: ""});
+    title: "", volanta: "", subtitle:"", text: "",  image:"", videoLink:"", categoryId: ""});
     const [showEditForm, setShowEditForm] = useState(false);
     const [reload, setReload] = useState(false);
 
@@ -94,6 +94,12 @@ export function NewsManagement() {
                 type="text"
                 name="title"
                 value={editData.title}
+                onChange={handleEditChange}
+            />
+            <input
+                type="text"
+                name="volanta"
+                value={editData.volanta}
                 onChange={handleEditChange}
             />
             <label>Subtítulo de la noticia</label>

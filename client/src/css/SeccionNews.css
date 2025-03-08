@@ -1,13 +1,60 @@
-.galeria {
+.seccion-home{
+  width: 98%;
+  margin: auto;
+}
+
+.seccion-news-content{
+  display: flex;
+  justify-content: space-between;
+  padding: 0px;
+  margin: auto;
+}
+
+.seccion-left-column {
+  width: 75%;
+  /*border: #a52834 1px solid;*/
+  margin: 0px auto;
+  margin-right: 10px;
+  /*box-shadow: 5px 0 15px rgba(0, 0, 0, 0.3); der*/
+ /* box-shadow: -5px 0 10px rgba(0, 0, 0, 0.2);*/
+  /*box-shadow: -5px 0 10px #000c266e, 5px 0 10px #000c2663;*/
+}
+
+.seccion-right-column {
+  width: 100%;
+  max-width: 25%;
+  height: 100vh;
+  margin: 0px auto; 
+  /*box-shadow: -5px 0 10px rgba(0, 0, 0, 0.2);*/
+  /*box-shadow: -1px 0 10px #000c2660, 5px 0 10px #000c2657;*/
+  /*box-shadow: -5px 0 10px rgba(0, 0, 0, 0.2), 5px 0 10px rgba(0, 0, 0, 0.2);*/
+}
+
+.seccion-galeria-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Ajuste dinámico */
+  gap: 20px;
+  padding: 20px 10px;
+  width: 98%; /* Se ajusta al contenedor */
+  max-width: 1200px; /* Controla el ancho máximo para evitar que se vea demasiado ancho */
+  margin: 0 auto; /* Centra el grid */
+  }
+
+  .seccion-news-card-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: auto;
-    flex-wrap: wrap;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
+    justify-content: center; /* Centra cada tarjeta */
+    width: 100%; /* Se ajusta al espacio asignado */
+    margin: 0%;
+  }
+  
+  .seccion-news-card-container > * {
+    width: 100%; /* Asegura que el componente <News /> use todo el espacio */
+  }
+  
+  @media (min-width: 768px) { /* En pantallas más grandes */
+    .seccion-galeria-grid {
+      grid-template-columns: 1fr 1fr; /* Dos columnas */
+    }
   }
   
   .menu {

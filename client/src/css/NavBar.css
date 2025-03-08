@@ -4,7 +4,7 @@
   background-size: cover;
   background-position: center;
   color: white;
-  height: 200px; /* Ajusta la altura total */
+  height: 250px; /* Ajusta la altura total */
   display: flex;
   flex-direction: column; /* Para dividir la barra en dos secciones */
   width: 100%;
@@ -52,29 +52,46 @@
   align-items: center;
 }
 
-.buttons {
+.nav-container-button {
   display: flex;
-  gap: 15px;
+  align-items: center;
+  gap: 10px; /* Espacio entre los enlaces */
 }
 
 .nav-button {
-  background-color: transparent;
-  border-bottom: 2px solid white;
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-  padding: 5px 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  background-color: transparent !important;
+  border: none !important;
+  outline: none !important;
+  color: white ;
+  font-size: 16px !important;
+  font-weight: bold !important;
+  padding: 5px 1px !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  text-decoration: none !important; /* Quita el subrayado */
 }
 
+/* Evita que los enlaces visitados cambien de color */
+.nav-button:link,
+.nav-button:visited {
+  color: white ;
+  text-decoration: none !important;
+}
+
+/* Hover */
 .nav-button:hover {
-  background-color: white;
-  color: #333;
-  transform: scale(1.05);
+  color: #bebebe !important;
+  
 }
 
-.nav-button:active {
-  transform: scale(0.95);
+/* Agrega el separador | entre los enlaces */
+.nav-button:not(:last-child)::after {
+  content: " | " !important;
+  color: white ;
+  margin-left: 10px !important;
+}
+
+a:-webkit-any-link {
+  color: white ;
+  text-decoration: none !important;
 }
