@@ -16,7 +16,7 @@ async function getNews (req,res,next){
                     attributes: ['name']
                 }
             ],
-            attributes:['id','title','text', 'subtitle', 'image', 'videoLink', 'createdAt'],
+            attributes:['id','title', 'volanta', 'subtitle','text',  'image', 'videoLink', 'createdAt'],
             order: [['createdAt', 'DESC']]
         })
         if(title){
@@ -75,7 +75,7 @@ async function postNews(req, res, next) {
             return res.status(404).send("Usuario no encontrado");
         }
 
-        const { title, subtitle, text, image, videoLink, categoryId } = req.body;
+        const { title, volanta, subtitle, text, image, videoLink, categoryId } = req.body;
        // console.log("Datos recibidos:", { title, subtitle, text, image });
 
         const exist = await New.findAll({
@@ -89,6 +89,7 @@ async function postNews(req, res, next) {
 
         const insertNews = await New.create({
             title,
+            volanta,
             subtitle,
             text,
             image,
@@ -111,6 +112,7 @@ async function putNews(req,res,next){
     const {id}= req.params
     const {
         title,
+        volanta,
         subtitle,
         text,
         image,
@@ -125,6 +127,7 @@ async function putNews(req,res,next){
         })
         await updateNews.update({
             title,
+            volanta,
             subtitle,
             text,
             image,
@@ -161,7 +164,7 @@ async function getNewsByCategory(req, res, next) {
 
         const noticias = await New.findAll({
             where: { categoryId },
-            attributes: ['id', 'title', 'subtitle', 'text', 'image', 'videoLink']
+            attributes: ['id', 'title', 'volanta', 'subtitle', 'text', 'image', 'videoLink']
         });
 
         res.json(noticias);

@@ -14,6 +14,10 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },    
+    volanta:{
+      type: DataTypes.STRING,
+      allowNull:false
+    },
     subtitle:{
       type: DataTypes.STRING(255),
       allowNull: false,
