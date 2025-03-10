@@ -27,6 +27,7 @@ server.use('/', routes);
 //imagenes ads
 server.use("/uploads", express.static(path.join(__dirname, "../public/uploads")));
 
+
 //console.log(__dirname)
 // Error handling
 server.use((err, req, res, next) => {
