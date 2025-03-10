@@ -1,24 +1,52 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { clearPage, addComment, detailNews, getComments } from '../redux/actions/actions';
-
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { clearPage, addComment, detailNews, getComments, getNews, getRelatedNews } from '../redux/actions/actions';
+import { Navigate } from 'react-router-dom';
 import Footer from './Footer';
 import PuffLoader from 'react-spinners/PuffLoader';
-import Navbar from './NavBar';
+import NavBar from './NavBar';
+import BannerCarousel from './BannerCarousel';
+import Buscador from './Search';
+import AdsCarousel from './AdsCarousel';
 
 export default function NewsDetail() {
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
   const dispatch = useDispatch();
-
+  const news = useSelector(state => state.news);
   const noticia = useSelector(state => state.newsDetail);
+  console.log('categorya en noticias', noticia)
   const comment = useSelector(state => state.comment) || [];
+
+  const [isPaused, setIsPaused] = useState(false);
 
   const [localState, setLocalState] = useState({
     guestName: '',
     comment: '',
   });
+
+//noticias relacionadas
+const noticiasRelacionadas = useSelector((state)=> state.noticiasRelacionadas)
+  useEffect(()=>{
+    if(noticia.id){
+      dispatch(getRelatedNews(noticia.id));
+    }
+  }, [dispatch, noticia.id]);
+
+  const navigate = useNavigate();
+
+  const handleClick = (id) => {
+    navigate(`/news/${id}`);
+  };
+  //fin noticias relacionadas
+
+  //trae las corredizas
+  useEffect(() => {
+    if (!news.length) {
+      dispatch(getNews()); // Llama a la acción para traer noticias
+    }
+  }, [dispatch, news.length]);
 
   useEffect(() => {
     setLoading(true);
@@ -68,18 +96,48 @@ export default function NewsDetail() {
     setLocalState({ comment: "", guestName: "" });
   }
 
-  return (
-    <div>
-        <header>
-                <Navbar />
-            </header>
-    <div className="containerTotal">
+    return (
+      <div className='detail-home'>
+
+        <div className="home-ad-space-between">
+        <BannerCarousel />
+      </div>
+
+      <header className="home-header">
+        <NavBar />
+      </header>
+        
+      <div className="marquee-container">
+        <div className="static-title">Últimas Noticias:</div>
+        <div
+          className={`marquee-wrapper ${isPaused ? 'paused' : ''}`}
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          <div className="marquee">
+            {news.length > 0
+              ? news.map((item, index) => (
+                  <span
+                    key={item.id}
+                    onClick={() => navigate(`/news/${item.id}`)}
+                    className="news-title"
+                  >
+                    {index > 0 && <span style={{ margin: '0 8px' }}>|</span>}
+                    {item.title}
+                  </span>
+                ))
+              : 'Cargando noticias...'}
+          </div>
+        </div>
+      </div>
+      
+      <div className="detail-news-content">
       {loading ? (
         <PuffLoader className='loader' size={200} color={'#e78345'} loading={loading} />
       ) : (
-        <div>
-          
+        <div className="detail-left-column">          
           <div className="detalleNoticia">
+          {noticia.category ? noticia.category.name : "Sin categoría"} | {noticia.volanta}
             <h2 className="noticiaTitulo">{noticia.title}</h2>
             <div className='video'>
             {noticia.videoLink ? (
@@ -170,10 +228,89 @@ export default function NewsDetail() {
               </div>
             </section>
           </div>
-          <Footer />
-        </div>
+
+
+          {/** Noticias Relacionadas */}
+          <div className="noticia-container">
+            <h3>Noticias Relacionadas</h3>
+            
+            <div className="related-news-container">
+  {noticiasRelacionadas.length > 0 ? (
+    noticiasRelacionadas.map((rel) => (
+      <div 
+        key={rel.id} 
+        className="related-news-card" 
+        onClick={() => handleClick(rel.id)}  // Pasa el id de la noticia relacionada
+      >
+        {rel.videoLink ? (
+          <iframe
+            className="related-news-video"
+            src={
+              rel.videoLink.includes('youtube.com')
+                ? rel.videoLink.replace('watch?v=', 'embed/')
+                : rel.videoLink.includes('facebook.com')
+                ? `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(rel.videoLink)}`
+                : rel.videoLink
+            }
+            title="Video Noticia"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
+        ) : rel.image ? (
+          <img
+            src={rel.image}
+            alt={rel.title}
+            className="related-news-image"
+          />
+        ) : (
+          <img
+            src="https://img.freepik.com/vector-premium/advertencia-error-sistema-operativo-ventana-mensaje-emergente-ventana-dialogo-falla-sistema-diseno-plano_812892-54.jpg"
+            alt="Imagen no encontrada"
+            className="related-imgNews"
+          />
+        )}
+        <h4 className='related-title'>{rel.title}</h4>
+      </div>
+    ))
+  ) : (
+    <p>No hay noticias relacionadas.</p>
+  )}
+</div>
+              
+          </div>
+
+        {/**fin left */}
+        </div>        
       )}
-    </div>
-    </div>
-  );
-}
+      <div className='detail-right-column'>
+
+      <Buscador />
+          
+          <div className="home-lateral-clima">
+            <iframe
+              src="https://api.wo-cloud.com/content/widget/?geoObjectKey=11415237&language=es&region=AR&timeFormat=HH:mm&windUnit=kmh&systemOfMeasurement=metric&temperatureUnit=celsius"
+              name="CW2"
+              scrolling="no"
+              className="home-lateral-clima"
+              frameBorder="0"
+            ></iframe>
+          </div>
+          
+          <div className="home-ad-space">
+            <AdsCarousel />
+          </div>
+        {/** fin rigth */}
+      </div>
+      {/** div container total */}      
+      </div>
+
+      <div className="home-ad-space-between-footer">
+        <BannerCarousel />
+      </div>
+
+      <Footer />
+        {/**div detail home */}
+      </div>
+    
+)}

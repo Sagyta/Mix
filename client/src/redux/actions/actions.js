@@ -24,6 +24,7 @@ import {
 	DELETE_ADS_BANNER,
 	GET_NEWS_BY_CATEGORY,
 	SET_NOTICIAS,
+	GET_RELATED_NEWS,
 } from './DataTypes';
 
 const adsUrl = "http://localhost:3001/ads";
@@ -469,4 +470,16 @@ export const createAdsBanner = (formData) => async (dispatch) => {
 	} catch (error) {
 	  console.error("Error al eliminar el anuncio:", error);
 	}
+  };
+
+  export const getRelatedNews = (id) => {
+	return async (dispatch) => {
+	  try {
+		const response = await fetch(`http://localhost:3001/news/related/${id}`);
+		const data = await response.json();
+		dispatch({ type: GET_RELATED_NEWS, payload: data });
+	  } catch (error) {
+		console.error("Error al obtener noticias relacionadas:", error);
+	  }
+	};
   };

@@ -14,6 +14,7 @@ import UsersManagement from './admin/UsersManagement';
 import CategoryManagement from './admin/CategoryManagement';
 import AdsLatManagement from './admin/AdsLatManagement';
 import AdsBannerManagement from './admin/AdsBannerManagement';
+import NewsByCategory from './components/NewsByCategory';
 
 function PrivateRoute ({element}){
   const { isAuthenticated, isAdmin } = useSelector(state => state);
@@ -29,6 +30,7 @@ function App() {
         <Route exact path="/news" element={<News />} />
         <Route exact path="/news/:id" element={<DetailNews />} />
         <Route exact path='/SeccionNews' element={<SeccionNews />} />
+        <Route exact path='/news/category/:id' element={<NewsByCategory />} />
         <Route path="/admin/login" element={<AdminLogin />} />
 
         <Route path="/admin/dashboard" element={<PrivateRoute element={<AdminDashboard />} />} />

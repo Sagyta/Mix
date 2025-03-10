@@ -1,169 +1,213 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;700&display=swap');
+
+html {
+    font-family: 'Lato', Arial, sans-serif !important;
+    font-weight: normal
+};
+
+ h1, h2, h3, h4, h5, p{
+    font-family: 'Lato', Arial, sans-serif !important;
+}
 /* css news*/
 
 /*css card news*/
-.news {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  background: white;
-  border-radius: 8px;
-  padding: 5px;
+.news{
+  margin: auto;
+  width: 100%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease-in-out;
   width: 100%; /* Se adapta al contenedor */
-  max-width: 450px; /* Controla el tamaño máximo */
-  margin: auto;
+  max-width: 1024px; /* Controla el tamaño máximo */
   height: 100%;
-  background-color: #0020422a;
+  background-color: #00204225;
 }
-
-.news-card-category{
-  background-color: #002042;
-  color: #fff;
-  width: 100%;
-  padding: 5px;
-  margin: 0px;
-  border-radius: 5px;
-}
-
 .news:hover {
   transform: scale(1.03);
 }
+.news-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;
+  padding: 2px;
+}
 
-.card-imgNews, .card-video {
+.news-header {
+  display: flex;
+  justify-content: space-between; /* Espacio entre categoría y fecha */
+  align-items: center;
+  padding: 10px; /* Espaciado interno */
+  background-color: #002042;
+  color: #fff;
+}
+
+.news-left, .news-rigth {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.news-card-category {
+  font-weight: bold;
+}
+
+.news-date {
+  text-align: right;
+  font-size: 14px;
+  color: #fff;
+}
+
+.card-video {
   width: 100%;
-  height: 200px; /* Tamaño fijo para imágenes y videos */
-  object-fit: cover; /* Evita que las imágenes se deformen */
-  border-radius: 8px;
+  height: 180px;
+  max-height: 300px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-imgNews {
+  width: 100%;
+  height: 180px;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .titleNews {
   font-size: 18px;
   font-weight: bold;
-  color: #333;
-  text-align: center;
-  margin: 10px 0;
+  color: #002042;
 }
-.titleNews:hover {
-  background-color: transparent;
+
+.titleNews:hover{
+  font-size: 18px;
+  font-weight: bold;
   color: #ff6500;
 }
 
 .subtitleNews {
-  font-size: 14px;
-  color: #666;
-  text-align: center;
-  margin-bottom: 10px;
-}
-
-.news button {
-  background: #007bff;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 5px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.news button:hover {
-  background: #0056b3;
-}
-
-.news p {
-  font-size: 12px;
-  color: rgb(255, 255, 255);
-  margin-top: 5px;
+  font-size: 16px;
+  color: rgb(95, 95, 95);
 }
 /*fin css card news*/
-/*.news{
-    display: flex;
-    flex-direction: column;
-    margin: 5px 0px 5px 0px;
-    padding: 5px ;
-    width: 100%;
-    height: 80vh;
-}
-
-.news .video{
-    width: 640px;
-    height: 460px;
-    padding-bottom: 10px;
-}
-
-.news .titleNews{
-    font-size: 28px;
-    font-weight: bolder;
-    padding-top: 5px;
-    margin: 10px;
-}
-
-.news .subtitleNews{
-    font-size: 18px;
-    font-weight: normal;
-    margin: 0 0 0 5px;
-}
-
-.news button{
-    margin-top: 20px;
-    color: aliceblue;
-    border: 0;
-    padding: 5px;
-    background-color: rgb(71, 71, 71);
-}
-.news button:hover{
-    background-color: #fff;
-    color: darkslategrey;
-}
 /*fin css news*/
 
 /* css news details*/
-.containerTotal{
-    width: 98%;
-    margin: auto;    
+.detail-home{
+  width: 98%;
+  margin: auto;
 }
 
+.detail-news-content{
+  display: flex;
+  justify-content: space-between;
+  padding: 0px;
+  margin: auto;
+}
+.detail-left-column{
+  width: 74%;
+  margin: 0px auto;
+  margin-right: 10px;
+}
+.detail-right-column{
+  width: 100%;
+  max-width: 25%;
+  height: 100vh;
+  margin: 0px auto;
+}
 .detalleNoticia{
-   /* border-radius: 1%;*/
-    border-bottom: #28139e 1px solid;
-    width: 100%;
+  border-bottom: #28139e 1px solid;
+    width: 96%;
     margin: auto;
     padding-bottom: 5%;
 }
 .noticiaTitulo{
-    font-size: 28px;
+  font-size: 26px;
+  color: #002042;
     font-weight: bolder;
     text-align: center;
     padding: 5px;
     margin: 10px;
 }
 .video{
-    width: 780px;
-    height: 480px;
-    padding-bottom: 10px;
-    margin: auto;
-}
-.imgNews{
-  width: 780px;
-  height: 480px;
-  padding-bottom: 10px;
-  margin: auto;
+      margin: auto; 
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
 }
 .noticiaSubtitulo{
-    font-size: 18px;
+  font-size: 18px;
     font-weight: bolder;
-    margin: 0 0 0 5px;
+    margin: 15px 0 0 5px;
     text-align: justify;
-    padding: 5px;
+    padding: 15px 3px;
 }
 .noticiaTexto{
-    font-size: 16px;
+  font-size: 16px;
     text-align: justify;
     padding: 5px 10px 45px 10px;
     margin: 5px 10px 5px 10px;
 }
+/*noticias relacionadas*/
+.related-news-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 columnas iguales */
+  gap: 15px;
+  justify-content: center;
+  width: 100%;
+  margin: 0 auto;
+  border-bottom: #002042 1px solid;
+}
+.noticia-container h3{
+  color: #002042;
+  border-bottom: #002042 1px solid;
+}
+
+.related-news-card {
+  padding: 15px 8px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  cursor: pointer;
+}
+
+.related-news-card:hover {
+  transform: scale(1.03);
+}
+
+.related-news-card h4 {
+  margin: 0;
+  font-size: 1rem;
+  color: #333;
+}
+
+.related-news-card p {
+  font-size: 0.7rem;
+  color: #666;
+}
+.related-news-video, .related-news-image{
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  max-height: 65%;
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Ajuste para pantallas más pequeñas */
+@media (max-width: 1024px) {
+  .related-news-container {
+    grid-template-columns: repeat(4, 1fr); /* 2 columnas en pantallas medianas */
+  }
+}
+
+@media (max-width: 600px) {
+  .related-news-container {
+    grid-template-columns: repeat(1, 1fr); /* 1 columna en móviles */
+  }
+}
+/* fin noticias relacionadas*/
 /* fin css news details*/
 
 /*  css comentarios*/
@@ -177,7 +221,6 @@
   padding-top: 5px;
   padding-bottom: 20px;
   width: 100%;
-  background-color: #fff;
 }
 
 .seccionComentarios h3{
@@ -185,6 +228,9 @@
   font-weight: 700;
   padding: 5px;
   margin-left: 2%;
+}
+.seccionComentarios section{
+  width: 98%;
 }
 .seccionComentarios input {
     width: 30%;
@@ -205,11 +251,12 @@
     margin-top: 20px;
   }
 .seccionComentariosHechos{
-    width: 100%;
+    width: 98%;
 
 }
 .comentariosHechos{
     width: 100vh;
+    max-width: 98%;
     margin: auto;
 }
 .seccionComentariosHechos h3 {
@@ -232,7 +279,7 @@
     margin-left: 1%;
   }
   .comentariosHechos p {
-    width: 100%;
+    width: 98%;
     text-align: center;
     border-radius: 10px;
     padding: 20px;
@@ -244,11 +291,12 @@
   }
   .containerComment {
     width: 100vh;
-    border-bottom: #000000e3 1px solid;
+    max-width: 98%;
     border-radius: 10px;
     padding: 20px;
     backdrop-filter: blur(9px);
    margin: 5px 0px 5px 0px;
+   background-color:#0020422f;
   }
   .sectionEscribirComentario {
     margin-top: 15px;
@@ -260,11 +308,18 @@
     text-decoration: underline;
   }
   .sectionEscribirComentario input {
-    display: flex;
-    margin-left: 5%;
-    width: 350px;
-    height: 30px;
-    margin-top:3% ;
+    width: 100%;
+    padding: 10px;
+    margin: 20px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  .sectionEscribirComentario input:hover {
+    width: 100%;
+    padding: 10px;
+    margin: 20px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
   }
   .sectionEscribirComentario label {
     display: flex;
@@ -274,18 +329,25 @@
     padding-top: 2%;
   }
   .sectionEscribirComentario textarea {
-    display: flex;
-    margin-left: 5%;
-    width: 50%;
-    height: 60%;
-    transition: all 0.3s ease;
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    margin: 20px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
   }
   .sectionEscribirComentario .enviarComentario button{
-    background-color: #000000e3;
-    color: #fff;
-    width: 10%;
-    margin: 20px 0px 10px 43px;
-    padding: 5px;
+    padding: 10px;
+    background:#002042;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  .sectionEscribirComentario .enviarComentario button:hover{
+    background-color: #ff6500;
   }
 /* fin css comentarios*/
 

@@ -6,7 +6,7 @@ import '../css/SeccionNews.css';
 import NavBar from './NavBar';
 import Footer from './Footer';
 import BannerCarousel from './BannerCarousel';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import '../css/Home.css'
 import Buscador from './Search';
 import AdsCarousel from './AdsCarousel';
@@ -15,6 +15,8 @@ import Paginator from './Paginador';  // Importamos el componente Paginador
 export default function SeccionNews() {
   const news = useSelector(state => state.news);
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   const [currentPage, setCurrentPage] = useState(1);
   const newsPerPage = 6;
@@ -52,7 +54,7 @@ export default function SeccionNews() {
               ? news.map((item, index) => (
                   <span
                     key={item.id}
-                    onClick={() => Navigate(`/news/${item.id}`)}
+                    onClick={() => navigate(`/news/${item.id}`)}
                     className="news-title"
                   >
                     {index > 0 && <span style={{ margin: '0 8px' }}>|</span>}
@@ -78,7 +80,7 @@ export default function SeccionNews() {
                   subtitle={e.subtitle}
                   category={e.category}
                   image={e.image}
-                  createdAt={e.createdAt ? new Date(e.createdAt).toLocaleDateString() : 'Fecha no disponible'}
+                  createdAt={e.createdAt}
                 />
               </div>
             ))}

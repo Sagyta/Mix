@@ -90,7 +90,7 @@ const Home = () => {
           <div className="home-latest-news">
             <h2 className="home-title-news">lo nuevo</h2>
             <div className="home-last-news-content">
-              <h5>{lastNews.category.name} | {lastNews.volanta}</h5>
+              <h5>{lastNews.category.name} | {lastNews.volanta} </h5>
               <h2 onClick={() => navigate(`/news/${lastNews.id}`)}
                   className="home-ver-mas-btn">{lastNews.title} </h2>
               <div>

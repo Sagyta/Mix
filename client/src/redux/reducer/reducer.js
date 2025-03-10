@@ -13,6 +13,7 @@ const initialState = {
    ads: [],
    adsBanner: [],
    newsByCategory: {},
+   noticiasRelacionadas: [],
 };
 
 const rootReducer = (state = initialState, {type, payload}) => {
@@ -202,6 +203,11 @@ const rootReducer = (state = initialState, {type, payload}) => {
             return {
                 ...state,
                 adsBanner: state.adsBanner.filter((ad) => ad.id !==payload)
+            };
+        case 'GET_RELATED_NEWS':
+            return {
+                ...state,
+                noticiasRelacionadas: payload,
             };
         
         default:
