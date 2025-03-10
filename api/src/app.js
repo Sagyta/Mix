@@ -13,7 +13,7 @@ server.name = 'API';
 
 // Configurar CORS
 server.use(cors({
-    origin: 'http://localhost:3000', 
+    origin: ['http://localhost:3000', 'https://mix-front.onrender.com'], 
     credentials: true
 }));
 
