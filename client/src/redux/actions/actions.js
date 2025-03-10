@@ -29,13 +29,13 @@ import {
 
 const adsUrl = "https://mix-7emk.onrender.com/ads";
 const bannerUrl = "https://mix-7emk.onrender.com/adsbanner";
-
+const apiUrl='https://mix-7emk.onrender.com/';
 
 // Noticias
 export function getNews(){
     return async (dispatch) =>{
         try{
-            let {data} = await axios.get("https://mix-7emk.onrender.com/news");
+            let {data} = await axios.get(`${apiUrl}/news`);
             //console.log('Noticias recibidas:', data);
             return dispatch({ type: ALL_NEWS, payload: data});
         }catch (error){
@@ -48,7 +48,7 @@ export function getNews(){
 export const newsByCategory = (categoryId) => async (dispatch) => {
     try {
        // console.log(`🔍 Obteniendo noticias para categoría: ${categoryId}`);
-        const { data } = await axios.get(`https://mix-7emk.onrender.com/news/category/${categoryId}`);
+        const { data } = await axios.get(`${apiUrl}/news/category/${categoryId}`);
 
        // console.log(`✅ Noticias recibidas para categoría ${categoryId}:`, data);
 
@@ -65,7 +65,7 @@ export function detailNews(id) {
 	return async function (dispatch) {
 		try {
 			const { data } = await axios.get(
-				`https://mix-7emk.onrender.com/news/${id}`
+				`${apiUrl}/news/${id}`
 			);
 			dispatch({
 				type: DETAIL_NEWS,
@@ -81,7 +81,7 @@ export function buscarNoticias(query) {
 	return async (dispatch) => {
 	  try {
 		// Hacemos la solicitud al backend con el parámetro 'title'
-		const response = await fetch(`https://mix-7emk.onrender.com/news/?title=${query}`);
+		const response = await fetch(`${apiUrl}/news/?title=${query}`);
 		const data = await response.json();
   
 		if (data.length === 0) {
@@ -114,8 +114,8 @@ export function buscarNoticias(query) {
   export function getComments(newId){
 	return async (dispatch)=>{
 		try{
-			let url = newId ? `https://mix-7emk.onrender.com/comment?newId=${newId}` 
-			: `https://mix-7emk.onrender.com/comment`;
+			let url = newId ? `${apiUrl}/comment?newId=${newId}` 
+			: `${apiUrl}/comment`;
 
 			let {data} = await axios.get(url);
 			dispatch({type: GET_COMMENTS, payload: data})
@@ -128,7 +128,7 @@ export function buscarNoticias(query) {
   export function addComment(newsId, comment) {
 	return async function (dispatch) {
 	  try {
-		const {data} = await axios.post(`https://mix-7emk.onrender.com/comment/comentar/${newsId}`, comment);
+		const {data} = await axios.post(`${apiUrl}/comment/comentar/${newsId}`, comment);
 		dispatch({ type: ADD_COMMENT, payload: data });
 	  } catch (error) {
 		console.error("Error agregando comentario:", error);
@@ -157,7 +157,7 @@ export function clearComments() {
 export const loginAdmin = (username, password) => async (dispatch) => {
     try {
         // Enviar la solicitud POST para loguearse
-        const response = await axios.post("https://mix-7emk.onrender.com/admin/login", {
+        const response = await axios.post("${apiUrl}/admin/login", {
             username,
             password,
         });
@@ -198,7 +198,7 @@ export const logoutAdmin = () => (dispatch) => {
 //SECCION USUARIOS
 export const createUser = (userData) => async (dispatch) => {
     try {
-        const response = await axios.post("https://mix-7emk.onrender.com/admin/users", userData);
+        const response = await axios.post("${apiUrl}/admin/users", userData);
 		//console.log("Usuario creado con éxito:", response.data);
         dispatch({
             type: CREATE_USER,
@@ -212,7 +212,7 @@ export const createUser = (userData) => async (dispatch) => {
 export function getUsers (){
 	return async (dispatch) =>{
 		try{
-			let {data} = await axios.get('https://mix-7emk.onrender.com/user');
+			let {data} = await axios.get('${apiUrl}/user');
 			return dispatch({type: GET_USERS, payload: data});
 		}catch(error){
 			console.error('no se encontraron usuarios', error)
@@ -223,7 +223,7 @@ export function getUsers (){
 export function updateUser(id, updateData){
 	return async(dispatch)=>{
 		try{
-			await axios.put(`https://mix-7emk.onrender.com/user/${id}`, updateData);
+			await axios.put(`${apiUrl}/user/${id}`, updateData);
 			dispatch(getUsers());
 			swal.fire("Éxito", "Usuario actualizado correctamente", "success");
 		}catch(error){
@@ -236,7 +236,7 @@ export function updateUser(id, updateData){
 export function deleteUser(id){
 	return async (dispatch)=>{
 		try{
-			await axios.delete(`https://mix-7emk.onrender.com/user/${id}`);
+			await axios.delete(`${apiUrl}/user/${id}`);
 			dispatch(getUsers());
 		}catch(error){
 			console.error("Error al eliminar usuario", error)
@@ -249,7 +249,7 @@ export function createNews(newsData, userId) {
     return async (dispatch) => {
         try {
 			//console.log("userId enviado a la API:", userId); 
-            const {data} = await axios.post(`https://mix-7emk.onrender.com/news/crear/${userId}`, newsData);
+            const {data} = await axios.post(`${apiUrl}/news/crear/${userId}`, newsData);
             dispatch({type: ADD_NEWS, payload: data});
 
 			swal.fire({
@@ -275,7 +275,7 @@ export function createNews(newsData, userId) {
 export function updateNews(id, updateData){
 	return async (dispatch)=>{
 		try{
-			await axios.put(`https://mix-7emk.onrender.com/news/${id}`, updateData);
+			await axios.put(`${apiUrl}/news/${id}`, updateData);
 			dispatch(getNews());
 			swal.fire("Éxito", "Noticia actualizada correctamente", "success");
 		}catch(error){
@@ -288,7 +288,7 @@ export function updateNews(id, updateData){
 export function deleteNews(id){
 	return async (dispatch)=>{
 		try{
-			await axios.delete(`https://mix-7emk.onrender.com/news/${id}`);
+			await axios.delete(`${apiUrl}/news/${id}`);
 			dispatch(getNews());
 		}catch(error){
 			console.error("Error al eliminar noticia", error)
@@ -300,7 +300,7 @@ export function deleteNews(id){
 export function updateComment(id, updateData){
 	return async (dispatch)=>{
 		try{
-			await axios.put(`https://mix-7emk.onrender.com/comment/${id}`, updateData);
+			await axios.put(`${apiUrl}/comment/${id}`, updateData);
 			swal.fire("Éxito", "Comentario actualizado correctamente", "success");
 			dispatch(getComments());
 		}catch (error){
@@ -313,7 +313,7 @@ export function updateComment(id, updateData){
 export function deleteComment(commentId, newId) {
 	return async (dispatch) => {
 		try {
-			await axios.delete(`https://mix-7emk.onrender.com/comment/${commentId}`);
+			await axios.delete(`${apiUrl}/comment/${commentId}`);
 			return dispatch({ type: DELETE_COMMENT, payload: commentId }, getComments(newId))
 			//dispatch(getComments(newId));
 		} catch (error) {
@@ -326,7 +326,7 @@ export function deleteComment(commentId, newId) {
 export function createCategory(name) {
     return async (dispatch) => {
         try {
-            const response = await axios.post('https://mix-7emk.onrender.com/category', { name });
+            const response = await axios.post('${apiUrl}/category', { name });
             swal.fire({
 				icon: 'success',
 				title: '¡Categoría creada!',
@@ -348,7 +348,7 @@ export function getCategories() {
     return async (dispatch) => {
         try {
            // console.log("🔍 Llamando a la API para obtener categorías GetCategory...");
-            const response = await axios.get("https://mix-7emk.onrender.com/category");
+            const response = await axios.get("${apiUrl}/category");
            // console.log("✅ Categorías recibidas GetCategory:", response.data);
 
             dispatch({ type: GET_CATEGORIES, payload: response.data });
@@ -360,7 +360,7 @@ export function getCategories() {
 
 export const updateCategory = (id, data) => async (dispatch) => {
     try {
-        const response = await axios.put(`https://mix-7emk.onrender.com/category/${id}`, data);
+        const response = await axios.put(`${apiUrl}/category/${id}`, data);
 
         dispatch({ type: "UPDATE_CATEGORY", payload: response.data });
 
@@ -374,7 +374,7 @@ export const updateCategory = (id, data) => async (dispatch) => {
 export function deleteCategory(id) {
     return async (dispatch) => {
         try {
-            await axios.delete(`https://mix-7emk.onrender.com/category/${id}`);
+            await axios.delete(`${apiUrl}/category/${id}`);
             dispatch({ type: DELETE_CATEGORY, payload: id });
         } catch (error) {
             console.error("Error al eliminar categoría", error);
@@ -385,7 +385,7 @@ export function deleteCategory(id) {
 export function getAds(){
 	return async (dispatch)=>{
 		try{
-			const {data} = await axios.get('https://mix-7emk.onrender.com/ads');
+			const {data} = await axios.get('${apiUrl}/ads');
 			dispatch({ type: GET_ADS, payload: data})
 		}catch(error){
 			console.error('Error al cargar la imagen', error);
@@ -430,7 +430,7 @@ export const createAds = (formData) => async (dispatch) => {
 export function getAdsBanner(){
 	return async (dispatch)=>{
 		try{
-			const {data} = await axios.get('https://mix-7emk.onrender.com/adsbanner');
+			const {data} = await axios.get('${apiUrl}/adsbanner');
 			dispatch({ type: GET_ADS_BANNER, payload: data})
 		}catch(error){
 			console.error('Error al cargar la imagen', error);
@@ -475,7 +475,7 @@ export const createAdsBanner = (formData) => async (dispatch) => {
   export const getRelatedNews = (id) => {
 	return async (dispatch) => {
 	  try {
-		const response = await fetch(`https://mix-7emk.onrender.com/news/related/${id}`);
+		const response = await fetch(`${apiUrl}/news/related/${id}`);
 		const data = await response.json();
 		dispatch({ type: GET_RELATED_NEWS, payload: data });
 	  } catch (error) {
