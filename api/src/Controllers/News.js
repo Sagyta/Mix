@@ -1,4 +1,5 @@
 const {New, Comment, User, Category} = require('../db')
+const {Op} = require('sequelize');
 
 
 async function getNews (req,res,next){
@@ -19,13 +20,14 @@ async function getNews (req,res,next){
             attributes:['id','title', 'volanta', 'subtitle','text',  'image', 'videoLink', 'createdAt'],
             order: [['createdAt', 'DESC']]
         })
+        
         if(title){
            // console.log(title)
             let findTitle= newsFind.filter(e=>e.title.toLowerCase().includes(title.toLowerCase()))
             if(findTitle.length) return res.send(findTitle)
             else return res.status(404).send('No hay noticias que contengan esta palabra en el título')
         }
-        
+        console.log("Fecha en el backend antes de enviarla:", newsFind.createdAt);
         res.send(newsFind)
     } catch (error) {
         next(error)
@@ -56,6 +58,7 @@ async function getNewsId(req,res,next){
             ],
             attributes: {exclude: ['categoryId', 'userId']}
         })
+        console.log('fecha en newsid', newsId.createdAt)
         res.send(newsId)
     } catch (error) {
         next(error)
@@ -164,7 +167,7 @@ async function getNewsByCategory(req, res, next) {
 
         const noticias = await New.findAll({
             where: { categoryId },
-            attributes: ['id', 'title', 'volanta', 'subtitle', 'text', 'image', 'videoLink']
+            attributes: ['id', 'title', 'volanta', 'subtitle', 'text', 'image', 'videoLink', 'createdAt']
         });
 
         res.json(noticias);
@@ -174,11 +177,36 @@ async function getNewsByCategory(req, res, next) {
     }
 }
 
+async function getRelatedNews(req, res, next){
+    const{id} = req.params;
+
+    try{
+        const noticia = await New.findByPk(id);
+        if(!noticia) return res.status(404).json({message:"Noticia no encontrada"});
+
+        const relatedNews = await New.findAll({
+            where: {
+                categoryId: noticia.categoryId,
+                id:{ [ Op.ne]: id },
+            },
+            limit:4,
+            include: {
+                model: Category,
+                attributes: ['name'],
+            },
+        });
+        res.json(relatedNews);
+        } catch (error) {
+         res.status(500).json({ message: "Error al obtener noticias relacionadas", error });
+    }
+};
+
 module.exports = {
     getNews,
     postNews,
     getNewsId,
     putNews,
     deleteNews,
-    getNewsByCategory
+    getNewsByCategory,
+    getRelatedNews,
 }
