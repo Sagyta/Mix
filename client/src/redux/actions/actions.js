@@ -27,9 +27,9 @@ import {
 	GET_RELATED_NEWS,
 } from './DataTypes';
 
-const adsUrl = "mix-7emk.onrender.com/ads";
-const bannerUrl = "mix-7emk.onrender.com/adsbanner";
-const apiUrl='mix-7emk.onrender.com';
+const adsUrl = "https://mix-7emk.onrender.com/ads";
+const bannerUrl = "https://mix-7emk.onrender.com/adsbanner";
+const apiUrl='https://mix-7emk.onrender.com';
 
 // Noticias
 export function getNews(){
