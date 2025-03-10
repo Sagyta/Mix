@@ -19,7 +19,7 @@ html {
   width: 100%; /* Se adapta al contenedor */
   max-width: 1024px; /* Controla el tamaño máximo */
   height: 100%;
-  background-color: #00204225;
+  background-color: #00204218;
 }
 .news:hover {
   transform: scale(1.03);
@@ -351,6 +351,122 @@ html {
   }
 /* fin css comentarios*/
 
+/*componente NewsByCategory*/
+.newsBy-home{
+  width: 98%;
+  margin: auto;
+}
+
+.newsBy-content{
+  display: flex;
+  justify-content: space-between;
+  padding: 0px;
+  margin: auto;
+    gap: 20px; /* Espacio entre columnas */
+}
+
+.newsBy-content-left {
+  display: grid;
+  gap: 20px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.newsBy-item {
+  display: grid;
+  grid-template-columns: 1fr ; /* 2 columnas dentro del ítem */
+  height: max-content;
+  padding:0% ;
+  background-color:#00204218;
+  border-bottom: #002042 1px solid;
+
+}
+.newsBy-item-title {
+  width: 96%;
+  font-size: 1.5em;
+  text-align: justify;
+  margin: 0;
+  color: #fff;
+  background-color: #002042;
+  padding: 1% 2%;
+}
+
+.newsBy-item-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.newsBy-item-media {
+  width: 100%;
+  margin: auto;
+  padding: 1% 1% 0% 1%;
+  /* Establecer un tamaño para los videos o imágenes */
+}
+
+.newsBy-video {
+  width: 100%;
+  height: 180px;
+  max-height: 300px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.newsBy-imgNews {
+  width: 100%;
+  height: 180px;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.newsBy-item-media,
+.newsBy-item-content {
+  padding: 10px;
+}
+
+.newsBy-item-content h3 {
+  font-size: 1.2em;
+  margin: 1% auto;
+}
+.newsBy-item-content h5 {
+  white-space: normal; /* Permite que el texto haga saltos de línea */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Muestra solo 3 líneas, ajusta el número según lo que quieras */
+  -webkit-box-orient: vertical;
+  max-width: 280px;
+  padding: 0%;
+  margin: 1% auto;
+  margin: 0% 1%;
+  padding: 0%;
+}
+
+.newsBy-item-content p {
+  font-size: 0.8em;
+  text-align: justify;
+  white-space: normal; /* Permite que el texto haga saltos de línea */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 15; /* Muestra solo 3 líneas, ajusta el número según lo que quieras */
+  -webkit-box-orient: vertical;
+  max-width: 280px;
+  padding: 0%;
+  margin: 1% auto;
+}
+.newsBy-content-right{
+  width: 100%;
+  max-width: 25%;
+  height: 100vh;
+  margin: 0px auto; 
+}
+
+/*componente NewsByCategory*/
 /* -------------------------LOADER------------------------- */
   
 .loader {

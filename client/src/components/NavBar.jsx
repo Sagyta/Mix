@@ -42,15 +42,15 @@ const Navbar = () => {
       <div className="navbar-bottom">
         <div className="left">
           {/* Iconos de redes sociales en la parte inferior izquierda */}
-          <div className="social-icons">
+          <div className="social-media">
             <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-              <img src={face} alt="Facebook" />
+              <img src={face} alt="Facebook" className='social-icons'/>
             </a>
             <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer">
-              <img src={tik} alt="tiktok" />
+              <img src={tik} alt="tiktok" className='social-icons' />
             </a>
             <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-              <img src={insta} alt="Instagram" />
+              <img src={insta} alt="Instagram" className='social-icons'/>
             </a>
           </div>
         </div>
@@ -60,7 +60,7 @@ const Navbar = () => {
           <div className="nav-container-button">
             <button className="nav-button"><NavLink className='nav-button' to='/' >Inicio </NavLink></button>
             <button className="nav-button"><NavLink className='nav-button' to='/SeccionNews' >Noticias</NavLink></button>
-            <button className="nav-button"><NavLink className='nav-button' to='' >Contacto</NavLink></button>
+           {/* <button className="nav-button"><NavLink className='nav-button' to='' >Contacto</NavLink></button>*/}
           </div>
         </div>
       </div>

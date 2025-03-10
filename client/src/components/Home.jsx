@@ -9,6 +9,7 @@ import CategoryCarousel from './CategoryCarousel';
 import AdsCarousel from './AdsCarousel';
 import BannerCarousel from './BannerCarousel';
 import Buscador from './Search';
+import ScrollToTopButton from './ScrollTop';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -260,6 +261,7 @@ const Home = () => {
         <BannerCarousel />
       </div>
 
+      <ScrollToTopButton/>
       <Footer />
     </div>
   );

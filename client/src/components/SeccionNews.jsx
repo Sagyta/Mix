@@ -11,6 +11,7 @@ import '../css/Home.css'
 import Buscador from './Search';
 import AdsCarousel from './AdsCarousel';
 import Paginator from './Paginador';  // Importamos el componente Paginador
+import ScrollToTopButton from './ScrollTop';
 
 export default function SeccionNews() {
   const news = useSelector(state => state.news);
@@ -115,6 +116,8 @@ export default function SeccionNews() {
       <div className="home-ad-space-between-footer">
         <BannerCarousel />
       </div>
+
+      <ScrollToTopButton/>
       <Footer />
     </div>
   );

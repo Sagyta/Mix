@@ -1,0 +1,28 @@
+/* Estilo del botón */
+.scroll-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: none;  /* Inicialmente oculto */
+    cursor: pointer;
+    background-color: #ff6500;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(255, 101, 0, 0.6);
+  }
+  
+  /* Mostrar cuando se cumpla la condición */
+  .scroll-to-top.show {
+    display: flex;  /* Mostrar el botón cuando sea necesario */
+  }
+  
+  /* Estilo del icono */
+  .scroll-icon {
+    color: white;  /* Color del icono */
+    font-size: 2.5rem;  /* Tamaño del icono */
+  }

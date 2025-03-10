@@ -9,6 +9,7 @@ import NavBar from './NavBar';
 import BannerCarousel from './BannerCarousel';
 import Buscador from './Search';
 import AdsCarousel from './AdsCarousel';
+import ScrollToTopButton from './ScrollTop';
 
 export default function NewsDetail() {
   const [loading, setLoading] = useState(false);
@@ -309,6 +310,7 @@ const noticiasRelacionadas = useSelector((state)=> state.noticiasRelacionadas)
         <BannerCarousel />
       </div>
 
+      <ScrollToTopButton/>
       <Footer />
         {/**div detail home */}
       </div>
