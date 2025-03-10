@@ -6,14 +6,14 @@
     z-index: 9999;
     display: none;  /* Inicialmente oculto */
     cursor: pointer;
-    background-color: #ff6500;
+    background-color: #003c7c;
     border-radius: 50%;
     width: 50px;
     height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 4px 8px rgba(255, 101, 0, 0.6);
+    box-shadow: 0 4px 8px #0052aa;
   }
   
   /* Mostrar cuando se cumpla la condición */

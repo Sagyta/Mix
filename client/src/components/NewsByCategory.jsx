@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
-import { newsByCategory } from '../redux/actions/actions';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { getNews, newsByCategory } from '../redux/actions/actions';
 import AdsCarousel from './AdsCarousel';
 import BannerCarousel from './BannerCarousel';
 import Footer from './Footer';
 import NavBar from './NavBar';
+import Paginator from './Paginador';
 import ScrollToTopButton from './ScrollTop';
 import Buscador from './Search';
 
@@ -21,16 +22,31 @@ const NewsByCategory = () => {
         if (id) {
             dispatch(newsByCategory(id)); // Llamar al action para obtener las noticias por categoría
         
+            if (!allNews.length) { // Si no hay noticias cargadas, intenta cargarlas
+              dispatch(getNews()); // Asegúrate de que esta acción esté definida en tu archivo de acciones
+          }
+
             const category = categories.find((cat)=> cat.id === id);
             if(category){
                 setCategoryName(category.name);
             }
         }
-    }, [dispatch, id, categories]);
+    }, [dispatch, id, categories, allNews.length]);
 
     const [isPaused, setIsPaused] = useState(false);
 
     const navigate = useNavigate();
+
+    //paginador
+    const [currentPage, setCurrentPage] = useState(1);
+    const newsPerPage = 5; // Puedes ajustar el número de noticias por página
+
+    // Calcular el índice de la primera y última noticia
+    const indexOfLastNews = currentPage * newsPerPage;
+    const indexOfFirstNews = indexOfLastNews - newsPerPage;
+    const currentNews = news.slice(indexOfFirstNews, indexOfLastNews);
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     return (
         <div className='newsBy-home'> 
@@ -74,11 +90,13 @@ const NewsByCategory = () => {
 
             <div class="newsBy-content">
             <div className="newsBy-content-left">      
-            {news.length > 0 ? (
-            news.map((item) => (
+            {currentNews.length > 0 ? (
+            currentNews.map((item) => (
             <div key={item.id} className="newsBy-item">
                 {/* Título que ocupa todo el ancho */}
-            <h3 className="newsBy-item-title">{item.title} | {item.volanta}</h3>
+            <h3 className="newsBy-item-title">
+            <Link to={`/news/${item.id}`}>{item.title} | {item.volanta}
+            </Link></h3>
         
         {/* Contenedor en dos columnas: media y texto */}
         <div className="newsBy-item-grid">
@@ -124,6 +142,17 @@ const NewsByCategory = () => {
   ) : (
     <p>No hay noticias en esta categoría.</p>
   )}
+
+    <div>
+    {news.length > newsPerPage && (
+      <Paginator
+        currentPage={currentPage}
+        totalNews={news.length}
+        newsPerPage={newsPerPage}
+        paginate={paginate}
+      />
+      )}
+    </div>  
 </div>
 
 
