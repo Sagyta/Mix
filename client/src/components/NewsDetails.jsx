@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { clearPage, addComment, detailNews, getComments, getNews, getRelatedNews } from '../redux/actions/actions';
-import { Navigate } from 'react-router-dom';
+//import { Navigate } from 'react-router-dom';
 import Footer from './Footer';
 import PuffLoader from 'react-spinners/PuffLoader';
 import NavBar from './NavBar';

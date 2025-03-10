@@ -6,7 +6,7 @@ import '../css/SeccionNews.css';
 import NavBar from './NavBar';
 import Footer from './Footer';
 import BannerCarousel from './BannerCarousel';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../css/Home.css'
 import Buscador from './Search';
 import AdsCarousel from './AdsCarousel';

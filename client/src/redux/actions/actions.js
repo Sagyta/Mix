@@ -27,9 +27,9 @@ import {
 	GET_RELATED_NEWS,
 } from './DataTypes';
 
-const adsUrl = "https://mix-7emk.onrender.com/ads";
-const bannerUrl = "https://mix-7emk.onrender.com/adsbanner";
-const apiUrl='https://mix-7emk.onrender.com/';
+const adsUrl = "mix-7emk.onrender.com/ads";
+const bannerUrl = "mix-7emk.onrender.com/adsbanner";
+const apiUrl='mix-7emk.onrender.com';
 
 // Noticias
 export function getNews(){
@@ -157,7 +157,7 @@ export function clearComments() {
 export const loginAdmin = (username, password) => async (dispatch) => {
     try {
         // Enviar la solicitud POST para loguearse
-        const response = await axios.post("${apiUrl}/admin/login", {
+        const response = await axios.post(`${apiUrl}/admin/login`, {
             username,
             password,
         });
@@ -198,7 +198,7 @@ export const logoutAdmin = () => (dispatch) => {
 //SECCION USUARIOS
 export const createUser = (userData) => async (dispatch) => {
     try {
-        const response = await axios.post("${apiUrl}/admin/users", userData);
+        const response = await axios.post(`${apiUrl}/admin/users`, userData);
 		//console.log("Usuario creado con éxito:", response.data);
         dispatch({
             type: CREATE_USER,
@@ -212,7 +212,7 @@ export const createUser = (userData) => async (dispatch) => {
 export function getUsers (){
 	return async (dispatch) =>{
 		try{
-			let {data} = await axios.get('${apiUrl}/user');
+			let {data} = await axios.get(`${apiUrl}/user`);
 			return dispatch({type: GET_USERS, payload: data});
 		}catch(error){
 			console.error('no se encontraron usuarios', error)
@@ -326,7 +326,7 @@ export function deleteComment(commentId, newId) {
 export function createCategory(name) {
     return async (dispatch) => {
         try {
-            const response = await axios.post('${apiUrl}/category', { name });
+            const response = await axios.post(`${apiUrl}/category`, { name });
             swal.fire({
 				icon: 'success',
 				title: '¡Categoría creada!',
@@ -348,7 +348,7 @@ export function getCategories() {
     return async (dispatch) => {
         try {
            // console.log("🔍 Llamando a la API para obtener categorías GetCategory...");
-            const response = await axios.get("${apiUrl}/category");
+            const response = await axios.get(`${apiUrl}/category`);
            // console.log("✅ Categorías recibidas GetCategory:", response.data);
 
             dispatch({ type: GET_CATEGORIES, payload: response.data });
@@ -385,7 +385,7 @@ export function deleteCategory(id) {
 export function getAds(){
 	return async (dispatch)=>{
 		try{
-			const {data} = await axios.get('${apiUrl}/ads');
+			const {data} = await axios.get(`${apiUrl}/ads`);
 			dispatch({ type: GET_ADS, payload: data})
 		}catch(error){
 			console.error('Error al cargar la imagen', error);
@@ -430,7 +430,7 @@ export const createAds = (formData) => async (dispatch) => {
 export function getAdsBanner(){
 	return async (dispatch)=>{
 		try{
-			const {data} = await axios.get('${apiUrl}/adsbanner');
+			const {data} = await axios.get(`${apiUrl}/adsbanner`);
 			dispatch({ type: GET_ADS_BANNER, payload: data})
 		}catch(error){
 			console.error('Error al cargar la imagen', error);

@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { logoutAdmin, createCategory, createNews, createUser, getCategories, createAds, createAdsBanner } from "../redux/actions/actions";
+import { logoutAdmin, createCategory, createNews,  getCategories, createAds, createAdsBanner } from "../redux/actions/actions";
 import { useNavigate, NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "../css/AdminDashboard.css";
