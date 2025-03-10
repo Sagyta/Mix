@@ -28,10 +28,10 @@ server.use('/', routes);
 server.use("/uploads", express.static(path.join(__dirname, "../public/uploads")));
 
 // Configuración para servir el frontend en producción
-server.use(express.static(path.join(__dirname, "../../client/build")));  // Ajusta la ruta según la estructura del proyecto
+server.use(express.static(path.join(__dirname, "../../client")));  // Ajusta la ruta según la estructura del proyecto
 
 server.get("/*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../../client/build", "index.html"));
+    res.sendFile(path.join(__dirname, "../../client"));
 });
 
 //console.log(__dirname)
