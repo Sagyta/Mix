@@ -27,6 +27,13 @@ server.use('/', routes);
 //imagenes ads
 server.use("/uploads", express.static(path.join(__dirname, "../public/uploads")));
 
+// Serve the static files from React
+server.use(express.static(path.join(__dirname, 'build')));
+
+// All other requests should return the React app
+server.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 //console.log(__dirname)
 // Error handling
