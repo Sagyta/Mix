@@ -4,6 +4,8 @@ const morgan = require('morgan');
 const cors = require('cors');
 const routes = require('./routes/index');
 const path = require("path")
+const fs = require('fs')
+
 
 require('./db');
 
@@ -29,16 +31,20 @@ server.use("/uploads", express.static(path.join(__dirname, "../public/uploads"))
 
 // En producción, sirve los archivos de React
 if (process.env.NODE_ENV === 'production') {
-  const path = require('path');
-  
-  server.use(express.static(path.join(__dirname, '../../client/build')));
-
-  // Cualquier ruta que no sea una API, redirige al index.html del frontend
-  server.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../client/build', 'index.html'));
+  // Verificar si el archivo build está disponible antes de servirlo
+  server.get('*', (req, res, next) => {
+    const reactBuildPath = path.join(__dirname, 'client', 'build', 'index.html');
+    
+    // Verifica si la carpeta build existe
+    fs.access(reactBuildPath, fs.constants.F_OK, (err) => {
+      if (err) {
+        return res.status(404).send("Página no encontrada");
+      } else {
+        res.sendFile(reactBuildPath);
+      }
+    });
   });
 }
-
 //console.log(__dirname)
 // Error handling
 server.use((err, req, res, next) => {
