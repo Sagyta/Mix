@@ -28,18 +28,6 @@ server.use('/', routes);
 //imagenes ads
 server.use("/uploads", express.static(path.join(__dirname, "../public/uploads")));
 
-// Sirve los archivos estáticos de React desde el directorio build
-server.use(express.static(path.join(__dirname, '/build')));
-
-// Redirige todas las demás rutas a index.html
-server.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '/build', 'index.html'));
-});
-
-// Ruta de la API principal (para pruebas, si es necesario)
-server.get('/api/test', (req, res) => {
-  res.json({ message: 'API funcionando correctamente' });
-});
 //console.log(__dirname)
 // Error handling
 server.use((err, req, res, next) => {
