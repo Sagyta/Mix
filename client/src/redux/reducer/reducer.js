@@ -81,7 +81,7 @@ const rootReducer = (state = initialState, {type, payload}) => {
                 comment: Array.isArray(state.comment)? [...state.comment, payload] : [payload],
       };
       //PANEL ADMIN - AUTENTICACION ADMIN
-      case "ADMIN_LOGIN_SUCCESS":
+      case "LOGIN_SUCCESS":
         return {
             ...state,
             user: payload.user,
@@ -89,12 +89,13 @@ const rootReducer = (state = initialState, {type, payload}) => {
             isAdmin: payload.isAdmin,
             error: null,
         };
-    case "ADMIN_LOGIN_FAILURE":
+    case "LOGIN_FAIL":
         return {
             ...state,
             user: null,
             isAuthenticated: false,
             isAdmin: false,
+            error: payload,
         };
 
     case "LOGOUT_ADMIN":
