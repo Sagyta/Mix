@@ -31,13 +31,11 @@ server.use("/uploads", express.static(path.join(__dirname, "../public/uploads"))
 
 // Sirviendo archivos estáticos de React en producción
 if (process.env.NODE_ENV === 'production') {
-  // Cambiamos el path para que refleje la estructura en Render
-  const clientBuildPath = path.join(__dirname, '..', 'client', 'build');
+  const clientBuildPath = path.join(__dirname, '../../client/build');
   console.log('Client Build Path:', clientBuildPath);
 
   server.use(express.static(clientBuildPath));
 
-  // Servimos el index.html para cualquier ruta no manejada
   server.get('*', (req, res) => {
     const indexHtmlPath = path.join(clientBuildPath, 'index.html');
     console.log('Index HTML Path:', indexHtmlPath);
