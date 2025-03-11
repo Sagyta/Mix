@@ -34,7 +34,8 @@ export function AdsManagement() {
         }
     };
 
-    const baseUrl = "https://mix-7emk.onrender.com/"; 
+    const baseUrl = process.env.REACT_APP_API_URL; 
+    console.log('env del front', baseUrl)
 
     return (
         <div className="ads-management">
@@ -46,7 +47,7 @@ export function AdsManagement() {
             {Array.isArray(ads) && ads.length > 0 ? (
                     ads.map((ad) => (
                         <li key={ad.id} className="ads-item">
-                            <img src={`${baseUrl}${ad.image}`} alt="Anuncio" className="ads-preview" />
+                            <img src={`${baseUrl}/${ad.image}`} alt="Anuncio" className="ads-preview" />
                             <button onClick={() => handleDelete(ad.id)} className="delete-btn-ads">
                                 Eliminar
                             </button>
