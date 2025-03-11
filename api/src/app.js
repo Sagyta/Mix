@@ -29,22 +29,23 @@ server.use('/', routes);
 //imagenes ads
 server.use("/uploads", express.static(path.join(__dirname, "../public/uploads")));
 
-// En producción, sirve los archivos de React
-if (process.env.NODE_ENV === 'production') {
-  // Verificar si el archivo build está disponible antes de servirlo
-  server.get('*', (req, res, next) => {
-    const reactBuildPath = path.join(__dirname, 'client', 'build', 'index.html');
-    
-    // Verifica si la carpeta build existe
-    fs.access(reactBuildPath, fs.constants.F_OK, (err) => {
-      if (err) {
-        return res.status(404).send("Página no encontrada");
-      } else {
-        res.sendFile(reactBuildPath);
-      }
-    });
+// Ruta para servir contenido estático de React
+server.use(express.static(path.join(__dirname, 'client', 'build')));  // Asegúrate de servir los archivos estáticos
+
+// Manejo de cualquier otra solicitud (que no sea de API), para servir el index.html de React
+server.get('*', (req, res, next) => {
+  const reactBuildPath = path.join(__dirname, 'client', 'build', 'index.html');
+  console.log('reactBuildPath:', reactBuildPath);  // Verifica la ruta
+  
+  fs.access(reactBuildPath, fs.constants.F_OK, (err) => {
+    if (err) {
+      console.log('Error accediendo a la ruta del build:', err);  // Verifica el error
+      return res.status(404).send("Página no encontrada");
+    } else {
+      res.sendFile(reactBuildPath);  // Si existe el archivo, lo sirve
+    }
   });
-}
+});
 //console.log(__dirname)
 // Error handling
 server.use((err, req, res, next) => {
