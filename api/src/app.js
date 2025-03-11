@@ -28,7 +28,7 @@ server.use(morgan('dev'));
 server.use('/', routes);
 
 //imagenes ads
-server.use("/uploads", express.static(path.join(__dirname, "../public/uploads")));
+server.use("/uploads", express.static(path.join(__dirname, "../public/")));
 
 //console.log(__dirname)
 // Error handling
