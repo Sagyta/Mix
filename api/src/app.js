@@ -27,6 +27,18 @@ server.use('/', routes);
 //imagenes ads
 server.use("/uploads", express.static(path.join(__dirname, "../public/uploads")));
 
+// En producción, sirve los archivos de React
+if (process.env.NODE_ENV === 'production') {
+  const path = require('path');
+  
+  server.use(express.static(path.join(__dirname, '../../client/build')));
+
+  // Cualquier ruta que no sea una API, redirige al index.html del frontend
+  server.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../client/build', 'index.html'));
+  });
+}
+
 //console.log(__dirname)
 // Error handling
 server.use((err, req, res, next) => {
