@@ -28,17 +28,15 @@ server.use('/', routes);
 //imagenes ads
 server.use("/uploads", express.static(path.join(__dirname, "../public/uploads")));
 
-// Sirviendo archivos estáticos de React en producción
-if (process.env.NODE_ENV === 'production') {
-  const clientBuildPath = path.join(__dirname, '..', '..', 'client', 'build');
-  console.log('Client Build Path:', clientBuildPath);
+// Sirviendo archivos estáticos del frontend
+const clientBuildPath = path.join(__dirname, '..', '..', 'client', 'build');
+console.log('Client Build Path:', clientBuildPath);
 
-  server.use(express.static(clientBuildPath));
+server.use(express.static(clientBuildPath));
 
-  server.get('*', (req, res) => {
-    res.sendFile(path.join(clientBuildPath, 'index.html'));
-  });
-}
+server.get('*', (req, res) => {
+  res.sendFile(path.join(clientBuildPath, 'index.html'));
+});
 
 // Ruta de la API principal (para pruebas, si es necesario)
 server.get('/api/test', (req, res) => {
