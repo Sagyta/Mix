@@ -34,7 +34,7 @@ export function AdsManagement() {
         }
     };
 
-    const baseUrl = "https://mix-7emk.onrender.com"; 
+    const baseUrl = "https://mix-7emk.onrender.com/public"; 
 
     return (
         <div className="ads-management">
