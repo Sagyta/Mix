@@ -29,10 +29,10 @@ server.use("/uploads", express.static(path.join(__dirname, "../public/uploads"))
 
 // En producción, sirve los archivos de React
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, 'client/build'))); // Asume que React está en la carpeta `client`
+  server.use(express.static(path.join(__dirname, 'client/build'))); // Asume que React está en la carpeta `client`
 
   // Para cualquier ruta, devuelve el archivo `index.html` de React
-  app.get('*', (req, res) => {
+  server.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
   });
 }
