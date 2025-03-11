@@ -4,7 +4,6 @@ const morgan = require('morgan');
 const cors = require('cors');
 const routes = require('./routes/index');
 const path = require("path")
-const fs = require('fs')
 
 
 require('./db');
@@ -31,23 +30,13 @@ server.use("/uploads", express.static(path.join(__dirname, "../public/uploads"))
 
 // Sirviendo archivos estáticos de React en producción
 if (process.env.NODE_ENV === 'production') {
-  const clientBuildPath = path.join(__dirname, '../../client/build');
+  const clientBuildPath = path.join(__dirname, '..', '..', 'client', 'build');
   console.log('Client Build Path:', clientBuildPath);
 
   server.use(express.static(clientBuildPath));
 
   server.get('*', (req, res) => {
-    const indexHtmlPath = path.join(clientBuildPath, 'index.html');
-    console.log('Index HTML Path:', indexHtmlPath);
-
-    fs.access(indexHtmlPath, fs.constants.F_OK, (err) => {
-      if (err) {
-        console.error('Error accediendo a la ruta del build:', err);
-        return res.status(404).send("Página no encontrada");
-      } else {
-        res.sendFile(indexHtmlPath);
-      }
-    });
+    res.sendFile(path.join(clientBuildPath, 'index.html'));
   });
 }
 
