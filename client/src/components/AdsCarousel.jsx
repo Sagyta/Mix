@@ -17,7 +17,7 @@ const AdsCarousel = () => {
     dispatch(getAds()); // Llama a la acción para obtener las imágenes de los anuncios
   }, [dispatch]);
 
-  const baseUrl = "https://mix-7emk.onrender.com/"; // 🔹 Ruta base del servidor
+  const baseUrl = "https://mix-back.onrender.com"; // 🔹 Ruta base del servidor
 
   return (
     <div className="adsLat-carousel-container">
