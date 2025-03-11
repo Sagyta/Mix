@@ -10,6 +10,11 @@ conn.sync({ force: false }).then(() => {
     res.send('¡Hola Mundo!');
   });
   
+  // Maneja todas las rutas que no son API
+server.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
   server.listen(PORT, () => {
     console.log('Servidor corriendo en 3001'); 
 
