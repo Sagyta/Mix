@@ -29,22 +29,33 @@ server.use('/', routes);
 //imagenes ads
 server.use("/uploads", express.static(path.join(__dirname, "../public/uploads")));
 
-// Ruta para servir contenido estático de React
-server.use(express.static(path.join(__dirname, 'client', 'build')));  // Asegúrate de servir los archivos estáticos
+// Sirviendo archivos estáticos de React en producción
+if (process.env.NODE_ENV === 'production') {
+  // Cambiamos el path para que refleje la estructura en Render
+  const clientBuildPath = path.join(__dirname, '..', 'client', 'build');
+  console.log('Client Build Path:', clientBuildPath);
 
-// Manejo de cualquier otra solicitud (que no sea de API), para servir el index.html de React
-server.get('*', (req, res, next) => {
-  const reactBuildPath = path.join(__dirname, 'client', 'build', 'index.html');
-  console.log('reactBuildPath:', reactBuildPath);  // Verifica la ruta
-  
-  fs.access(reactBuildPath, fs.constants.F_OK, (err) => {
-    if (err) {
-      console.log('Error accediendo a la ruta del build:', err);  // Verifica el error
-      return res.status(404).send("Página no encontrada");
-    } else {
-      res.sendFile(reactBuildPath);  // Si existe el archivo, lo sirve
-    }
+  server.use(express.static(clientBuildPath));
+
+  // Servimos el index.html para cualquier ruta no manejada
+  server.get('*', (req, res) => {
+    const indexHtmlPath = path.join(clientBuildPath, 'index.html');
+    console.log('Index HTML Path:', indexHtmlPath);
+
+    fs.access(indexHtmlPath, fs.constants.F_OK, (err) => {
+      if (err) {
+        console.error('Error accediendo a la ruta del build:', err);
+        return res.status(404).send("Página no encontrada");
+      } else {
+        res.sendFile(indexHtmlPath);
+      }
+    });
   });
+}
+
+// Ruta de la API principal (para pruebas, si es necesario)
+app.get('/api/test', (req, res) => {
+  res.json({ message: 'API funcionando correctamente' });
 });
 //console.log(__dirname)
 // Error handling
