@@ -27,9 +27,9 @@ import {
 	GET_RELATED_NEWS,
 } from './DataTypes';
 
-const adsUrl = "https://mix-back.onrender.com/ads";
-const bannerUrl = "https://mix-back.onrender.com/adsbanner";
-const apiUrl=process.env.REACT_APP_API_URL || 'http://localhost:3001';
+const adsUrl = process.env.REACT_APP_API_URL;
+const bannerUrl = process.env.REACT_APP_API_URL;
+const apiUrl= process.env.REACT_APP_API_URL;
 
 // Noticias
 export function getNews(){
@@ -399,7 +399,7 @@ export function getAds(){
 
 export const createAds = (formData) => async (dispatch) => {
 	try {
-	  const { data } = await axios.post(`${adsUrl}/upload`, formData, {
+	  const { data } = await axios.post(`${adsUrl}/ads/upload`, formData, {
 		headers: { "Content-Type": "multipart/form-data" },
 	  });
 	  swal.fire({
@@ -420,7 +420,7 @@ export const createAds = (formData) => async (dispatch) => {
   
   export const deleteAds = (id) => async (dispatch) => {
 	try {
-	  await axios.delete(`${adsUrl}/${id}`);
+	  await axios.delete(`${adsUrl}/ads/${id}`);
 	  dispatch({ type: DELETE_ADS, payload: id });
 	} catch (error) {
 	  console.error("Error al eliminar el anuncio:", error);
@@ -444,7 +444,7 @@ export function getAdsBanner(){
 
 export const createAdsBanner = (formData) => async (dispatch) => {
 	try {
-	  const { data } = await axios.post(`${bannerUrl}/upload`, formData, {
+	  const { data } = await axios.post(`${bannerUrl}/adsbanner/upload`, formData, {
 		headers: { "Content-Type": "multipart/form-data" },
 	  });
 	  swal.fire({
@@ -465,7 +465,7 @@ export const createAdsBanner = (formData) => async (dispatch) => {
   
   export const deleteAdBanner = (id) => async (dispatch) => {
 	try {
-	  await axios.delete(`${bannerUrl}/${id}`);
+	  await axios.delete(`${bannerUrl}/adsbanner/${id}`);
 	  dispatch({ type: DELETE_ADS_BANNER, payload: id });
 	} catch (error) {
 	  console.error("Error al eliminar el anuncio:", error);

@@ -17,7 +17,7 @@ const AdsCarousel = () => {
     dispatch(getAds()); // Llama a la acción para obtener las imágenes de los anuncios
   }, [dispatch]);
 
-  const baseUrl = "https://mix-back.onrender.com"; // 🔹 Ruta base del servidor
+  const baseUrl = process.env.REACT_APP_API_URL; // 🔹 Ruta base del servidor
 
   return (
     <div className="adsLat-carousel-container">
@@ -40,7 +40,7 @@ const AdsCarousel = () => {
           <SwiperSlide key={index}>
             <div className="adsLat-ads-slide">
               <img
-                src={`${baseUrl}${ad.image}`} // 🔹 Concatena la URL base con la ruta de la imagen
+                src={`${baseUrl}/${ad.image}`} // 🔹 Concatena la URL base con la ruta de la imagen
                 alt={`Publicidad ${index}`}
                 className="adsLat-ads-image"
               />
