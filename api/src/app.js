@@ -12,9 +12,10 @@ const server = express();
 
 server.name = 'API';
 
+const frontUrl = process.env.HOST_FRONT;
 // Configurar CORS
 server.use(cors({
-    origin: ['http://localhost:3000', 'https://mix-front.onrender.com'], 
+    origin: [frontUrl, 'http://localhost:3000'], 
     credentials: true
 }));
 
