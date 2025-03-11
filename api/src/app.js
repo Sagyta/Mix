@@ -54,7 +54,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // Ruta de la API principal (para pruebas, si es necesario)
-app.get('/api/test', (req, res) => {
+server.get('/api/test', (req, res) => {
   res.json({ message: 'API funcionando correctamente' });
 });
 //console.log(__dirname)
