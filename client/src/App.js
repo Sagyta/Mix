@@ -32,6 +32,7 @@ function App() {
         <Route exact path='/SeccionNews' element={<SeccionNews />} />
         <Route exact path='/news/category/:id' element={<NewsByCategory />} />
         <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path='*' element={()=> <h1>404 - Not Found</h1>} />
 
         <Route path="/admin/dashboard" element={<PrivateRoute element={<AdminDashboard />} />} />
         <Route path='/admin/category' element={<PrivateRoute element={<CategoryManagement/>}/>}/>

@@ -19,7 +19,6 @@ const AdminLogin = () => {
         if (isAuthenticated) {
             if (isAdmin) {
                 // Redirigir al dashboard si es admin
-                console.log("Redirigiendo al dashboard...");
                 navigate("/admin/dashboard");
             } else {
                 // Mostrar alerta si no es admin

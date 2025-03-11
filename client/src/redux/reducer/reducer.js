@@ -95,7 +95,6 @@ const rootReducer = (state = initialState, {type, payload}) => {
             user: null,
             isAuthenticated: false,
             isAdmin: false,
-            error: payload,
         };
 
     case "LOGOUT_ADMIN":

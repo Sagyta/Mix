@@ -158,40 +158,38 @@ export function clearComments() {
 // PANEL ADMIN
 
 export const loginAdmin = (username, password) => async (dispatch) => {
-   try {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/admin/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username,
-        password,
-      }),
-    });
+    try {
+        // Enviar la solicitud POST para loguearse
+        const response = await axios.post(`${apiUrl}/admin/login`, {
+            username,
+            password,
+        });
+		console.log('Login response:', response);
 
-    if (response.ok) {
-      const data = await response.json();
-      dispatch({
-        type: LOGIN_SUCCESS,
-        payload: data,  // Puedes almacenar el token o la información del admin aquí
-      });
-      console.log("Login exitoso:", data);
-    } else {
-      const errorData = await response.json();
-      dispatch({
-        type: LOGIN_FAIL,
-        payload: errorData.error || "Ocurrió un error, por favor intenta de nuevo.",
-      });
-      console.log("Error en login:", errorData);
+        const { user, token, isAdmin } = response.data; // Desestructuramos la respuesta
+
+        // Guardar el token, usuario y el estado isAdmin en localStorage
+        localStorage.setItem("token", token);  
+        localStorage.setItem("user", JSON.stringify(user)); // Guardamos el usuario
+        localStorage.setItem("isAdmin", isAdmin);  // Guardamos el isAdmin
+
+        // Dispatch para guardar el usuario y el isAdmin en Redux
+        dispatch({
+            type: LOGIN_SUCCESS,
+            payload: { 
+                user, 
+                isAdmin 
+            },  
+        });
+       // console.log('dispatch desde action realizado con éxito');
+
+    } catch (error) {
+        // Si hay error al hacer login, se despacha un fallo
+        dispatch({
+            type: LOGIN_FAIL,
+            payload: error.message || "Error al iniciar sesión",
+        });
     }
-  } catch (error) {
-    dispatch({
-      type: LOGIN_FAIL,
-      payload: "Error en la conexión, por favor intenta de nuevo.",
-    });
-    console.log("Error en la conexión:", error);
-  }
 };
 
 export const logoutAdmin = () => (dispatch) => {
