@@ -41,9 +41,12 @@ server.use('/', routes);
 
 //imagenes ads
 
-console.log('console log de dirname', path.join(__dirname, "public/uploads"));
+console.log('Archivos en uploads:', fs.readdirSync(path.join(__dirname, '../public/uploads')));
 
-server.use("/uploads", express.static(path.join(__dirname, "public", "uploads")));
+const archivosEnUploads = fs.readdirSync(path.join(__dirname, "../public/uploads"));
+console.log("Archivos dentro de uploads:", archivosEnUploads);
+
+server.use("/uploads", express.static(path.join(__dirname, "../public/uploads")));
 
 
 
