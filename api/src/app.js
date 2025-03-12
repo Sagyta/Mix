@@ -28,7 +28,10 @@ server.use(morgan('dev'));
 server.use('/', routes);
 
 //imagenes ads
-server.use("/uploads", express.static(path.join(__dirname, "../public/")));
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Rutas específicas para uploads
+app.use('/uploads', express.static(path.join(__dirname, 'public', 'uploads')));
 
 //console.log(__dirname)
 // Error handling
