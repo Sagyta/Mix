@@ -40,7 +40,7 @@ const BannerCarousel = () => {
           <SwiperSlide key={index}>
             <div className="banner-ads-slide">
               <img
-                src={`${baseUrl}${ad.image}`} // 🔹 Concatena la URL base con la ruta de la imagen
+                src={`${baseUrl}/${ad.image}`} // 🔹 Concatena la URL base con la ruta de la imagen
                 alt={`Publicidad ${index}`}
                 className="banner-ads-image"
               />
