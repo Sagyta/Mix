@@ -18,7 +18,7 @@ const BannerCarousel = () => {
     dispatch(getAdsBanner()); // Llama a la acción para obtener las imágenes de los anuncios
   }, [dispatch]);
 
-  const baseUrl = 'https://mix-back.onrender.com/' ; // 🔹 Ruta base del servidor
+  const baseUrl = 'http://localhost:3001/' ; // 🔹 Ruta base del servidor
 
   return (
     <div className="banner-carousel-container">
