@@ -19,6 +19,10 @@ const AdsCarousel = () => {
 
   const baseUrl = process.env.REACT_APP_API_URL; // 🔹 Ruta base del servidor
 
+  if (ads.length === 0) {
+    return <div>Cargando anuncios...</div>;
+  }
+
   return (
     <div className="adsLat-carousel-container">
       <Swiper
@@ -36,6 +40,7 @@ const AdsCarousel = () => {
         loop={true}
         speed={1000}
       >
+        
         {ads.map((ad, index) => (
           <SwiperSlide key={index}>
             <div className="adsLat-ads-slide">
