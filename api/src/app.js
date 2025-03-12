@@ -12,17 +12,24 @@ const server = express();
 
 server.name = 'API';
 
-//const frontUrl = process.env.HOST_FRONT;
+const frontUrl = process.env.HOST_FRONT;
 // Configurar CORS
-/*server.use(cors({
+server.use(cors({
     origin: [frontUrl, 'http://localhost:3000'], 
+    credentials: true
+}));
+
+server.use((req, res, next) => {
+    res.setHeader("Referrer-Policy", "no-referrer-when-downgrade");
+    next();
+});
+
+/*server.use(cors({
+    origin: '*', // Esto permitirá solicitudes de cualquier origen
     credentials: true
 }));*/
 
-server.use(cors({
-    origin: '*', // Esto permitirá solicitudes de cualquier origen
-    credentials: true
-}));
+
 
 server.use(express.urlencoded({ extended: true, limit: '50mb' }));
 server.use(express.json({ limit: '50mb' }));
