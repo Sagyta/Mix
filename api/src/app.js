@@ -43,7 +43,7 @@ server.use('/', routes);
 
 console.log('console log de dirname', path.join(__dirname, "public/uploads"));
 
-server.use("/uploads", express.static(path.join(__dirname, "/public/uploads")));
+server.use("/uploads", express.static(path.join(__dirname, "public", "uploads")));
 
 
 
