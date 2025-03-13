@@ -63,10 +63,11 @@ const noticiasRelacionadas = useSelector((state)=> state.noticiasRelacionadas)
   }, [dispatch, id]);
 
   function handleChange(e) {
-    setLocalState({
-      ...localState,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+    setLocalState(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
   }
 
   function handleSubmit() {
@@ -96,6 +97,7 @@ const noticiasRelacionadas = useSelector((state)=> state.noticiasRelacionadas)
 
     setLocalState({ comment: "", guestName: username }); // Mantener el nombre guardado en el state
   }
+
 
     return (
       <div className='detail-home'>
@@ -197,11 +199,8 @@ const noticiasRelacionadas = useSelector((state)=> state.noticiasRelacionadas)
               <section className="sectionEscribirComentario">
                 <h3>Deja un comentario:</h3>
 
-                {localState.guestName ? (
-                  <div>
-                    <h4>Bienvenido, {localState.guestName}</h4>
-                  </div>
-                ) : (
+                {/* Mostrar nombre solo si el campo está vacío */}
+                {!localState.guestName && (
                   <div>
                     <input
                       type="text"
