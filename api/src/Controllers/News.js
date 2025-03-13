@@ -34,55 +34,34 @@ async function getNews (req,res,next){
     }
 }
 
-async function getNewsId(req, res, next) {
-    const { id } = req.params;
+async function getNewsId(req,res,next){
+    const {id} = req.params
     try {
-        const newsId = await New.findByPk(id, {
-            include: [
+        const newsId = await New.findByPk(id,{
+            include:[
                 {
+                model: User,
+                attributes: ['username']
+                },
+                {
+                model: Category,
+                attributes: ['name']
+                },
+                {
+                model: Comment,
+                include:[{
                     model: User,
                     attributes: ['username']
+                }],
+                attributes: ['id','comment', 'username', 'createdAt']
                 },
-                {
-                    model: Category,
-                    attributes: ['name']
-                },
-                {
-                    model: Comment,
-                    include: [
-                        {
-                            model: User,
-                            attributes: ['username']
-                        }
-                    ],
-                    attributes: ['id', 'comment', 'createdAt'],  // Asegúrate de incluir createdAt aquí
-                }
             ],
-            attributes: { exclude: ['categoryId', 'userId'] }
-        });
-
-        // Verifica si se encontraron comentarios
-        if (!newsId) {
-            return res.status(404).json({ error: "Noticia no encontrada" });
-        }
-
-        // Verifica si existen comentarios y formatea los datos
-        const formattedComments = newsId.Comments ? newsId.Comments.map(comment => ({
-            id: comment.id,
-            comment: comment.comment,
-            username: comment.user ? comment.user.username : comment.username,
-            createdAt: comment.createdAt ? comment.createdAt : 'Fecha no disponible',
-        })) : [];
-
-        // Devuelve la noticia junto con los comentarios
-        res.json({
-            title: newsId.title,
-            content: newsId.content,
-            category: newsId.category.name,
-            comments: formattedComments
-        });
+            attributes: {exclude: ['categoryId', 'userId']}
+        })
+        console.log('fecha en newsid', newsId.createdAt)
+        res.send(newsId)
     } catch (error) {
-        next(error);
+        next(error)
     }
 }
 
