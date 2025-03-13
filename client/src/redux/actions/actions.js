@@ -408,7 +408,7 @@ export const createAds = (formData) => async (dispatch) => {
 	  swal.fire({
 		icon: 'success',
 		title: '¡La imagen se ha subido!',
-		text: 'Imagen se ha creado correctamente.',
+		text: 'La imagen se ha creado correctamente.',
 	  });
 	  dispatch({ type: CREATE_ADS, payload: data });
 	} catch (error) {

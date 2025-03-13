@@ -47,8 +47,12 @@ const AdminDashboard = () => {
     };
 
     const handleCreateAd = () => {
-        dispatch(createAds(newAd));
-        setNewAd({ image: "" });
+        const formData = new FormData();
+        formData.append("name", newAd.name);  // Agregamos el nombre
+        formData.append("image", newAd.image);  // Agregamos la imagen
+    
+        dispatch(createAds(formData));  // Enviamos el formData en lugar de newAd
+        setNewAd({ image: "", name: "" });
         setActiveForm(null);
     };
 
@@ -173,18 +177,27 @@ const AdminDashboard = () => {
                 {activeForm === "ads" && (
                     <div className="form-container">
                         <h3>Crear Publicidad</h3>
-                            {/* Input para cargar imagen */}
-                        <input
-                            type="file"
-                            onChange={(e) => setNewAd({ image: e.target.files[0] })}
-                        />
-                        <div className="button-group">
-                        {/* Botón para enviar la imagen */}
-                        <button onClick={handleCreateAd}>Crear Publicidad</button>
-                        <button onClick={() => setActiveForm(null)}>Cancelar</button>
-                        </div>
-                    </div>
-                )}
+
+                    {/* Input para el nombre de la publicidad */}
+                    <input
+                    type="text"
+                      placeholder="Nombre de la publicidad"
+                      onChange={(e) => setNewAd({ ...newAd, name: e.target.value })}
+                    />
+
+                    {/* Input para cargar la imagen */}
+                    <input
+                      type="file"
+                      onChange={(e) => setNewAd({ ...newAd, image: e.target.files[0] })}
+                    />
+
+                  <div className="button-group">
+                    {/* Botón para enviar la imagen */}
+                    <button onClick={handleCreateAd}>Crear Publicidad</button>
+                    <button onClick={() => setActiveForm(null)}>Cancelar</button>
+                  </div>
+                </div>
+              )}
 
                 {activeForm === "adsban" && (
                     <div className="form-container">
