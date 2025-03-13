@@ -15,6 +15,7 @@ async function getComment (req,res,next){
         const comment = await Comment.findAll({
             where: whereCondition,     
             order: [['createdAt', 'DESC']],    
+            attributes: ['id', 'comment', 'username', 'createdAt'],
             include: [
                 {
                     model: User,
@@ -34,7 +35,8 @@ async function getComment (req,res,next){
             comment: comment.comment,
             username: comment.user ? comment.user.username : comment.username,
             newTitle: comment.new ? comment.new.title : "Noticia desconocida",
-            newId: comment.newId
+            newId: comment.newId, 
+            createdAt: comment.createdAt  // Asegúrate de que esté presente
         }));
        // console.log("los de format coment", formattedComments)
         res.send(formattedComments);
