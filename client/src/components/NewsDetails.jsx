@@ -10,6 +10,8 @@ import BannerCarousel from './BannerCarousel';
 import Buscador from './Search';
 import AdsCarousel from './AdsCarousel';
 import ScrollToTopButton from './ScrollTop';
+import { format } from 'date-fns';
+import {es} from 'date-fns/locale'
 
 export default function NewsDetail() {
   const [loading, setLoading] = useState(false);
@@ -18,7 +20,7 @@ export default function NewsDetail() {
   const news = useSelector(state => state.news);
   const noticia = useSelector(state => state.newsDetail);
   console.log('categorya en noticias', noticia)
-  const comment = useSelector(state => state.comment) || [];
+  const comment = useSelector(state => state.comments) || [];
 
   const [isPaused, setIsPaused] = useState(false);
 
@@ -94,7 +96,7 @@ const noticiasRelacionadas = useSelector((state)=> state.noticiasRelacionadas)
       dispatch(getComments(id));
     }); // ✅ Ahora sí le pasa el `newsId` y `comment` separados
   
-    setLocalState({ comment: "", guestName: "" });
+    setLocalState({ comment: "", guestName: ""});
   }
 
     return (
@@ -181,7 +183,8 @@ const noticiasRelacionadas = useSelector((state)=> state.noticiasRelacionadas)
               <div className="comentariosHechos">
   {comment?.length > 0 ? (
     comment.map((comment, i) => (
-      <div className="containerComment" key={i}>
+      <div className="containerComment" key={i}>        
+        <h5>{comment.createdAt ? format(new Date(comment.createdAt), "d 'de' MMMM 'de' yyyy", { locale: es }) : 'Fecha no disponible'}</h5>
         <h3>{comment.username || "Anónimo"}:</h3>
         <h4>{comment.comment}</h4>
       </div>

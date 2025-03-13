@@ -1,7 +1,7 @@
 const initialState = {
     news: [],
     newsDetail: {},
-    comment:[],
+    comments:[],
     users:[],
     category:[],
    // auth:{
@@ -40,45 +40,44 @@ const rootReducer = (state = initialState, {type, payload}) => {
         case 'SET_NOTICIAS':
             return {
                 ...state,
-                news: payload, // Guardamos las noticias filtradas
+                news: payload,
             };    
         case 'CLEAR_MEMBER_DETAIL':
-			return {
-				...state,
-				memberDetail: {},
-			};
+            return {
+                ...state,
+                memberDetail: {},
+            };
         case 'CLEAR_COMMENTS':
                 return {
                     ...state,
                     comments: [],
                 };
         case 'CLEAR_PAGE':
-			return {
-				...state,
-				memberDetail: {},
-				newsDetail: {},
-				comment: [],
-			};
+            return {
+                ...state,
+                memberDetail: {},
+                newsDetail: {},
+                comments: [],
+            };
         case 'SEARCH_NEWS':
-			//functión para buscar en el estado
-			return {
+            return {
                 ...state,
                 filteredNews: state.news
                   ? state.news.filter((news) =>
                       news.title.toLowerCase().includes(payload.toLowerCase())
                     )
-                  : [], // Si `allNews` es undefined, evitar el error devolviendo un array vacío
+                  : [],
               };
         case 'GET_COMMENTS':
             return {
              ...state,
-            comment: payload
+            comments: payload
       };
 
         case 'ADD_COMMENT':
             return {
                 ...state,
-                comment: Array.isArray(state.comment)? [...state.comment, payload] : [payload],
+                comments: Array.isArray(state.comment)? [...state.comment, payload] : [payload],
       };
       //PANEL ADMIN - AUTENTICACION ADMIN
       case "LOGIN_SUCCESS":
@@ -98,7 +97,6 @@ const rootReducer = (state = initialState, {type, payload}) => {
         };
 
     case "LOGOUT_ADMIN":
-      // Eliminar del estado y de localStorage
       localStorage.removeItem("user");
       localStorage.removeItem("token");
       localStorage.removeItem("isAdmin");
@@ -109,11 +107,10 @@ const rootReducer = (state = initialState, {type, payload}) => {
         token: null,
       };
         
-// NOTICIAS Y COMENTARIOS
         case 'ADD_NEWS':
             return {
             ...state,
-            news: [...state.news, payload], // Agregar una noticia
+            news: [...state.news, payload],
         };
 
         case 'EDIT_NEWS':
@@ -175,13 +172,11 @@ const rootReducer = (state = initialState, {type, payload}) => {
         case "GET_ADS":
             return{
                 ...state,
-                //ads: Array.isArray(payload) ? payload : [],
                 ads: payload
             };
         case "GET_ADS_BANNER":
             return{
                 ...state,
-                //adsBanner: Array.isArray(payload) ? payload : [],
                 adsBanner: payload
             };
         case "CREATE_ADS":
