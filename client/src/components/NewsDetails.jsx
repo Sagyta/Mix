@@ -74,29 +74,27 @@ const noticiasRelacionadas = useSelector((state)=> state.noticiasRelacionadas)
       alert("El comentario no puede estar vacío");
       return;
     }
-  
-    let storedData = localStorage.getItem('data');
-    let username = storedData ? JSON.parse(storedData).username : localState.guestName.trim();
+
+    let username = localState.guestName.trim();
   
     if (!username) {
       alert("Debes ingresar un nombre para comentar");
       return;
     }
-  
-    //console.log("🟢 Enviando comentario:", 
-    //{ newsId: id, username, comment: localState.comment });
-  
+
+    // Guardar el nombre del usuario en localStorage para futuras visitas
+    localStorage.setItem('guestName', username);
+
     const newComment = {
       username,
       comment: localState.comment,
     };
-  
-      dispatch(addComment(id, newComment)).then(()=>{
-       // console.log("🔵 Comentario agregado, recargando lista...");
+
+    dispatch(addComment(id, newComment)).then(() => {
       dispatch(getComments(id));
-    }); // ✅ Ahora sí le pasa el `newsId` y `comment` separados
-  
-    setLocalState({ comment: "", guestName: ""});
+    });
+
+    setLocalState({ comment: "", guestName: username }); // Mantener el nombre guardado en el state
   }
 
     return (
@@ -177,53 +175,54 @@ const noticiasRelacionadas = useSelector((state)=> state.noticiasRelacionadas)
           </div>
 
           <div className="seccionComentarios">
-            <section>
-              <h3>Comentarios:</h3>
-              <div className="seccionComentariosHechos">
-              <div className="comentariosHechos">
-  {comment?.length > 0 ? (
-    comment.map((comment, i) => (
-      <div className="containerComment" key={i}>        
-        <h5>{comment.createdAt ? format(new Date(comment.createdAt), "d 'de' MMMM 'de' yyyy", { locale: es }) : 'Fecha no disponible'}</h5>
-        <h3>{comment.username || "Anónimo"}:</h3>
-        <h4>{comment.comment}</h4>
-      </div>
-    ))
-  ) : (
-    <p>No hay comentarios aún. ¡Sé el primero en comentar!</p>
-  )}
-</div>
-              </div>
-            </section>
-
-            <hr />
-
-            <section className="sectionEscribirComentario">
-              <h3>Deja un comentario:</h3>
-
-              {!localStorage.getItem('data') && (
-                <div>
-                 {/* <label>Nombre:</label>*/}
-                  <input
-                    type="text"
-                    name="guestName"
-                    value={localState.guestName}
-                    onChange={handleChange}
-                    placeholder="Ingresa tu nombre..."
-                  />
+              <section>
+                <h3>Comentarios:</h3>
+                <div className="comentariosHechos">
+                  {comment.length > 0 ? (
+                    comment.map((comment, i) => (
+                      <div className="containerComment" key={i}>        
+                        <h5>{comment.createdAt ? format(new Date(comment.createdAt), "d 'de' MMMM 'de' yyyy", { locale: es }) : 'Fecha no disponible'}</h5>
+                        <h3>{comment.username || "Anónimo"}:</h3>
+                        <h4>{comment.comment}</h4>
+                      </div>
+                    ))
+                  ) : (
+                    <p>No hay comentarios aún. ¡Sé el primero en comentar!</p>
+                  )}
                 </div>
-              )}
+              </section>
 
-              <div>
-                <textarea
-                  name="comment"
-                  cols="50"
-                  value={localState.comment}
-                  onChange={handleChange}
-                  rows="5"
-                  placeholder="Escribe tu comentario..."
-                ></textarea>
-              </div>
+              <hr />
+
+              <section className="sectionEscribirComentario">
+                <h3>Deja un comentario:</h3>
+
+                {localState.guestName ? (
+                  <div>
+                    <h4>Bienvenido, {localState.guestName}</h4>
+                  </div>
+                ) : (
+                  <div>
+                    <input
+                      type="text"
+                      name="guestName"
+                      value={localState.guestName}
+                      onChange={handleChange}
+                      placeholder="Ingresa tu nombre..."
+                    />
+                  </div>
+                )}
+
+                <div>
+                  <textarea
+                    name="comment"
+                    cols="50"
+                    value={localState.comment}
+                    onChange={handleChange}
+                    rows="5"
+                    placeholder="Escribe tu comentario..."
+                  ></textarea>
+                </div>
 
               <div className="enviarComentario">
                 <button onClick={handleSubmit} type="button">
