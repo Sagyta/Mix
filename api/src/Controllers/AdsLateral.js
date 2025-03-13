@@ -1,7 +1,7 @@
 const { Adslateral } = require("../db");
 
 // Obtener todas las propagandas
-const  getAds = async (req, res, next) => {
+const getAds = async (req, res, next) => {
   try {
     const ads = await Adslateral.findAll();
     res.status(200).json(ads);
@@ -13,25 +13,59 @@ const  getAds = async (req, res, next) => {
 // Crear una nueva propaganda
 const createAd = async (req, res) => {
   try {
+    // Verificar que se haya subido una imagen
     if (!req.file) {
       return res.status(400).json({ message: "No se subió ninguna imagen." });
     }
 
-    // La URL de la imagen será la ruta completa desde la carpeta 'public/uploads/'
-    const imageUrl = `uploads/${req.file.filename}`;
+    // Verificar que el nombre haya sido enviado
+    const { name } = req.body;
+    if (!name) {
+      return res.status(400).json({ message: "El nombre es requerido." });
+    }
 
-    // Guardamos la URL de la imagen en la base de datos
-    const ads = await Adslateral.create({ image: imageUrl });
+    // La URL de la imagen será la ruta completa desde la carpeta 'Ads/lateral/'
+    const imageUrl = `Ads/lateral/${req.file.filename}`;
 
-    // Respondemos con éxito
-    res.status(201).json({ message: "Imagen subida exitosamente", ads });
+    // Guardar la imagen y el nombre en la base de datos
+    const ad = await Adslateral.create({
+      name, // Nombre de la propaganda
+      image: imageUrl, // Ruta de la imagen
+    });
+
+    res.status(201).json({ message: "Imagen subida exitosamente", ad });
   } catch (error) {
-    console.error(error);
+    console.error("Error al guardar la propaganda:", error);
     res.status(500).json({ message: "Error al subir la imagen", error: error.message });
   }
-  
 };
 
+// Editar una propaganda existente
+const updateAd = async (req, res) => {
+  const { id } = req.params;
+  const { name } = req.body;
+
+  try {
+    const ad = await Adslateral.findByPk(id);
+    if (!ad) {
+      return res.status(404).json({ message: 'Propaganda no encontrada' });
+    }
+
+    if (name) {
+      ad.name = name;
+    }
+
+    // Si hay un archivo de imagen nuevo, actualizar la imagen
+    if (req.file) {
+      ad.image = `Ads/lateral/${req.file.filename}`;
+    }
+
+    await ad.save();
+    res.status(200).json({ message: "Propaganda actualizada exitosamente", ad });
+  } catch (error) {
+    res.status(500).json({ message: 'Error al actualizar la propaganda', error });
+  }
+};
 
 // Eliminar una propaganda
 const deleteAd = async (req, res) => {
@@ -52,39 +86,6 @@ const deleteAd = async (req, res) => {
 module.exports = {
   getAds,
   createAd,
-  deleteAd
-}
-/*const uploadAdvertImage = async (req, res, next) => {
-  try {
-    if (!req.file) {
-      return res.status(400).json({ message: "No se subió ninguna imagen." });
-    }
-
-    // La URL de la imagen será la ruta completa desde la carpeta 'public/uploads/'
-    const imageUrl = `uploads/${req.file.filename}`;
-
-    // Guardamos la URL de la imagen en la base de datos
-    const ads = await AdsLateral.create({ image: imageUrl });
-
-    // Respondemos con éxito
-    res.status(201).json({ message: "Imagen subida exitosamente", ads });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Error al subir la imagen", error: error.message });
-  }
+  updateAd,
+  deleteAd,
 };
-
-const getAllAdverts = async (req, res) => {
-  try {
-    const ads = await AdsLateral.findAll();
-    res.json(adverts);  // Devuelve todas las imágenes guardadas
-  } catch (error) {
-    res.status(500).json({ message: "Error al obtener las imágenes", error: error.message });
-  }
-};
-
-
-module.exports = {
-  uploadAdvertImage,
-  getAllAdverts
-}*/

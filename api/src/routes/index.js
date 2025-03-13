@@ -16,7 +16,7 @@ router.use('/news', newRoute)
 router.use('/comment', commentRoute)
 router.use('/admin', admin)
 router.use('/category', category)
-router.use("/ads", adsLateral);
-router.use("/adsbanner", AdsBanner);
+router.use('/ads/lateral', adsLateral);
+router.use('/ads/banner', AdsBanner);
 
 module.exports = router;

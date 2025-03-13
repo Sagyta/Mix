@@ -11,7 +11,7 @@ conn.sync({ force: false }).then(() => {
   });
   
   server.listen(PORT, () => {
-    console.log('Servidor corriendo en 3001'); 
+    console.log('Servidor corriendo en local 3001'); 
 
     buildUser();
   });

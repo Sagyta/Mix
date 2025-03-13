@@ -1,17 +1,19 @@
 const express = require("express");
-const upload = require("../middleware/upload");
-const { getAdsBanner, createAdBanner,  deleteAdBanner} = require("../Controllers/AdsBanner");
+const upload = require("../middleware/uploadBanner");  // El middleware para las imágenes
+const { getAdsBanner, createAdBanner, updateAdBanner, deleteAdBanner } = require("../Controllers/AdsBanner");
 
 const router = express.Router();
 
-// Ruta para subir una imagen de publicidad
-router.post("/upload", upload.single("image"), createAdBanner);
-
-// Ruta para obtener todas las imágenes de publicidad
+// Ruta para obtener todas las propagandas del banner
 router.get("/", getAdsBanner);
 
-//router.put("/:id", updateAd);
+// Ruta para crear una nueva propaganda del banner
+router.post("/upload", upload.single("image"), createAdBanner);
 
+// Ruta para actualizar una propaganda del banner
+router.put("/:id", upload.single("image"), updateAdBanner);
+
+// Ruta para eliminar una propaganda del banner
 router.delete("/:id", deleteAdBanner);
 
 module.exports = router;

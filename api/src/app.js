@@ -40,15 +40,10 @@ server.use(morgan('dev'));
 server.use('/', routes);
 
 //imagenes ads
+// Servir imágenes estáticas desde la carpeta 'ads/lateral'
+server.use("/Ads/lateral", express.static(path.join(__dirname, 'Ads/lateral')));
 
-console.log('Archivos en uploads:', fs.readdirSync(path.join(__dirname, '../public/uploads')));
-
-//const archivosEnUploads = fs.readdirSync(path.join(__dirname, "../public/uploads"));
-//console.log("Archivos dentro de uploads:", archivosEnUploads);
-
-server.use("/uploads", express.static(path.join(__dirname, "../public/uploads")));
-
-
+server.use("/Ads/banner", express.static(path.join(__dirname, 'Ads/banner')));
 
 //console.log(__dirname)
 // Error handling
