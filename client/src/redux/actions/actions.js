@@ -388,7 +388,7 @@ export function deleteCategory(id) {
 export function getAds(){
 	return async (dispatch)=>{
 		try{
-			const {data} = await axios.get(`${apiUrl}/ads`);
+			const {data} = await axios.get(`${apiUrl}/ads/lateral`);
 			dispatch({ type: GET_ADS, payload: data})
 		}catch(error){
 			console.error('Error al cargar la imagen', error);
@@ -402,7 +402,7 @@ export function getAds(){
 
 export const createAds = (formData) => async (dispatch) => {
 	try {
-	  const { data } = await axios.post(`${apiUrl}/ads/upload`, formData, {
+	  const { data } = await axios.post(`${apiUrl}/ads/lateral/upload`, formData, {
 		headers: { "Content-Type": "multipart/form-data" },
 	  });
 	  swal.fire({
@@ -423,7 +423,7 @@ export const createAds = (formData) => async (dispatch) => {
   
   export const deleteAds = (id) => async (dispatch) => {
 	try {
-	  await axios.delete(`${apiUrl}/ads/${id}`);
+	  await axios.delete(`${apiUrl}/ads/lateral/${id}`);
 	  dispatch({ type: DELETE_ADS, payload: id });
 	} catch (error) {
 	  console.error("Error al eliminar el anuncio:", error);
@@ -433,7 +433,7 @@ export const createAds = (formData) => async (dispatch) => {
 export function getAdsBanner(){
 	return async (dispatch)=>{
 		try{
-			const {data} = await axios.get(`${apiUrl}/adsbanner`);
+			const {data} = await axios.get(`${apiUrl}/ads/banner`);
 			dispatch({ type: GET_ADS_BANNER, payload: data})
 		}catch(error){
 			console.error('Error al cargar la imagen', error);
@@ -447,7 +447,7 @@ export function getAdsBanner(){
 
 export const createAdsBanner = (formData) => async (dispatch) => {
 	try {
-	  const { data } = await axios.post(`${apiUrl}/adsbanner/upload`, formData, {
+	  const { data } = await axios.post(`${apiUrl}/ads/banner/upload`, formData, {
 		headers: { "Content-Type": "multipart/form-data" },
 	  });
 	  swal.fire({
@@ -468,7 +468,7 @@ export const createAdsBanner = (formData) => async (dispatch) => {
   
   export const deleteAdBanner = (id) => async (dispatch) => {
 	try {
-	  await axios.delete(`${apiUrl}/adsbanner/${id}`);
+	  await axios.delete(`${apiUrl}/ads/banner/${id}`);
 	  dispatch({ type: DELETE_ADS_BANNER, payload: id });
 	} catch (error) {
 	  console.error("Error al eliminar el anuncio:", error);
