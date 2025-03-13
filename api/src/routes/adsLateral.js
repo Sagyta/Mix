@@ -1,6 +1,6 @@
 const express = require("express");
 const upload = require("../middleware/uploadLateral"); // Middleware para subir imágenes
-const { getAds, createAd, deleteAd } = require("../controllers/AdsLateral");
+const { getAds, createAd, deleteAd } = require("../Controllers/AdsLateral");
 
 const router = express.Router();
 
