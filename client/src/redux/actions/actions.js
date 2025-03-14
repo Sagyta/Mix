@@ -402,9 +402,7 @@ export function getAds(){
 
 export const createAds = (formData) => async (dispatch) => {
 	try {
-	  const { data } = await axios.post(`${apiUrl}/ads/lateral/upload`, formData, {
-		headers: { "Content-Type": "multipart/form-data" },
-	  });
+	  const { data } = await axios.post(`${apiUrl}/ads/lateral/upload`, formData);
 	  swal.fire({
 		icon: 'success',
 		title: '¡La imagen se ha subido!',
