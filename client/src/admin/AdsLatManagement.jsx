@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAds, deleteAds } from "../redux/actions/actions";
 import Swal from "sweetalert2";
-import { Link } from "react-router-dom";
-//import "../css/AdsManagement.css"; // Asegúrate de crear un archivo CSS para mejorar el diseño
+import { Link, useNavigate } from "react-router-dom";
 
-export function AdsManagement() {
+export function AdsLatManagement() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const ads = useSelector((state) => state.ads); 
 
     const [reload, setReload] = useState(false);
@@ -30,27 +30,31 @@ export function AdsManagement() {
         if (result.isConfirmed) {
             dispatch(deleteAds(id));
             Swal.fire("Eliminado!", "El anuncio ha sido eliminado.", "success");
-            setReload(prev => !prev);
+            setReload((prev) => !prev);
         }
     };
 
-    const baseUrl = process.env.REACT_APP_API_URL; 
-    console.log('env del front', baseUrl)
+    const baseUrl = process.env.REACT_APP_API_URL;
 
     return (
-        <div className="ads-management">
+        <div className="ads-lat-management">
             <nav>
                 <Link to="/admin/dashboard" className="dashboard-btn">🏠 Volver al Panel</Link>
             </nav>
-            <h2>Gestión de Publicidad</h2>
+            <h2>Gestión de Publicidad Lateral</h2>
             <ul className="ads-list">
-            {Array.isArray(ads) && ads.length > 0 ? (
+                {Array.isArray(ads) && ads.length > 0 ? (
                     ads.map((ad) => (
                         <li key={ad.id} className="ads-item">
                             <img src={`${baseUrl}/${ad.image}`} alt="Anuncio" className="ads-preview" />
-                            <button onClick={() => handleDelete(ad.id)} className="delete-btn-ads">
-                                Eliminar
-                            </button>
+                            <div className="ads-actions">
+                                <button onClick={() => handleDelete(ad.id)} className="delete-btn-ads">
+                                    Eliminar
+                                </button>
+                                <Link to={`/admin/edit-ad/${ad.id}`} className="edit-btn-ads">
+                                    Editar
+                                </Link>
+                            </div>
                         </li>
                     ))
                 ) : (
@@ -61,4 +65,4 @@ export function AdsManagement() {
     );
 }
 
-export default AdsManagement;
+export default AdsLatManagement;

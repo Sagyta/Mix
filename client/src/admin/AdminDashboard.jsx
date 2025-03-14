@@ -178,26 +178,29 @@ const AdminDashboard = () => {
                     <div className="form-container">
                         <h3>Crear Publicidad</h3>
 
-                    {/* Input para el nombre de la publicidad */}
-                    <input
-                    type="text"
-                      placeholder="Nombre de la publicidad"
-                      onChange={(e) => setNewAd({ ...newAd, name: e.target.value })}
-                    />
+                        {/* Input para el nombre de la publicidad */}
+                        <input
+                            type="text"
+                            placeholder="Nombre de la publicidad"
+                            value={newAd.name}
+                            onChange={(e) => setNewAd({ ...newAd, name: e.target.value })}
+                        />
 
-                    {/* Input para cargar la imagen */}
-                    <input
-                      type="file"
-                      onChange={(e) => setNewAd({ ...newAd, image: e.target.files[0] })}
-                    />
+                        {/* Input para el link de la publicidad */}
+                        <input
+                            type="text"
+                            placeholder="Link de la publicidad"
+                            value={newAd.image}
+                            onChange={(e) => setNewAd({ ...newAd, image: e.target.value })}
+                        />
 
-                  <div className="button-group">
-                    {/* Botón para enviar la imagen */}
-                    <button onClick={handleCreateAd}>Crear Publicidad</button>
-                    <button onClick={() => setActiveForm(null)}>Cancelar</button>
-                  </div>
-                </div>
-              )}
+                        <div className="button-group">
+                            {/* Botón para enviar el link */}
+                            <button onClick={handleCreateAd}>Crear Publicidad</button>
+                            <button onClick={() => setActiveForm(null)}>Cancelar</button>
+                        </div>
+                    </div>
+                )}
 
                 {activeForm === "adsban" && (
                     <div className="form-container">
