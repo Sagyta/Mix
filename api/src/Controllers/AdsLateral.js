@@ -18,20 +18,20 @@ const getAds = async (req, res) => {
 // Crear una nueva propaganda
 const createAd = async (req, res) => {
   try {
-    const { imageUrl, name } = req.body;
+    const { image, name } = req.body;  // Cambié imageUrl a image
 
-    if (!imageUrl) {
+    if (!image) {  // Verifica si la URL de la imagen es proporcionada
       return res.status(400).json({ message: "La URL de la imagen es requerida." });
     }
 
-    if (!name) {
+    if (!name) {  // Verifica si el nombre es proporcionado
       return res.status(400).json({ message: "El nombre es requerido." });
     }
 
     // Guardar el nombre y la URL de la imagen en la base de datos
     const ad = await Adslateral.create({
-      name, // Nombre de la propaganda
-      image: imageUrl, // URL de la imagen
+      name,  // Nombre de la propaganda
+      image, // URL de la imagen
     });
 
     res.status(201).json({ message: "Publicidad cargada exitosamente", ad });
