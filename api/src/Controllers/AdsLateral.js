@@ -4,14 +4,10 @@ const { Adslateral } = require("../db");
 const getAds = async (req, res) => {
   try {
     const ads = await Adslateral.findAll();
-    // Aseguramos que las imágenes se puedan usar directamente como URLs
-    const adsWithImageLinks = ads.map(ad => ({
-      ...ad.dataValues,
-      image: `https://your-website.com/${ad.image}` // Reemplaza con la URL base de tu servidor
-    }));
-    res.status(200).json(adsWithImageLinks);
+    // Simplemente devolvemos la URL que ya está guardada en la base de datos
+    res.status(200).json(ads);
   } catch (error) {
-    res.status(500).json({ message: 'Error al obtener las propagandas', error });
+    res.status(500).json({ message: "Error al obtener las propagandas", error });
   }
 };
 
