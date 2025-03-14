@@ -47,11 +47,11 @@ const AdminDashboard = () => {
     };
 
     const handleCreateAd = () => {
-        const formData = new FormData();
-        formData.append("name", newAd.name);  // Agregamos el nombre
-        formData.append("image", newAd.image);  // Agregamos la imagen
-    
-        dispatch(createAds(formData));  // Enviamos el formData en lugar de newAd
+        const formData = {
+            name: newAd.name,
+            image: newAd.image,
+        };        
+        dispatch(createAds(formData));
         setNewAd({ image: "", name: "" });
         setActiveForm(null);
     };
