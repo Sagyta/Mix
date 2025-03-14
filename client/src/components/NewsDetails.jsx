@@ -25,7 +25,7 @@ export default function NewsDetail() {
   const [isPaused, setIsPaused] = useState(false);
 
   const [localState, setLocalState] = useState({
-    guestName: localStorage.getItem('guestName') || '', // Cargar el nombre guardado
+    guestName: '',
     comment: '',
   });
 
@@ -97,6 +97,17 @@ const noticiasRelacionadas = useSelector((state)=> state.noticiasRelacionadas)
 
     setLocalState({ comment: "", guestName: username }); // Limpiar comentario pero mantener el nombre
   }
+
+  useEffect(() => {
+    // Recuperar el nombre del usuario desde localStorage cuando la página se carga
+    const storedName = localStorage.getItem('guestName');
+    if (storedName) {
+      setLocalState(prevState => ({
+        ...prevState,
+        guestName: storedName,
+      }));
+    }
+  }, []);
 
 
     return (
@@ -177,51 +188,51 @@ const noticiasRelacionadas = useSelector((state)=> state.noticiasRelacionadas)
           </div>
 
           <div className="seccionComentarios">
-        <section>
-          <h3>Comentarios:</h3>
-          <div className="comentariosHechos">
-            {comment.length > 0 ? (
-              comment.map((comment, i) => (
-                <div className="containerComment" key={i}>
-                  <h5>{comment.createdAt ? format(new Date(comment.createdAt), "d 'de' MMMM 'de' yyyy", { locale: es }) : 'Fecha no disponible'}</h5>
-                  <h3>{comment.username || "Anónimo"}:</h3>
-                  <h4>{comment.comment}</h4>
+              <section>
+                <h3>Comentarios:</h3>
+                <div className="comentariosHechos">
+                  {comment.length > 0 ? (
+                    comment.map((comment, i) => (
+                      <div className="containerComment" key={i}>
+                        <h5>{comment.createdAt ? format(new Date(comment.createdAt), "d 'de' MMMM 'de' yyyy", { locale: es }) : 'Fecha no disponible'}</h5>
+                        <h3>{comment.username || "Anónimo"}:</h3>
+                        <h4>{comment.comment}</h4>
+                      </div>
+                    ))
+                  ) : (
+                    <p>No hay comentarios aún. ¡Sé el primero en comentar!</p>
+                  )}
                 </div>
-              ))
-            ) : (
-              <p>No hay comentarios aún. ¡Sé el primero en comentar!</p>
-            )}
-          </div>
-        </section>
+              </section>
 
-        <hr />
+              <hr />
 
-        <section className="sectionEscribirComentario">
-          <h3>Deja un comentario:</h3>
+              <section className="sectionEscribirComentario">
+                <h3>Deja un comentario:</h3>
 
-          {/* Mostrar nombre solo si el campo está vacío */}
-          {!localState.guestName && (
-            <div>
-              <input
-                type="text"
-                name="guestName"
-                value={localState.guestName}
-                onChange={handleChange}
-                placeholder="Ingresa tu nombre..."
-              />
-            </div>
-          )}
+                {/* Mostrar nombre solo si el campo está vacío */}
+                {!localState.guestName && (
+                  <div>
+                    <input
+                      type="text"
+                      name="guestName"
+                      value={localState.guestName}
+                      onChange={handleChange}
+                      placeholder="Ingresa tu nombre..."
+                    />
+                  </div>
+                )}
 
-          <div>
-            <textarea
-              name="comment"
-              cols="50"
-              value={localState.comment}
-              onChange={handleChange}
-              rows="5"
-              placeholder="Escribe tu comentario..."
-            ></textarea>
-          </div>
+                <div>
+                  <textarea
+                    name="comment"
+                    cols="50"
+                    value={localState.comment}
+                    onChange={handleChange}
+                    rows="5"
+                    placeholder="Escribe tu comentario..."
+                  ></textarea>
+                </div>
 
               <div className="enviarComentario">
                 <button onClick={handleSubmit} type="button">
