@@ -62,53 +62,73 @@ const noticiasRelacionadas = useSelector((state)=> state.noticiasRelacionadas)
     };
   }, [dispatch, id]);
 
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setLocalState(prevState => ({
-      ...prevState,
-      [name]: value,
-    }));
-  }
+   // Recuperar el nombre del usuario desde localStorage
+   useEffect(() => {
+    const savedName = localStorage.getItem("guestName");
+    if (savedName) {
+        setLocalState((prevState) => ({
+            ...prevState,
+            guestName: savedName,
+        }));
+    }
+}, []); // Solo se ejecuta una vez cuando el componente se monta
 
-  function handleSubmit() {
+// Manejar cambios en los campos del formulario
+function handleChange(e) {
+    const { name, value } = e.target;
+    setLocalState((prevState) => ({
+        ...prevState,
+        [name]: value,
+    }));
+}
+
+// Guardar nombre de usuario
+function handleSaveUserName() {
+    if (localState.guestName.trim()) {
+        localStorage.setItem("guestName", localState.guestName);
+        alert("Nombre de usuario guardado.");
+    } else {
+        alert("Por favor, ingresa un nombre.");
+    }
+}
+
+// Borrar el nombre de usuario
+function handleDeleteUserName() {
+    localStorage.removeItem("guestName");
+    setLocalState((prevState) => ({
+        ...prevState,
+        guestName: "", // Limpiar el nombre en el estado
+    }));
+    alert("Nombre de usuario borrado.");
+}
+
+// Enviar el comentario
+function handleSubmit() {
     if (!localState.comment.trim()) {
-      alert("El comentario no puede estar vacío");
-      return;
+        alert("El comentario no puede estar vacío");
+        return;
     }
 
     let username = localState.guestName.trim();
 
     if (!username) {
-      alert("Debes ingresar un nombre para comentar");
-      return;
+        alert("Debes ingresar un nombre para comentar");
+        return;
     }
 
-    // Guardar el nombre del usuario en localStorage para futuras visitas
-    localStorage.setItem('guestName', username);
-
     const newComment = {
-      username,
-      comment: localState.comment,
+        username,
+        comment: localState.comment,
     };
 
     dispatch(addComment(id, newComment)).then(() => {
-      dispatch(getComments(id));
+        dispatch(getComments(id)); // Volver a cargar los comentarios después de agregar
+    }).catch((error) => {
+        console.error("Error al enviar comentario:", error);
     });
 
-    setLocalState({ comment: "", guestName: username }); // Limpiar comentario pero mantener el nombre
-  }
-
-  useEffect(() => {
-    // Recuperar el nombre del usuario desde localStorage cuando la página se carga
-    const storedName = localStorage.getItem('guestName');
-    if (storedName) {
-      setLocalState(prevState => ({
-        ...prevState,
-        guestName: storedName,
-      }));
-    }
-  }, []);
-
+    setLocalState({ comment: "", guestName: username }); // Limpiar el comentario pero mantener el nombre
+}
 
     return (
       <div className='detail-home'>
@@ -213,25 +233,24 @@ const noticiasRelacionadas = useSelector((state)=> state.noticiasRelacionadas)
                 {/* Mostrar nombre solo si el campo está vacío */}
                 {!localState.guestName && (
                   <div>
-                    <input
-                      type="text"
-                      name="guestName"
-                      value={localState.guestName}
-                      onChange={handleChange}
-                      placeholder="Ingresa tu nombre..."
-                    />
+                     <input
+                type="text"
+                name="guestName"
+                placeholder="Tu nombre"
+                value={localState.guestName}
+                onChange={handleChange}
+            />
                   </div>
                 )}
-
+<button onClick={handleSaveUserName}>Guardar Nombre</button>
+            <button onClick={handleDeleteUserName}>Borrar Nombre</button>
                 <div>
-                  <textarea
-                    name="comment"
-                    cols="50"
-                    value={localState.comment}
-                    onChange={handleChange}
-                    rows="5"
-                    placeholder="Escribe tu comentario..."
-                  ></textarea>
+                <textarea
+                name="comment"
+                placeholder="Escribe tu comentario"
+                value={localState.comment}
+                onChange={handleChange}
+            />
                 </div>
 
               <div className="enviarComentario">
