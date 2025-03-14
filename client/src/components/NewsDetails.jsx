@@ -17,7 +17,6 @@ export default function NewsDetail() {
   const dispatch = useDispatch();
   const news = useSelector(state => state.news);
   const noticia = useSelector(state => state.newsDetail);
-  console.log('categorya en noticias', noticia)
   const comment = useSelector(state => state.comments) || [];
 
   const [isPaused, setIsPaused] = useState(false);
