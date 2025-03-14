@@ -46,7 +46,7 @@ export function AdsLatManagement() {
                 {Array.isArray(ads) && ads.length > 0 ? (
                     ads.map((ad) => (
                         <li key={ad.id} className="ads-item">
-                            <img src={`${baseUrl}/${ad.image}`} alt="Anuncio" className="ads-preview" />
+                            <img src={ad.image} alt="Anuncio" className="ads-preview" />
                             <div className="ads-actions">
                                 <button onClick={() => handleDelete(ad.id)} className="delete-btn-ads">
                                     Eliminar
