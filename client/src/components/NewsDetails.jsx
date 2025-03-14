@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { clearPage, addComment, detailNews, getComments, getNews, getRelatedNews } from '../redux/actions/actions';
-//import { Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import Footer from './Footer';
 import PuffLoader from 'react-spinners/PuffLoader';
 import NavBar from './NavBar';
@@ -10,8 +10,6 @@ import BannerCarousel from './BannerCarousel';
 import Buscador from './Search';
 import AdsCarousel from './AdsCarousel';
 import ScrollToTopButton from './ScrollTop';
-import { format } from 'date-fns';
-import {es} from 'date-fns/locale'
 
 export default function NewsDetail() {
   const [loading, setLoading] = useState(false);
@@ -20,7 +18,7 @@ export default function NewsDetail() {
   const news = useSelector(state => state.news);
   const noticia = useSelector(state => state.newsDetail);
   console.log('categorya en noticias', noticia)
-  const comment = useSelector(state => state.comments) || [];
+  const comment = useSelector(state => state.comment) || [];
 
   const [isPaused, setIsPaused] = useState(false);
 
@@ -62,73 +60,42 @@ const noticiasRelacionadas = useSelector((state)=> state.noticiasRelacionadas)
     };
   }, [dispatch, id]);
 
-   // Recuperar el nombre del usuario desde localStorage
-   useEffect(() => {
-    const savedName = localStorage.getItem("guestName");
-    if (savedName) {
-        setLocalState((prevState) => ({
-            ...prevState,
-            guestName: savedName,
-        }));
-    }
-}, []); // Solo se ejecuta una vez cuando el componente se monta
-
-// Manejar cambios en los campos del formulario
-function handleChange(e) {
-    const { name, value } = e.target;
-    setLocalState((prevState) => ({
-        ...prevState,
-        [name]: value,
-    }));
-}
-
-// Guardar nombre de usuario
-function handleSaveUserName() {
-    if (localState.guestName.trim()) {
-        localStorage.setItem("guestName", localState.guestName);
-        alert("Nombre de usuario guardado.");
-    } else {
-        alert("Por favor, ingresa un nombre.");
-    }
-}
-
-// Borrar el nombre de usuario
-function handleDeleteUserName() {
-    localStorage.removeItem("guestName");
-    setLocalState((prevState) => ({
-        ...prevState,
-        guestName: "", // Limpiar el nombre en el estado
-    }));
-    alert("Nombre de usuario borrado.");
-}
-
-// Enviar el comentario
-function handleSubmit() {
-    if (!localState.comment.trim()) {
-        alert("El comentario no puede estar vacío");
-        return;
-    }
-
-    let username = localState.guestName.trim();
-
-    if (!username) {
-        alert("Debes ingresar un nombre para comentar");
-        return;
-    }
-
-    const newComment = {
-        username,
-        comment: localState.comment,
-    };
-
-    dispatch(addComment(id, newComment)).then(() => {
-        dispatch(getComments(id)); // Volver a cargar los comentarios después de agregar
-    }).catch((error) => {
-        console.error("Error al enviar comentario:", error);
+  function handleChange(e) {
+    setLocalState({
+      ...localState,
+      [e.target.name]: e.target.value,
     });
+  }
 
-    setLocalState({ comment: "", guestName: username }); // Limpiar el comentario pero mantener el nombre
-}
+  function handleSubmit() {
+    if (!localState.comment.trim()) {
+      alert("El comentario no puede estar vacío");
+      return;
+    }
+  
+    let storedData = localStorage.getItem('data');
+    let username = storedData ? JSON.parse(storedData).username : localState.guestName.trim();
+  
+    if (!username) {
+      alert("Debes ingresar un nombre para comentar");
+      return;
+    }
+  
+    //console.log("🟢 Enviando comentario:", 
+    //{ newsId: id, username, comment: localState.comment });
+  
+    const newComment = {
+      username,
+      comment: localState.comment,
+    };
+  
+      dispatch(addComment(id, newComment)).then(()=>{
+       // console.log("🔵 Comentario agregado, recargando lista...");
+      dispatch(getComments(id));
+    }); // ✅ Ahora sí le pasa el `newsId` y `comment` separados
+  
+    setLocalState({ comment: "", guestName: "" });
+  }
 
     return (
       <div className='detail-home'>
@@ -208,50 +175,52 @@ function handleSubmit() {
           </div>
 
           <div className="seccionComentarios">
-              <section>
-                <h3>Comentarios:</h3>
-                <div className="comentariosHechos">
-                  {comment.length > 0 ? (
-                    comment.map((comment, i) => (
-                      <div className="containerComment" key={i}>
-                        <h5>{comment.createdAt ? format(new Date(comment.createdAt), "d 'de' MMMM 'de' yyyy", { locale: es }) : 'Fecha no disponible'}</h5>
-                        <h3>{comment.username || "Anónimo"}:</h3>
-                        <h4>{comment.comment}</h4>
-                      </div>
-                    ))
-                  ) : (
-                    <p>No hay comentarios aún. ¡Sé el primero en comentar!</p>
-                  )}
-                </div>
-              </section>
+            <section>
+              <h3>Comentarios:</h3>
+              <div className="seccionComentariosHechos">
+              <div className="comentariosHechos">
+  {comment?.length > 0 ? (
+    comment.map((comment, i) => (
+      <div className="containerComment" key={i}>
+        <h3>{comment.username || "Anónimo"}:</h3>
+        <h4>{comment.comment}</h4>
+      </div>
+    ))
+  ) : (
+    <p>No hay comentarios aún. ¡Sé el primero en comentar!</p>
+  )}
+</div>
+              </div>
+            </section>
 
-              <hr />
+            <hr />
 
-              <section className="sectionEscribirComentario">
-                <h3>Deja un comentario:</h3>
+            <section className="sectionEscribirComentario">
+              <h3>Deja un comentario:</h3>
 
-                {/* Mostrar nombre solo si el campo está vacío */}
-                {!localState.guestName && (
-                  <div>
-                     <input
-                type="text"
-                name="guestName"
-                placeholder="Tu nombre"
-                value={localState.guestName}
-                onChange={handleChange}
-            />
-                  </div>
-                )}
-<button onClick={handleSaveUserName}>Guardar Nombre</button>
-            <button onClick={handleDeleteUserName}>Borrar Nombre</button>
+              {!localStorage.getItem('data') && (
                 <div>
-                <textarea
-                name="comment"
-                placeholder="Escribe tu comentario"
-                value={localState.comment}
-                onChange={handleChange}
-            />
+                 {/* <label>Nombre:</label>*/}
+                  <input
+                    type="text"
+                    name="guestName"
+                    value={localState.guestName}
+                    onChange={handleChange}
+                    placeholder="Ingresa tu nombre..."
+                  />
                 </div>
+              )}
+
+              <div>
+                <textarea
+                  name="comment"
+                  cols="50"
+                  value={localState.comment}
+                  onChange={handleChange}
+                  rows="5"
+                  placeholder="Escribe tu comentario..."
+                ></textarea>
+              </div>
 
               <div className="enviarComentario">
                 <button onClick={handleSubmit} type="button">
