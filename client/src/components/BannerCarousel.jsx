@@ -6,9 +6,8 @@ import { EffectFade, Navigation, Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import "../css/AdsCarousel.css"; // Archivo de estilos
-
 import "swiper/css/effect-fade";
+import "../css/AdsCarousel.css"; // Archivo de estilos
 
 const BannerCarousel = () => {
   const dispatch = useDispatch();
@@ -18,10 +17,12 @@ const BannerCarousel = () => {
     dispatch(getAdsBanner()); // Llama a la acción para obtener las imágenes de los anuncios
   }, [dispatch]);
 
- 
+  if (adsBan.length === 0) {
+    return <div>Cargando anuncios...</div>;
+  }
 
   return (
-    <div className="banner-carousel-container">
+    <div className="adsLat-carousel-container">
       <Swiper
         modules={[EffectFade, Navigation, Pagination, Autoplay]}
         spaceBetween={0}
