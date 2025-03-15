@@ -12,31 +12,16 @@ const getAdsBanner = async (req, res, next) => {
 
 // Crear una nueva propaganda para el banner
 const createAdBanner = async (req, res) => {
+  const { name, image } = req.body;
   try {
-    // Verificar que se haya subido una imagen
-    if (!req.file) {
-      return res.status(400).json({ message: "No se subió ninguna imagen." });
-    }
-
-    // Verificar que el nombre haya sido enviado
-    const { name } = req.body;
-    if (!name) {
-      return res.status(400).json({ message: "El nombre es requerido." });
-    }
-
-    // La URL de la imagen será la ruta completa desde la carpeta 'Ads/banner/'
-    const imageUrl = `Ads/banner/${req.file.filename}`;
-
-    // Guardar la imagen y el nombre en la base de datos
-    const ad = await Adsbanner.create({
-      name, // Nombre de la propaganda
-      image: imageUrl, // Ruta de la imagen
-    });
-
-    res.status(201).json({ message: "Imagen subida exitosamente al banner", ad });
+      const newBanner = await Adsbanner.create({ name, image });
+      res.status(201).json({
+          message: "Banner cargado exitosamente",
+          banner: newBanner,
+      });
   } catch (error) {
-    console.error("Error al guardar la propaganda del banner:", error);
-    res.status(500).json({ message: "Error al subir la imagen del banner", error: error.message });
+      console.error("Error al cargar el banner:", error);
+      res.status(500).json({ message: "Error al cargar el banner" });
   }
 };
 

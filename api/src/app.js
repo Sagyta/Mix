@@ -13,10 +13,10 @@ const server = express();
 server.name = 'API';
 
 const frontUrl = process.env.HOST_FRONT;
-const frontApi= process.env.HOST_API;
+//const frontApi= process.env.HOST_API;
 // Configurar CORS
 server.use(cors({
-    origin: [frontUrl, frontApi], 
+    origin: [frontUrl/*, frontApi*/], 
     credentials: true
 }));
 
@@ -42,9 +42,9 @@ server.use('/', routes);
 
 //imagenes ads
 // Servir imágenes estáticas desde la carpeta 'ads/lateral'
-server.use("/Ads/lateral", express.static(path.join(__dirname, 'Ads/lateral')));
+//server.use("/Ads/lateral", express.static(path.join(__dirname, 'Ads/lateral')));
 
-server.use("/Ads/banner", express.static(path.join(__dirname, 'Ads/banner')));
+//server.use("/Ads/banner", express.static(path.join(__dirname, 'Ads/banner')));
 
 //console.log(__dirname)
 // Error handling

@@ -8,7 +8,7 @@ const router = express.Router();
 router.get("/", getAdsBanner);
 
 // Ruta para crear una nueva propaganda del banner
-router.post("/upload", upload.single("image"), createAdBanner);
+router.post("/upload", createAdBanner);
 
 // Ruta para actualizar una propaganda del banner
 router.put("/:id", upload.single("image"), updateAdBanner);
