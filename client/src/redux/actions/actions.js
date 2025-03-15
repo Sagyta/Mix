@@ -385,24 +385,25 @@ export function deleteCategory(id) {
     };
 }
 // ADS
-export function getAds(){
-	return async (dispatch)=>{
-		try{
-			const {data} = await axios.get(`${apiUrl}/ads/lateral`);
-			dispatch({ type: GET_ADS, payload: data})
-		}catch(error){
-			console.error('Error al cargar la imagen', error);
-			dispatch({
-				type: 'GET_ADS',
-				payload: [],
-			})
-		}
-	}
+export function getAds() {
+    return async (dispatch) => {
+        try {
+            const { data } = await axios.get(`${apiUrl}/adslat`);
+            console.log("Datos recibidos de ads:", data);  // Verificar qué llega
+            dispatch({ type: GET_ADS, payload: data });
+        } catch (error) {
+            console.error("Error al cargar la imagen", error);
+            dispatch({
+                type: GET_ADS,
+                payload: [],
+            });
+        }
+    };
 }
 
 export const createAds = (formData) => async (dispatch) => {
 	try {
-	  const { data } = await axios.post(`${apiUrl}/ads/lateral/upload`, formData);
+	  const { data } = await axios.post(`${apiUrl}/adslat/upload`, formData);
 	  swal.fire({
 		icon: 'success',
 		title: '¡La imagen se ha subido!',
@@ -421,7 +422,7 @@ export const createAds = (formData) => async (dispatch) => {
   
   export const deleteAds = (id) => async (dispatch) => {
 	try {
-	  await axios.delete(`${apiUrl}/ads/lateral/${id}`);
+	  await axios.delete(`${apiUrl}/adslat/${id}`);
 	  dispatch({ type: DELETE_ADS, payload: id });
 	} catch (error) {
 	  console.error("Error al eliminar el anuncio:", error);
@@ -431,12 +432,12 @@ export const createAds = (formData) => async (dispatch) => {
 export function getAdsBanner(){
 	return async (dispatch)=>{
 		try{
-			const {data} = await axios.get(`${apiUrl}/ads/banner`);
+			const {data} = await axios.get(`${apiUrl}/adsban`);
 			dispatch({ type: GET_ADS_BANNER, payload: data})
 		}catch(error){
 			console.error('Error al cargar la imagen', error);
 			dispatch({
-				type: 'GET_ADS_BANNER',
+				type: GET_ADS_BANNER,
 				payload: [],
 			})
 		}
@@ -444,29 +445,27 @@ export function getAdsBanner(){
 };
 
 export const createAdsBanner = (formData) => async (dispatch) => {
-	try {
-	  const { data } = await axios.post(`${apiUrl}/ads/banner/upload`, formData, {
-		headers: { "Content-Type": "multipart/form-data" },
-	  });
-	  swal.fire({
-		icon: 'success',
-		title: '¡La imagen se ha subido!',
-		text: 'Imagen se ha creado correctamente.',
-	  });
-	  dispatch({ type: CREATE_ADS_BANNER, payload: data });
-	} catch (error) {
-	  console.error("Error al crear el anuncio:", error);
-	  swal.fire({
-		icon: 'error',
-		title: 'Error',
-		text: 'Error al subir la imagen.',
-	  });
-	}
-  };
+		try {
+		  const { data } = await axios.post(`${apiUrl}/adsban/upload`, formData);
+		  swal.fire({
+			icon: 'success',
+			title: '¡La imagen se ha subido!',
+			text: 'La imagen se ha creado correctamente.',
+		  });
+		  dispatch({ type: CREATE_ADS_BANNER, payload: data });
+		} catch (error) {
+		  console.error("Error al crear el anuncio:", error);
+		  swal.fire({
+			icon: 'error',
+			title: 'Error',
+			text: 'Error al subir la imagen.',
+		  });
+		}
+	  };
   
   export const deleteAdBanner = (id) => async (dispatch) => {
 	try {
-	  await axios.delete(`${apiUrl}/ads/banner/${id}`);
+	  await axios.delete(`${apiUrl}/adsban/${id}`);
 	  dispatch({ type: DELETE_ADS_BANNER, payload: id });
 	} catch (error) {
 	  console.error("Error al eliminar el anuncio:", error);

@@ -34,8 +34,6 @@ export function AdsBannerManagement() {
         }
     };
 
-    const baseUrl = "https://mix-7emk.onrender.com/"; 
-
     return (
         <div className="ads-management">
             <nav>
@@ -46,7 +44,8 @@ export function AdsBannerManagement() {
             {Array.isArray(banner) && banner.length > 0 ? (
                     banner.map((ad) => (
                         <li key={ad.id} className="ads-item">
-                            <img src={`${baseUrl}${ad.image}`} alt="Anuncio" className="ads-preview" />
+                            <img src={ad.image} alt="Anuncio" className="ads-preview" />
+                            <div>{ad.name}</div>
                             <button onClick={() => handleDelete(ad.id)} className="delete-btn-ads">
                                 Eliminar
                             </button>

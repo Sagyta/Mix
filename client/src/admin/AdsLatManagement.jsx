@@ -2,15 +2,15 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAds, deleteAds } from "../redux/actions/actions";
 import Swal from "sweetalert2";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export function AdsLatManagement() {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const ads = useSelector((state) => state.ads); 
+    const ads = useSelector((state) => state.ads); // Obtenemos los anuncios desde Redux
 
     const [reload, setReload] = useState(false);
 
+    // Usamos useEffect para cargar los anuncios al inicio
     useEffect(() => {
         dispatch(getAds());
     }, [dispatch, reload]);
@@ -30,11 +30,9 @@ export function AdsLatManagement() {
         if (result.isConfirmed) {
             dispatch(deleteAds(id));
             Swal.fire("Eliminado!", "El anuncio ha sido eliminado.", "success");
-            setReload((prev) => !prev);
+            setReload((prev) => !prev);  // Recargamos los anuncios
         }
     };
-
-    const baseUrl = process.env.REACT_APP_API_URL;
 
     return (
         <div className="ads-lat-management">
@@ -46,14 +44,16 @@ export function AdsLatManagement() {
                 {Array.isArray(ads) && ads.length > 0 ? (
                     ads.map((ad) => (
                         <li key={ad.id} className="ads-item">
-                            <img src={ad.image} alt="Anuncio" className="ads-preview" />
+                            <img 
+                                src={ad.image}  // Aquí tomamos la URL directamente de la base de datos
+                                alt="Anuncio" 
+                                className="ads-preview" 
+                            />
+                            <div>{ad.name}</div>
                             <div className="ads-actions">
                                 <button onClick={() => handleDelete(ad.id)} className="delete-btn-ads">
                                     Eliminar
                                 </button>
-                                <Link to={`/admin/edit-ad/${ad.id}`} className="edit-btn-ads">
-                                    Editar
-                                </Link>
                             </div>
                         </li>
                     ))

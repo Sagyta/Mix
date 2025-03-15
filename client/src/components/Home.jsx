@@ -44,13 +44,13 @@ const Home = () => {
 
   return (
     <div className="home">
-      <header className="home-header">
-        <NavBar />
-      </header>
-
       <div className="home-ad-space-between">
         <BannerCarousel />
       </div>
+
+      <header className="home-header">
+        <NavBar />
+      </header>      
 
       <div className="marquee-container">
         <div className="static-title">Últimas Noticias:</div>

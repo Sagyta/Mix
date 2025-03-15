@@ -18,7 +18,7 @@ const BannerCarousel = () => {
     dispatch(getAdsBanner()); // Llama a la acción para obtener las imágenes de los anuncios
   }, [dispatch]);
 
-  const baseUrl = process.env.REACT_APP_API_URL ; // 🔹 Ruta base del servidor
+ 
 
   return (
     <div className="banner-carousel-container">
@@ -40,7 +40,7 @@ const BannerCarousel = () => {
           <SwiperSlide key={index}>
             <div className="banner-ads-slide">
               <img
-                src={`${baseUrl}/${ad.image}`} // 🔹 Concatena la URL base con la ruta de la imagen
+                src={ad.image} // 🔹 Concatena la URL base con la ruta de la imagen
                 alt={`Publicidad ${index}`}
                 className="banner-ads-image"
               />

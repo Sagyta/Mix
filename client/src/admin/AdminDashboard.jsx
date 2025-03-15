@@ -57,8 +57,12 @@ const AdminDashboard = () => {
     };
 
     const handleCreateAdBanner = () => {
-        dispatch(createAdsBanner(newAdBan));
-        setNewAdBan({ image: "" });
+        const formDataBan={
+            name: newAdBan.name,
+            image: newAdBan.image,
+        }
+        dispatch(createAdsBanner(formDataBan));
+        setNewAdBan({ image: "" , name: ""});
         setActiveForm(null);
     };
 
@@ -207,8 +211,16 @@ const AdminDashboard = () => {
                         <h3>Crear Publicidad</h3>
                         {/* Input para cargar imagen */}
                             <input
-                             type="file"
-                             onChange={(e) => setNewAdBan({ image: e.target.files[0] })}
+                             type="text"
+                            placeholder="Nombre de la publicidad"
+                            value={newAdBan.name}
+                             onChange={(e) => setNewAdBan({ ...newAdBan, name: e.target.value })}
+                            />
+                            <input
+                            type="text"
+                            placeholder="Link del banner publicitario"
+                            value={newAdBan.image}
+                            onChange={(e)=> setNewAdBan({ ...newAdBan, image:e.target.value})}
                             />
                         <div className="button-group">
                         {/* Botón para enviar la imagen */}
