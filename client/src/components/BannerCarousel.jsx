@@ -22,7 +22,7 @@ const BannerCarousel = () => {
   }
 
   return (
-    <div className="adsLat-carousel-container">
+    <div className="banner-carousel-container">
       <Swiper
         modules={[EffectFade, Navigation, Pagination, Autoplay]}
         spaceBetween={0}
