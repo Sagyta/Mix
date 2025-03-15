@@ -28,6 +28,7 @@ const BannerCarousel = () => {
         slidesPerView={1}
         effect="fade"
         fadeEffect={{ crossFade: true }} // Para un efecto más suave desvanece
+        Pagination
         autoplay={{
           delay: 3000,
           disableOnInteraction: false,
