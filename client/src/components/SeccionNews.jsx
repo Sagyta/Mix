@@ -62,7 +62,7 @@ export default function SeccionNews() {
                     {item.title}
                   </span>
                 ))
-              : 'Cargando noticias...'}
+              : 'Espera un momento que se carguen las noticias...'}
           </div>
         </div>
       </div>
@@ -100,6 +100,7 @@ export default function SeccionNews() {
           <Buscador />
           <div className="home-lateral-clima">
             <iframe
+              title='Clima'
               src="https://api.wo-cloud.com/content/widget/?geoObjectKey=11415237&language=es&region=AR&timeFormat=HH:mm&windUnit=kmh&systemOfMeasurement=metric&temperatureUnit=celsius"
               name="CW2"
               scrolling="no"

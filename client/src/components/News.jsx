@@ -1,7 +1,6 @@
 //import React, {useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {Link} from 'react-router-dom';
-import UsersManagement from '../admin/UsersManagement';
 import { format } from 'date-fns';
 import {es} from 'date-fns/locale'
 import '../css/News.css'

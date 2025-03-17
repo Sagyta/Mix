@@ -10,6 +10,7 @@ import AdsCarousel from './AdsCarousel';
 import BannerCarousel from './BannerCarousel';
 import Buscador from './Search';
 import ScrollToTopButton from './ScrollTop';
+import AdsFooter from './AdsFooter';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -122,26 +123,76 @@ const Home = () => {
                 <CategoryCarousel news={news} />
               </div>
 
+              <div className="home-ad-space-between">
+                <BannerCarousel />
+              </div>
+
               <div className="home-featured-category">
-                {categories.map((category) => {
-                  const categoryNews = newsByCategoryData[category.id] || [];
-                  if (categoryNews.length === 0) return null;
+                <div className="by-category-grid">
+                  {categories.map((category) => {
+                    // Obtener las noticias de la categoría actual
+                    const categoryNews = newsByCategoryData[category.id] || [];
+                    
+                    // Si no hay noticias, no mostrar la categoría
+                    if (categoryNews.length === 0) return null;
 
-                  const lastCategoryNews = categoryNews[0];
-                  const otherNews = categoryNews.slice(1);
+                    // Obtener las últimas 2 noticias (asumiendo que están en orden descendente por fecha)
+                    const latestNews = categoryNews.slice(0, 2);
 
-                  return (
-                    <div key={category.id} className="by-category-section">
-                      <h2 className="by-category-title">{category.name}</h2>
-                      <h3
-                        onClick={() => navigate(`/news/${lastCategoryNews.id}`)}
-                        className="by-home-ver-mas-btn"
-                      >
-                        {lastCategoryNews.title} | {lastCategoryNews.volanta}
-                      </h3>
-                    </div>
-                  );
-                })}
+                    return (
+                      <div key={category.id} className="by-category-section">
+                        {/* Título de la categoría ocupando todo el ancho */}
+                        <h2 className="by-category-title" style={{ width: "100%", textAlign: "center" }}>
+                          {category.name}
+                        </h2>
+
+                        <div className="by-category-row">
+                          {latestNews.map((news) => (
+                            <div key={news.id} className="by-category-item">
+                              <h3
+                                onClick={() => navigate(`/news/${news.id}`)}
+                                className="by-home-ver-mas-btn"
+                              >
+                                {news.title} | {news.volanta}
+                              </h3>
+                              {/* Mostrar imagen o video */}
+                              {news.videoLink ? (
+                              <iframe
+                                className="by-category-video"
+                                src={
+                                  news.videoLink.includes('youtube.com')
+                                    ? news.videoLink.replace('watch?v=', 'embed/')
+                                    : news.videoLink.includes('facebook.com')
+                                    ? `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(news.videoLink)}`
+                                    : news.videoLink
+                                }
+                                title="Video Noticia"
+                                frameBorder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                              ></iframe>
+                            ) : news.image ? (
+                              <img
+                                src={news.image}
+                                alt={news.title}
+                                className="by-category-image"
+                              />
+                            ) : (
+                              <img
+                                src="https://img.freepik.com/vector-premium/advertencia-error-sistema-operativo-ventana-mensaje-emergente-ventana-dialogo-falla-sistema-diseno-plano_812892-54.jpg"
+                                alt="Imagen no encontrada"
+                                className="by-category-image"
+                              />
+                            )}
+                              <h4 className="by-category-subtitle">{news.subtitle}</h4>
+                              <p className="by-category-text">{news.text}</p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  })}                  
+                </div>
               </div>
             </>
           )}
@@ -165,7 +216,8 @@ const Home = () => {
       </div>
 
       <div className="home-ad-space-between-footer">
-        <BannerCarousel />
+        {/*publicidad fija*/}
+        <AdsFooter />
       </div>
 
       <ScrollToTopButton />

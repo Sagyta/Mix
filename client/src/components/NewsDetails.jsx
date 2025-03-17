@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import {  useNavigate, useParams } from 'react-router-dom';
 import { clearPage, addComment, detailNews, getComments, getNews, getRelatedNews } from '../redux/actions/actions';
-import { Navigate } from 'react-router-dom';
 import Footer from './Footer';
 import PuffLoader from 'react-spinners/PuffLoader';
 import NavBar from './NavBar';
@@ -126,7 +125,7 @@ const noticiasRelacionadas = useSelector((state)=> state.noticiasRelacionadas)
                     {item.title}
                   </span>
                 ))
-              : 'Cargando noticias...'}
+              : 'Espera un momento que se carguen las noticias...'}
           </div>
         </div>
       </div>
@@ -289,6 +288,7 @@ const noticiasRelacionadas = useSelector((state)=> state.noticiasRelacionadas)
           
           <div className="home-lateral-clima">
             <iframe
+              title='Clima'
               src="https://api.wo-cloud.com/content/widget/?geoObjectKey=11415237&language=es&region=AR&timeFormat=HH:mm&windUnit=kmh&systemOfMeasurement=metric&temperatureUnit=celsius"
               name="CW2"
               scrolling="no"
