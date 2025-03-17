@@ -167,7 +167,8 @@ async function getNewsByCategory(req, res, next) {
 
         const noticias = await New.findAll({
             where: { categoryId },
-            attributes: ['id', 'title', 'volanta', 'subtitle', 'text', 'image', 'videoLink', 'createdAt']
+            attributes: ['id', 'title', 'volanta', 'subtitle', 'text', 'image', 'videoLink', 'createdAt'],
+            order: [['createdAt', 'DESC']]
         });
 
         res.json(noticias);
