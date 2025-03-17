@@ -12,11 +12,11 @@ const server = express();
 
 server.name = 'API';
 
-//const frontUrl = process.env.HOST_FRONT;
-const frontApi= process.env.HOST_API;
+const frontUrl = process.env.HOST_FRONT;
+//const frontApi= process.env.HOST_API;
 // Configurar CORS
 server.use(cors({
-    origin: [/*frontUrl,*/ frontApi], 
+    origin: [frontUrl/*, frontApi*/], 
     credentials: true
 }));
 
