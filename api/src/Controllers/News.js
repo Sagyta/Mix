@@ -17,7 +17,7 @@ async function getNews (req,res,next){
                     attributes: ['name']
                 }
             ],
-            attributes:['id','title', 'volanta', 'subtitle','text',  'image', 'videoLink', 'createdAt'],
+            attributes:['id','title', 'volanta', 'subtitle','text',  'image', 'videoLink', 'createdAt', 'views'],
             order: [['createdAt', 'DESC']]
         })
         
@@ -58,7 +58,6 @@ async function getNewsId(req,res,next){
             ],
             attributes: {exclude: ['categoryId', 'userId']}
         })
-        console.log('fecha en newsid', newsId.createdAt)
         res.send(newsId)
     } catch (error) {
         next(error)
@@ -202,6 +201,68 @@ async function getRelatedNews(req, res, next){
     }
 };
 
+async function incrementViews(req, res) {
+    try {
+      const { id } = req.params; // ID de la noticia
+  
+      // Buscar la noticia por su ID
+      const noticia = await New.findByPk(id);
+  
+      if (!noticia) {
+        return res.status(404).json({ error: 'Noticia no encontrada' });
+      }
+  
+      // Incrementamos las vistas
+      noticia.views += 1;
+      await noticia.save(); // Guardamos la noticia actualizada
+  
+      return res.json(noticia); // Retornamos la noticia actualizada con las vistas
+    } catch (error) {
+      console.error('Error incrementando vistas:', error);
+      res.status(500).json({ error: 'Error al incrementar vistas' });
+    }
+  }
+
+  // Función para obtener las noticias más vistas
+ 
+  async function getMostPopularNews(req, res) {
+   /* try {
+        const popularNews = await New.findAll({
+            where: {
+                views: {
+                    [Sequelize.Op.gt]: 0,  // Filtra las noticias con más de 0 visitas
+                }
+            },
+            order: [['views', 'DESC']],  // Ordena por cantidad de visitas
+            limit: 5  // Trae las 5 más populares
+        });
+
+        res.json(popularNews);
+    } catch (error) {
+        console.error('Error al obtener las noticias populares:', error);
+        res.status(500).send('Error al obtener las noticias populares');
+    }*/
+
+
+   
+  
+        try {
+            const allNews = await New.findAll({
+                order: [['views', 'DESC']],
+            });
+    
+            const popularNews = allNews.filter(news => news.views > 0);
+    
+            res.json(popularNews);
+        } catch (error) {
+            console.error('Error al obtener las noticias populares:', error);
+            res.status(500).send('Error al obtener las noticias populares');
+        }
+    }
+
+  
+ 
+
 module.exports = {
     getNews,
     postNews,
@@ -210,4 +271,6 @@ module.exports = {
     deleteNews,
     getNewsByCategory,
     getRelatedNews,
+    incrementViews,
+    getMostPopularNews,
 }

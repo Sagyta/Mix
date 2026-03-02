@@ -34,6 +34,10 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    views:{
+      type: DataTypes.INTEGER,
+      defaultValue: 0
+    }
   },
   {
     timestamps: true,

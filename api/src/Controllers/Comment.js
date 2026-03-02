@@ -69,7 +69,7 @@ async function getCommentId(req,res,next){
     }
 }
 
-async function postComment(req,res,next){
+/*async function postComment(req,res,next){
    
   try {
     const { newId } = req.params;
@@ -97,7 +97,45 @@ async function postComment(req,res,next){
     res.status(500).json({ error: "Error en el servidor" });
   }
 
-}
+}*/
+
+async function postComment(req,res,next){
+    try {
+      const { newId } = req.params;
+      const { username, comment } = req.body;
+  
+      if (!comment || !username) {
+        return res.status(400).json({ error: "El comentario y el nombre son obligatorios" });
+      }
+  
+      const loggedUser = req.user ? await User.findByPk(req.user.id) : null;
+      const finalUsername = loggedUser ? loggedUser.username : username.trim() || "Anonimo";
+  
+      // 🔹 Eliminamos la validación de username único
+      // const existingComment = await Comment.findOne({
+      //   where: { username: finalUsername, newId: newId }
+      // });
+      //
+      // if(existingComment){
+      //   return res.status(400).json({ error: "Ese nombre ya fue usado en esta noticia, elige otro." });
+      // }
+  
+      // Crear comentario
+      const newComment = await Comment.create({
+        comment,
+        username: finalUsername,
+        newId: newId,
+        userId: loggedUser ? loggedUser.id : null,
+      });
+  
+      res.json(newComment);
+  
+    } catch (error) {
+      console.error("Error al agregar comentario:", error);
+      res.status(500).json({ error: "Error en el servidor" });
+    }
+  }
+
 
 async function putComment(req,res,next){
     const {id}= req.params

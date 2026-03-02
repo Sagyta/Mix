@@ -16,8 +16,7 @@ module.exports = (sequelize) => {
     }, 
     username: {  // 🔹 Verifica que esta línea existe
       type: DataTypes.STRING,
-      allowNull: false,
-      unique: true
+      allowNull: false
     },
   },
   {
