@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import NavBar from './NavBar';
 import Footer from './Footer';
 import { useDispatch, useSelector } from 'react-redux';
-import { getNews, getCategories, newsByCategory } from '../redux/actions/actions';
+import { getNews, getCategories, newsByCategory, getMostPopularNews } from '../redux/actions/actions';
 import '../css/Home.css';
 import CategoryCarousel from './CategoryCarousel';
 import AdsCarousel from './AdsCarousel';
@@ -11,6 +11,9 @@ import BannerCarousel from './BannerCarousel';
 import Buscador from './Search';
 import ScrollToTopButton from './ScrollTop';
 import AdsFooter from './AdsFooter';
+import PopularNews from './PopularNews';
+import { format } from 'date-fns';
+import {es} from 'date-fns/locale'
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -25,6 +28,7 @@ const Home = () => {
   useEffect(() => {
     dispatch(getNews());
     dispatch(getCategories());
+    dispatch(getMostPopularNews()); // Asegurate de tener esta acción
   }, [dispatch]);
 
   useEffect(() => {
@@ -88,7 +92,11 @@ const Home = () => {
               <div className="home-latest-news">
                 <h2 className="home-title-news">Lo Nuevo</h2>
                 <div className="home-last-news-content">
-                  <h5>{lastNews.category.name} | {lastNews.volanta} </h5>
+                <h5>
+  {lastNews.category ? lastNews.category.name : 'Sin categoría'} | 
+  {lastNews.user ? lastNews.user.username : 'Admin'} | 
+  {lastNews.createdAt ? format(new Date(lastNews.createdAt), "d 'de' MMMM 'de' yyyy", { locale: es }) : 'Fecha no disponible'}
+</h5>
                   <h2
                     onClick={() => navigate(`/news/${lastNews.id}`)}
                     className="home-ver-mas-btn"
@@ -97,21 +105,28 @@ const Home = () => {
                   </h2>
                   <div>
                     {lastNews.videoLink ? (
-                      <iframe
-                        className="home-last-news-video"
-                        src={lastNews.videoLink.replace('watch?v=', 'embed/')}
-                        title="Video Noticia"
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                      ></iframe>
-                    ) : (
-                      <img
-                        src={lastNews.image || "https://img.freepik.com/vector-premium/advertencia-error-sistema-operativo-ventana-mensaje-emergente-ventana-dialogo-falla-sistema-diseno-plano_812892-54.jpg"}
-                        alt={lastNews.title}
-                        className="home-last-news-image"
-                      />
-                    )}
+                        <iframe 
+                        className='home-last-news-video'
+                         src={
+                            lastNews.videoLink.includes('youtube.com')
+                            ? lastNews.videoLink.replace("watch?v=", "embed/")
+                            : lastNews.videoLink.includes('facebook.com')
+                            ? `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(lastNews.videoLink)}`
+                            : lastNews.videoLink}
+                         title="Video Noticia"
+                         frameBorder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                         allowFullScreen
+                        ></iframe>
+                      ) : lastNews.image ? (
+                       <img src={lastNews.image} alt="Imagen de la noticia" className="home-last-news-image" />
+                      ) : (
+                        <img
+                          src="https://img.freepik.com/vector-premium/advertencia-error-sistema-operativo-ventana-mensaje-emergente-ventana-dialogo-falla-sistema-diseno-plano_812892-54.jpg"
+                          alt="Imagen no encontrada"
+                          className="home-last-news-image"
+                        />
+                      )}
                   </div>
                   <div className="home-last-news-text">
                     <p>{lastNews.subtitle}</p>
@@ -137,7 +152,7 @@ const Home = () => {
                     if (categoryNews.length === 0) return null;
 
                     // Obtener las últimas 2 noticias (asumiendo que están en orden descendente por fecha)
-                    const latestNews = categoryNews.slice(0, 2);
+                    const latestNews = categoryNews.slice(0, 1);
 
                     return (
                       <div key={category.id} className="by-category-section">
@@ -153,7 +168,7 @@ const Home = () => {
                                 onClick={() => navigate(`/news/${news.id}`)}
                                 className="by-home-ver-mas-btn"
                               >
-                                {news.title} | {news.volanta}
+                                {news.title} | {news.createdAt ? format(new Date(news.createdAt), "d 'de' MMMM 'de' yyyy", { locale: es }) : 'Fecha no disponible'}
                               </h3>
                               {/* Mostrar imagen o video */}
                               {news.videoLink ? (
@@ -207,8 +222,10 @@ const Home = () => {
               scrolling="no"
               className="home-lateral-clima"
               frameBorder="0"
+              title='Clima'
             ></iframe>
           </div>
+          <PopularNews />
           <div className="home-ad-space">
             <AdsCarousel />
           </div>

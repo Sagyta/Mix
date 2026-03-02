@@ -8,6 +8,8 @@ import "swiper/css/pagination";
 import "../css/NewsCarousel.css";
 import { useDispatch, useSelector } from "react-redux";
 import { newsByCategory } from "../redux/actions/actions";
+import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
 
 const CategoryCarousel = () => {
   const dispatch = useDispatch();

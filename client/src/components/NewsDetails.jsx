@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {  useNavigate, useParams } from 'react-router-dom';
-import { clearPage, addComment, detailNews, getComments, getNews, getRelatedNews } from '../redux/actions/actions';
+import { clearPage, addComment, detailNews, getComments, getNews, getRelatedNews, incrementViews } from '../redux/actions/actions';
 import Footer from './Footer';
 import PuffLoader from 'react-spinners/PuffLoader';
 import NavBar from './NavBar';
@@ -9,6 +9,8 @@ import BannerCarousel from './BannerCarousel';
 import Buscador from './Search';
 import AdsCarousel from './AdsCarousel';
 import ScrollToTopButton from './ScrollTop';
+import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
 
 export default function NewsDetail() {
   const [loading, setLoading] = useState(false);
@@ -20,10 +22,17 @@ export default function NewsDetail() {
 
   const [isPaused, setIsPaused] = useState(false);
 
-  const [localState, setLocalState] = useState({
+ /* const [localState, setLocalState] = useState({
     guestName: '',
     comment: '',
-  });
+  });*/
+
+  const storedData = JSON.parse(localStorage.getItem('data'));
+const [localState, setLocalState] = useState({
+  guestName: storedData?.username || '',
+  comment: '',
+  loggedIn: storedData?.username ? true : false, // indica si ya tenemos nombre guardado
+});
 
 //noticias relacionadas
 const noticiasRelacionadas = useSelector((state)=> state.noticiasRelacionadas)
@@ -51,6 +60,9 @@ const noticiasRelacionadas = useSelector((state)=> state.noticiasRelacionadas)
     setLoading(true);
     dispatch(detailNews(id));
     dispatch(getComments(id));
+    
+    dispatch(incrementViews(id));
+
     setTimeout(() => setLoading(false), 2000);
 
     return () => {
@@ -65,7 +77,7 @@ const noticiasRelacionadas = useSelector((state)=> state.noticiasRelacionadas)
     });
   }
 
-  function handleSubmit() {
+  /*function handleSubmit() {
     if (!localState.comment.trim()) {
       alert("El comentario no puede estar vacío");
       return;
@@ -93,6 +105,46 @@ const noticiasRelacionadas = useSelector((state)=> state.noticiasRelacionadas)
     }); // ✅ Ahora sí le pasa el `newsId` y `comment` separados
   
     setLocalState({ comment: "", guestName: "" });
+  }*/
+
+  function handleSubmit() {
+    if (!localState.comment.trim()) {
+      alert("El comentario no puede estar vacío");
+      return;
+    }
+  
+    let storedData = localStorage.getItem('data');
+    let username;
+  
+    if (storedData) {
+      username = JSON.parse(storedData).username; // usamos el nombre guardado
+    } else {
+      username = localState.guestName.trim();
+      if (!username) {
+        alert("Debes ingresar un nombre para comentar");
+        return;
+      }
+    }
+  
+    // Guardamos el nombre en localStorage siempre que se cambie
+    localStorage.setItem('data', JSON.stringify({ username }));
+  
+    const newComment = {
+      username,
+      comment: localState.comment,
+    };
+  
+    dispatch(addComment(id, newComment)).then(() => {
+      dispatch(getComments(id));
+    });
+  
+    // 🔹 Actualizamos el estado para que el saludo se muestre al instante
+    setLocalState(prev => ({
+      ...prev,
+      comment: "",
+      guestName: username,   // actualiza al nuevo nombre
+      loggedIn: true         // activa el saludo y quita el input
+    }));
   }
 
     return (
@@ -136,7 +188,7 @@ const noticiasRelacionadas = useSelector((state)=> state.noticiasRelacionadas)
       ) : (
         <div className="detail-left-column">          
           <div className="detalleNoticia">
-          {noticia.category ? noticia.category.name : "Sin categoría"} | {noticia.volanta}
+          {noticia.category ? noticia.category.name : "Sin categoría"} | {noticia.user?.username || "Redacción"} | {noticia.createdAt ? format(new Date(noticia.createdAt), "d 'de' MMMM 'de' yyyy", { locale: es }) : 'Fecha no disponible'}
             <h2 className="noticiaTitulo">{noticia.title}</h2>
             <div className='video'>
             {noticia.videoLink ? (
@@ -196,18 +248,30 @@ const noticiasRelacionadas = useSelector((state)=> state.noticiasRelacionadas)
             <section className="sectionEscribirComentario">
               <h3>Deja un comentario:</h3>
 
-              {!localStorage.getItem('data') && (
-                <div>
-                 {/* <label>Nombre:</label>*/}
-                  <input
-                    type="text"
-                    name="guestName"
-                    value={localState.guestName}
-                    onChange={handleChange}
-                    placeholder="Ingresa tu nombre..."
-                  />
-                </div>
-              )}
+              {!localState.loggedIn ? (
+  <div>
+    <input
+      type="text"
+      name="guestName"
+      value={localState.guestName}
+      onChange={handleChange}
+      placeholder="Ingresa tu nombre..."
+    />
+  </div>
+) : (
+  <div className="user-greeting">
+    <p>Hola <strong>{localState.guestName}</strong> 👋</p>
+    <button 
+      type="button" 
+      onClick={() => {
+        localStorage.removeItem('data'); // borramos el nombre guardado
+        setLocalState({ ...localState, guestName: '', loggedIn: false });
+      }}
+    >
+      Cambiar nombre
+    </button>
+  </div>
+)}
 
               <div>
                 <textarea

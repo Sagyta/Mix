@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 
 export function CommentsManagement() {
     const dispatch = useDispatch();
-    const comments = useSelector((state) => state.comment);
+    const comments = useSelector((state) => state.comments || []);
 
     const [editData, setEditData] = useState({ id: "", comment: "" });
     const [showEditForm, setShowEditForm] = useState(false);

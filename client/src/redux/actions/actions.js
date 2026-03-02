@@ -28,10 +28,12 @@ import {
 	LOGIN_SUCCESS,
 	LOGIN_FAIL,
 	LOGOUT_ADMIN,
+	GET_POPULAR_NEWS,
+	INCREMENT_VIEWS,
 } from './DataTypes';
 
 
-const apiUrl= process.env.REACT_APP_API_URL;
+const apiUrl= process.env.REACT_APP_LOCAL_API_URL;
 console.log('apiurl',apiUrl)
 
 // Noticias
@@ -389,7 +391,6 @@ export function getAds() {
     return async (dispatch) => {
         try {
             const { data } = await axios.get(`${apiUrl}/adslat`);
-            console.log("Datos recibidos de ads:", data);  // Verificar qué llega
             dispatch({ type: GET_ADS, payload: data });
         } catch (error) {
             console.error("Error al cargar la imagen", error);
@@ -483,3 +484,28 @@ export const createAdsBanner = (formData) => async (dispatch) => {
 	  }
 	};
   };
+
+  export const incrementViews = (id) => async (dispatch) => {
+	try {
+	  const response = await axios.patch(`${apiUrl}/news/${id}/views`);
+	  dispatch({
+		type: INCREMENT_VIEWS,
+		payload: response.data,  // Podrías devolver los datos de la noticia con el contador de vistas actualizado
+	  });
+	} catch (error) {
+	  console.error('Error al incrementar vistas:', error);
+	}
+  };
+
+  export const getMostPopularNews = () => async (dispatch) => {
+	try {
+	  const response = await axios.get(`${apiUrl}/news/popular`);
+	  dispatch({
+		type: GET_POPULAR_NEWS,
+		payload: response.data,
+	  });
+	} catch (error) {
+	  console.error('Error al obtener noticias populares:', error);
+	}
+  };
+

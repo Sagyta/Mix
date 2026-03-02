@@ -13,12 +13,12 @@ export default function Noticias({ title,volanta, subtitle, videoLink, id, user,
   return (
     <div className='news' key={title}>
 
-      <div className="news-header">
-        <span className="news-card-category"> {category?.name}  |  {volanta}</span>
-        <span className="news-date">
-          {createdAt ? format(new Date(createdAt), "d 'de' MMMM 'de' yyyy", { locale: es }) : 'Fecha no disponible'}
-        </span>
-        </div>
+<div className="news-header">
+  <span className="news-card-category">
+    {category?.name} | {user?.username || "Redacción"} | {createdAt ? format(new Date(createdAt), "d 'de' MMMM 'de' yyyy", { locale: es }) : 'Fecha no disponible'}
+  </span>
+  <span className="news-volanta">{volanta}</span>
+</div>
 
       <div className='news-grid'>
         {/* Primera columna: Categoría + Imagen/Video */}

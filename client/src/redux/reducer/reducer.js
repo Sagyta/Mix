@@ -1,19 +1,19 @@
 const initialState = {
     news: [],
     newsDetail: {},
-    comments:[],
-    users:[],
-    category:[],
-   // auth:{
-    user: null,
-    isAuthenticated: false,
-    isAdmin: false,
+    comments: [],
+    users: [],
+    category: [],
+    // ✅ Autenticación desde localStorage
+    user: JSON.parse(localStorage.getItem("user")) || null,
+    isAuthenticated: !!localStorage.getItem("token"),
+    isAdmin: localStorage.getItem("isAdmin") === "true", // localStorage guarda strings
     error: null,
-   // }
-   ads: [],
-   adsBanner: [],
-   newsByCategory: {},
-   noticiasRelacionadas: [],
+    ads: [],
+    adsBanner: [],
+    newsByCategory: {},
+    noticiasRelacionadas: [],
+    popularNews: [],
 };
 
 const rootReducer = (state = initialState, {type, payload}) => {
@@ -77,7 +77,7 @@ const rootReducer = (state = initialState, {type, payload}) => {
         case 'ADD_COMMENT':
             return {
                 ...state,
-                comments: Array.isArray(state.comment)? [...state.comment, payload] : [payload],
+                comments: Array.isArray(state.comments)? [...state.comments, payload] : [payload],
       };
       //PANEL ADMIN - AUTENTICACION ADMIN
       case "LOGIN_SUCCESS":
@@ -129,7 +129,7 @@ const rootReducer = (state = initialState, {type, payload}) => {
         case 'DELETE_COMMENT':
             return {
             ...state,
-            comments: state.comment.filter(comment => comment.id !== payload)
+            comments: state.comments.filter(comment => comment.id !== payload)
         };
         case 'CREATE_USER':
             return {
@@ -204,7 +204,11 @@ const rootReducer = (state = initialState, {type, payload}) => {
                 ...state,
                 noticiasRelacionadas: payload,
             };
-        
+        case 'GET_POPULAR_NEWS':
+            return {
+                ...state,
+                popularNews: payload
+            };        
         default:
             return state;
     }

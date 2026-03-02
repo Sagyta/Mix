@@ -9,6 +9,8 @@ import NavBar from './NavBar';
 import Paginator from './Paginador';
 import ScrollToTopButton from './ScrollTop';
 import Buscador from './Search';
+import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
 
 const NewsByCategory = () => {
     const { id } = useParams(); // Obtener el id de la categoría desde la URL
